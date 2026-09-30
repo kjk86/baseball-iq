@@ -21,20 +21,26 @@ export interface DefensiveLineup {
  * (Coaches can also paste this same table into Coach Mode ⚙.)
  */
 export const THIS_WEEK = {
-  label: 'Weekend of Oct 3',
+  /** Shown at the top of the app. Update these with the table each week. */
+  game: {
+    opponent: 'Dodgers',
+    when: 'Sat, Oct 3 · 11:20 AM',
+    where: 'Cornerstone Park',
+  },
+  updated: 'Sep 30',
+  label: 'vs Dodgers, Oct 3 (Everett & Kam out)',
   table: `
 Batting	Player	1st	2nd	3rd	4th
 1	Joshua	2B	LF	SS	1B
 2	Sebastian	SS	LCF	1B	P
-3	Braxton	P	RF	LCF	2B
+3	Braxton	P	3B	LCF	2B
 4	Nico	3B	2B	P	RCF
-5	Everett	RCF	3B	LF	SS
-6	Lucas	LCF	1B	3B	LF
-7	Leif	1B	RCF	2B	3B
-8	Dawson	RF	P	C	-
-9	Luke	LF	SS	-	LCF
-10	Leo	-	C	RCF	RF
-11	Jackson	C	-	RF	C
+5	Lucas	LCF	1B	3B	LF
+6	Leif	1B	RCF	2B	SS
+7	Dawson	RF	P	C	3B
+8	Luke	LF	SS	RF	LCF
+9	Leo	RCF	C	LF	RF
+10	Jackson	C	RF	RCF	C
 `,
 };
 

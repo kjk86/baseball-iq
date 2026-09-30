@@ -1,12 +1,22 @@
 import { TopBar } from '../components/Layout/TopBar';
 import { LESSONS } from '../data/lessons';
 import { go } from '../router';
+import { THIS_WEEK } from '../data/lineups';
 import { BALL_BASE_BACKUP, PRINCIPLES } from '../baseball/teachingRules';
 
 export function Home() {
   return (
     <div className="page">
       <TopBar />
+      <div className="game-card" aria-label="Next game">
+        <div className="game-kicker">This week's lineup is for</div>
+        <div className="game-vs">
+          Cubs <span>vs</span> {THIS_WEEK.game.opponent}
+        </div>
+        <div className="game-meta">{THIS_WEEK.game.when}</div>
+        <div className="game-meta">📍 {THIS_WEEK.game.where}</div>
+        <div className="game-updated">Lineup updated {THIS_WEEK.updated}</div>
+      </div>
       <section className="hero">
         <div className="hero-kicker">Defense Trainer</div>
         <h1 className="hero-title">

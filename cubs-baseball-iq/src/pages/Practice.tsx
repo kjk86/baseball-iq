@@ -5,7 +5,7 @@ import { QuizRunner, type QuizItem } from '../components/QuizRunner/QuizRunner';
 import { ScorePanel, type QuestionResult } from '../components/ScorePanel/ScorePanel';
 import { buildBeforePitchSession, buildPracticeSession } from '../baseball/practice';
 import { POSITION_NAMES } from '../baseball/types';
-import { positionOf } from '../data/lineups';
+import { THIS_WEEK, positionOf } from '../data/lineups';
 import type { Player } from '../data/players';
 import { go } from '../router';
 import { useApp } from '../state/AppContext';
@@ -54,6 +54,11 @@ export function Practice({ mode = 'practice' }: { mode?: 'practice' | 'pitch' })
       {stage === 'preview' && player && session && (
         <div className="card preview">
           <div className="preview-name">{player.firstName}'s game</div>
+          <div className="preview-game">
+            vs {THIS_WEEK.game.opponent} · {THIS_WEEK.game.when}
+            <br />
+            {THIS_WEEK.game.where}
+          </div>
           <ul className="innings">
             {lineups.map((l) => {
               const pos = positionOf(l, player.id);

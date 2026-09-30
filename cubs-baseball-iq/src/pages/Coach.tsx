@@ -8,7 +8,10 @@ export function Coach() {
   return (
     <div className="page">
       <TopBar back="/" title="Coach Mode" />
-      <h2 className="section-title">Lineup · {THIS_WEEK.label}</h2>
+      <h2 className="section-title">Lineup · vs {THIS_WEEK.game.opponent}</h2>
+      <p className="small">
+        <b>{THIS_WEEK.game.when}</b> · {THIS_WEEK.game.where} · updated {THIS_WEEK.updated}
+      </p>
       <p className="muted small">
         {edited
           ? 'This phone is using your Coach Mode edits.'
