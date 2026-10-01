@@ -1,4 +1,5 @@
 import { Coach } from './pages/Coach';
+import { Team } from './pages/Team';
 import { Home } from './pages/Home';
 import { Lesson } from './pages/Lesson';
 import { Play } from './pages/Play';
@@ -22,6 +23,8 @@ function Routes() {
       return <Practice key="pitch" mode="pitch" />;
     case 'coach':
       return <Coach />;
+    case 'team':
+      return <Team />;
     default:
       return <Home />;
   }

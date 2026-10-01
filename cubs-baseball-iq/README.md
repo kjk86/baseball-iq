@@ -34,6 +34,11 @@ It's a static site — no backend. Any of these work:
 | Move where a spot is on the field  | `src/baseball/coordinates.ts`         |
 | Add a play                         | `src/data/scenarios.ts`               |
 | Change a lesson's plays            | `src/data/lessons.ts`                 |
+| Update stats                       | GameChanger → export season stats → save over `gamechanger/stats.csv` |
+| Update schedule / add a result     | `gamechanger/schedule.csv` (e.g. `W 7-2` in the result column) |
+| Add a practice plan                | Drop the PDF into `practice-plans/` (optional: link it to a date in `schedule.csv`) |
+
+The Team page reads `gamechanger/*.csv` and lists `practice-plans/` straight from the GitHub repo when the site loads, so those three need **no rebuild** — just commit and push.
 
 ### Lineups (weekly)
 The lineup is a plain table you can paste straight from your lineup sheet:

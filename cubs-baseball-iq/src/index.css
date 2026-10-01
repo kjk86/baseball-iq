@@ -372,3 +372,53 @@ button:focus-visible, select:focus-visible, textarea:focus-visible, input:focus-
 .game-meta { font-weight: 700; margin-top: 2px; }
 .game-updated { font-size: 12px; opacity: .75; margin-top: 4px; }
 .preview-game { color: var(--muted); font-weight: 700; margin: -6px 0 12px; }
+
+/* ───────── team hub ───────── */
+.team-link { margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(255,255,255,.14); border: 0; color: #fff; border-radius: 10px; padding: 9px 12px; font-weight: 700; cursor: pointer; }
+.team-link:active { background: rgba(255,255,255,.25); }
+.team-rec { background: var(--gold); color: var(--ink); font: 800 16px/1 var(--display); padding: 4px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.record-card { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 14px; text-align: center; margin-bottom: 12px; }
+.record-label { font: 700 12px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.record-big { font: 800 56px/1 var(--display); margin: 6px 0 4px; font-variant-numeric: tabular-nums; }
+.record-sub { font-weight: 600; opacity: .85; font-size: 14px; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: #e6e9f0; border-radius: 12px; padding: 4px; margin-bottom: 12px; }
+.tab { border: 0; background: transparent; border-radius: 9px; padding: 9px 4px; font-weight: 700; font-size: 14px; color: var(--muted); cursor: pointer; }
+.tab-on { background: #fff; color: var(--blue); box-shadow: 0 1px 2px rgba(19,34,63,.12); }
+.seg { display: flex; gap: 6px; margin-bottom: 10px; }
+.sched { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.sched-row { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; background: #fff; border-radius: 12px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(19,34,63,.08); }
+.sched-game { border-left: 5px solid var(--blue); }
+.sched-next { box-shadow: 0 0 0 2px var(--gold); }
+.sched-date { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.sched-dow { font: 700 11px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sched-day { font: 800 26px/1.05 var(--display); }
+.sched-mon { font: 700 11px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sched-main { min-width: 0; }
+.sched-title { font: 800 19px/1.15 var(--display); letter-spacing: .02em; }
+.sched-meta { color: var(--muted); font-size: 13px; font-weight: 600; }
+.next-pill { display: inline-block; background: var(--gold); color: var(--ink); font: 800 11px/1 var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 3px 6px; border-radius: 4px; margin-bottom: 3px; }
+.plan-link { display: inline-block; margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--blue); text-decoration: none; }
+.sched-result { font: 800 18px/1 var(--display); font-variant-numeric: tabular-nums; }
+.res-w { color: var(--good); }
+.res-l { color: var(--muted); }
+.stat-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.stat-tile { background: #fff; border-radius: 12px; padding: 10px 6px; text-align: center; box-shadow: 0 1px 2px rgba(19,34,63,.08); }
+.stat-num { font: 800 28px/1 var(--display); color: var(--blue); font-variant-numeric: tabular-nums; }
+.stat-lbl { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.table-wrap { overflow-x: auto; background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(19,34,63,.08); }
+.stats { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 14px; }
+.stats th, .stats td { padding: 8px 6px; text-align: center; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.stats th button { border: 0; background: none; font: 800 13px/1 var(--display); letter-spacing: .06em; color: var(--muted); cursor: pointer; padding: 2px; }
+.stats th button.th-on { color: var(--blue); text-decoration: underline; }
+.th-name, .td-name { text-align: left !important; position: sticky; left: 0; background: #fff; }
+.td-name { font-weight: 700; }
+.jersey { display: inline-block; min-width: 28px; color: var(--muted); font-weight: 600; font-size: 12px; }
+.tr-total td { font-weight: 800; background: var(--blue-soft); }
+.tr-total .td-name { background: var(--blue-soft); }
+.plans { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.plan-card { display: block; background: #fff; border-radius: 12px; padding: 12px 14px; text-decoration: none; color: var(--ink); box-shadow: 0 1px 2px rgba(19,34,63,.08); border-left: 5px solid var(--red); }
+.plan-date { font: 700 12px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--red); }
+.plan-title { font: 800 20px/1.15 var(--display); margin-top: 3px; }
+.plan-focus { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.plan-open { color: var(--blue); font-weight: 700; font-size: 14px; margin-top: 6px; }
+.team-rec { white-space: nowrap; }

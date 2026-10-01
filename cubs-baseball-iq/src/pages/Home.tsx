@@ -2,9 +2,13 @@ import { TopBar } from '../components/Layout/TopBar';
 import { LESSONS } from '../data/lessons';
 import { go } from '../router';
 import { THIS_WEEK } from '../data/lineups';
+import { recordFrom } from '../data/team';
+import { useTeamData } from './Team';
 import { BALL_BASE_BACKUP, PRINCIPLES } from '../baseball/teachingRules';
 
 export function Home() {
+  const team = useTeamData();
+  const rec = recordFrom(team.schedule);
   return (
     <div className="page">
       <TopBar />
@@ -16,6 +20,13 @@ export function Home() {
         <div className="game-meta">{THIS_WEEK.game.when}</div>
         <div className="game-meta">📍 {THIS_WEEK.game.where}</div>
         <div className="game-updated">Lineup updated {THIS_WEEK.updated}</div>
+        <button className="team-link" onClick={() => go('/team')}>
+          <span className="team-rec">
+            {rec.wins}–{rec.losses}
+          </span>
+          <span>Schedule · Stats · Plans</span>
+          <span aria-hidden>›</span>
+        </button>
       </div>
       <section className="hero">
         <div className="hero-kicker">Defense Trainer</div>
