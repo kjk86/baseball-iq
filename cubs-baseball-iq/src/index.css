@@ -422,3 +422,5 @@ button:focus-visible, select:focus-visible, textarea:focus-visible, input:focus-
 .plan-focus { color: var(--muted); font-size: 14px; margin-top: 2px; }
 .plan-open { color: var(--blue); font-weight: 700; font-size: 14px; margin-top: 6px; }
 .team-rec { white-space: nowrap; }
+
+.btn-now { border-color: var(--red); color: var(--red); }

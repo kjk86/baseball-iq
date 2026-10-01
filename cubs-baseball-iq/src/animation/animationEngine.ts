@@ -120,7 +120,11 @@ export interface BuiltScenario {
   variant: DemoVariant;
 }
 
-export function buildScenario(scenario: Scenario, variant: DemoVariant = 'main'): BuiltScenario {
+export function buildScenario(
+  scenario: Scenario,
+  variant: DemoVariant = 'main',
+  opts: { thinkBeforePlay?: number } = {},
+): BuiltScenario {
   let overrides = scenario.overrides;
   let phases = scenario.phases;
   if (variant === 'alternate' && scenario.alternate) {
@@ -130,6 +134,16 @@ export function buildScenario(scenario: Scenario, variant: DemoVariant = 'main')
   if (variant === 'wrong' && scenario.decision) {
     const i = phases.findIndex((p) => p.kind === 'DECISION');
     phases = [...phases.slice(0, i + 1), ...scenario.decision.wrongPhases];
+  }
+  // "Now what?" quizzes: give the defense a beat to get into place before the fielder throws.
+  if (opts.thinkBeforePlay) {
+    const hitIdx = phases.findIndex((p) => p.kind === 'HIT');
+    const i = phases.findIndex(
+      (p, k) => k > hitIdx && ['THROW', 'OVERTHROW', 'CARRY', 'WILD_THROW'].includes(p.kind),
+    );
+    if (i > 0) {
+      phases = [...phases.slice(0, i), { kind: 'WAIT', seconds: opts.thinkBeforePlay }, ...phases.slice(i)];
+    }
   }
   const resolved = resolveScenario({
     event: scenario.event,
@@ -191,6 +205,7 @@ export function buildTimeline(resolved: ResolvedPlay, phases: ScenarioPhase[]): 
   let hitEnd = 0;
   let reactStart = -1;
   let decisionTime: number | undefined;
+  let firstPlay: number | undefined;
   const moved = new Set<DefensivePosition>();
 
   let now = 0;
@@ -268,6 +283,7 @@ export function buildTimeline(resolved: ResolvedPlay, phases: ScenarioPhase[]): 
     const d = distance(from, to);
     const last = lastKey(ball);
     const start = Math.max(t, last.t);
+    if (firstPlay === undefined && hitEnd > 0) firstPlay = start;
     ball.keys.push({ t: start, ...from });
     return moveTo(ball, start, to, 0.2 + d / speed, { ease: 'linear', h: d * arc });
   };
@@ -390,6 +406,7 @@ export function buildTimeline(resolved: ResolvedPlay, phases: ScenarioPhase[]): 
         const start = Math.max(t0, trackEnd(tr));
         const d = distance(endPos(tr), to);
         const dur = Math.max(0.4, d / SPEED.player);
+        if (firstPlay === undefined) firstPlay = start;
         moveTo(tr, start, to, dur);
         ball.keys.push({ t: Math.max(start, lastKey(ball).t), ...endPos(ball) });
         moveTo(ball, start, to, dur);
@@ -450,6 +467,7 @@ export function buildTimeline(resolved: ResolvedPlay, phases: ScenarioPhase[]): 
         t = Math.max(t, lastKey(ball).t) + 0.3;
         pauses.push({ id: pauses.length, t, kind: 'DECISION' });
         decisionTime = t;
+        if (firstPlay === undefined) firstPlay = t;
         end = t + 0.05;
         break;
       }
@@ -499,6 +517,7 @@ export function buildTimeline(resolved: ResolvedPlay, phases: ScenarioPhase[]): 
     hitEnd,
     reactStart: reactStart < 0 ? hitEnd : reactStart,
     decisionTime,
+    firstPlay,
   };
 }
 

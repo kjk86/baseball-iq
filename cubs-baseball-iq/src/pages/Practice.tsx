@@ -3,7 +3,7 @@ import { TopBar } from '../components/Layout/TopBar';
 import { PlayerSelector } from '../components/PlayerSelector/PlayerSelector';
 import { QuizRunner, type QuizItem } from '../components/QuizRunner/QuizRunner';
 import { ScorePanel, type QuestionResult } from '../components/ScorePanel/ScorePanel';
-import { buildBeforePitchSession, buildPracticeSession } from '../baseball/practice';
+import { buildBeforePitchSession, buildNowWhatSession, buildPracticeSession } from '../baseball/practice';
 import { POSITION_NAMES } from '../baseball/types';
 import { THIS_WEEK, positionOf } from '../data/lineups';
 import type { Player } from '../data/players';
@@ -12,8 +12,9 @@ import { useApp } from '../state/AppContext';
 
 const ORD = ['1st', '2nd', '3rd', '4th'];
 
-export function Practice({ mode = 'practice' }: { mode?: 'practice' | 'pitch' }) {
+export function Practice({ mode = 'practice' }: { mode?: 'practice' | 'pitch' | 'now' }) {
   const pitch = mode === 'pitch';
+  const now = mode === 'now';
   const { lineups, namesFor, present } = useApp();
   const [player, setPlayer] = useState<Player | null>(null);
   const [stage, setStage] = useState<'pick' | 'preview' | 'quiz' | 'done'>('pick');
@@ -21,8 +22,11 @@ export function Practice({ mode = 'practice' }: { mode?: 'practice' | 'pitch' })
   const [results, setResults] = useState<QuestionResult[]>([]);
 
   const session = useMemo(
-    () => (player ? (pitch ? buildBeforePitchSession : buildPracticeSession)(player.id, lineups, seed) : null),
-    [player, lineups, seed, pitch],
+    () =>
+      player
+        ? (now ? buildNowWhatSession : pitch ? buildBeforePitchSession : buildPracticeSession)(player.id, lineups, seed)
+        : null,
+    [player, lineups, seed, pitch, now],
   );
 
   const items: QuizItem[] = useMemo(() => {
@@ -31,14 +35,17 @@ export function Practice({ mode = 'practice' }: { mode?: 'practice' | 'pitch' })
       r.questions.map((q) => ({
         question: q,
         names: namesFor(r.inning),
-        roundLabel: `ROUND ${ri + 1} — ${POSITION_NAMES[r.position].toUpperCase()}`,
+        roundLabel:
+          now && ri === session.rounds.length - 1 && r.questions.some((q) => q.position !== r.position)
+            ? `ROUND ${ri + 1} — YOUR TEAMMATES`
+            : `ROUND ${ri + 1} — ${POSITION_NAMES[r.position].toUpperCase()}`,
       })),
     );
-  }, [session, namesFor]);
+  }, [session, namesFor, now]);
 
   return (
     <div className="page">
-      <TopBar back="/" title={pitch ? 'Before the Pitch' : 'Practice My Game'} />
+      <TopBar back="/" title={now ? 'Now What?' : pitch ? 'Before the Pitch' : 'Practice My Game'} />
       {stage === 'pick' && (
         <>
           <h2 className="section-title center">Who's playing?</h2>
@@ -74,7 +81,9 @@ export function Practice({ mode = 'practice' }: { mode?: 'practice' | 'pitch' })
           {session.total > 0 ? (
             <>
               <p className="muted">
-                {pitch
+                {now
+                  ? `${session.total} plays. The ball is fielded — where does it go?`
+                  : pitch
                   ? `${session.total} situations. Before each pitch: what's YOUR job?`
                   : `${session.total} questions about YOUR positions.`}
               </p>

@@ -45,7 +45,7 @@ export interface ChoiceQuestion {
   explanation: string;
   concept: Concept;
   /** Where in the play the question appears. */
-  pauseAt: 'HIT' | 'DECISION' | 'HIGHLIGHT' | 'START';
+  pauseAt: 'HIT' | 'DECISION' | 'HIGHLIGHT' | 'START' | 'FIELDED';
   hint: string;
   beforePitch?: boolean;
 }
@@ -180,6 +180,8 @@ export function lessonQuestions(scenario: Scenario): Question[] {
   const ft = forceTagQuestion(scenario);
   const dec = decisionQuestion(scenario);
   if (dec) return [dec];
+  const now = nowWhatQuestion(scenario);
+  if (now) out.push(now);
   out.push(...choiceQuestions(scenario));
   if (ft) out.push(ft);
 
@@ -187,7 +189,7 @@ export function lessonQuestions(scenario: Scenario): Question[] {
   for (const p of Object.keys(scenario.prompts ?? {}) as DefensivePosition[]) positions.push(p);
   for (const c of scenario.choiceQuestions ?? []) if (c.position && !positions.includes(c.position)) positions.push(c.position);
   for (const p of scenario.relevantPositions) {
-    if (positions.length >= (ft ? 1 : 2)) break;
+    if (positions.length >= (ft || now ? 1 : 2)) break;
     if (!positions.includes(p)) positions.push(p);
   }
   for (const p of positions) out.push(destinationQuestion(scenario, p));
@@ -228,8 +230,8 @@ const RECEIVER_PLAY: Partial<Record<string, string>> = {
 const PLAY_WHY: Record<string, string> = {
   FIRST: 'Get the sure out at first!',
   SECOND: 'Short toss to second for the force!',
-  THIRD: 'Throw to third!',
-  HOME: 'Throw home!',
+  THIRD: 'The lead runner is going to third — throw to third!',
+  HOME: 'The runner is going home — throw home!',
   CUTOFF: 'Get it in — hit the cutoff!',
   STEP: 'Close to the bag? Step on first yourself!',
   HOLD: 'No good throw here. Hold the ball and keep the runner where he is!',
@@ -237,8 +239,9 @@ const PLAY_WHY: Record<string, string> = {
 };
 
 /** What the fielder should do with the ball, read from the scenario script. */
-export function playForFielder(scenario: Scenario): string | null {
-  if (scenario.phases.some((p) => p.kind === 'BOBBLE')) return null; // mistakes aren't the plan
+export function playForFielder(scenario: Scenario, allowMistakes = false): string | null {
+  // Before the pitch, a bobble isn't the plan. After the ball is fielded, it's fair game.
+  if (!allowMistakes && scenario.phases.some((p) => p.kind === 'BOBBLE')) return null;
   const resolved = resolveScenario({ event: scenario.event, ...scenario.gameState, overrides: scenario.overrides });
   const fielder = resolved.primaryFielder;
   if (!fielder) return null;
@@ -258,12 +261,26 @@ export function playForFielder(scenario: Scenario): string | null {
 }
 
 export function prePitchQuestion(scenario: Scenario): ChoiceQuestion | null {
-  const play = playForFielder(scenario);
-  if (!play) return null;
+  return fielderPlayQuestion(scenario, 'START');
+}
+
+/**
+ * NOW WHAT?
+ * The ball is hit, the fielder gets it, everybody moves — FREEZE.
+ * "{NAME} has the ball. Now what?"
+ */
+export function nowWhatQuestion(scenario: Scenario): ChoiceQuestion | null {
+  return fielderPlayQuestion(scenario, 'FIELDED');
+}
+
+function fielderPlayQuestion(scenario: Scenario, when: 'START' | 'FIELDED'): ChoiceQuestion | null {
+  const fielded = when === 'FIELDED';
+  const play = playForFielder(scenario, fielded);
+  if (!play || (fielded && play === 'CATCH')) return null;
   const resolved = resolveScenario({ event: scenario.event, ...scenario.gameState, overrides: scenario.overrides });
   const fielder = resolved.primaryFielder!;
   const outfield = ['LF', 'LCF', 'RCF', 'RF'].includes(fielder);
-  const pool =
+  const pool: string[] =
     play === 'CATCH'
       ? ['CATCH', 'WAIT', 'FIRST']
       : outfield
@@ -271,22 +288,25 @@ export function prePitchQuestion(scenario: Scenario): ChoiceQuestion | null {
         : scenario.gameState.runners.length
           ? ['FIRST', 'SECOND', 'THIRD', 'HOME', 'HOLD']
           : ['FIRST', 'SECOND', 'HOME', 'HOLD'];
-  const picks = [play, ...pool.filter((x) => x !== play)].slice(0, 3);
+  if (fielded && !pool.includes('HOLD')) pool.push('HOLD');
+  const picks = [play, ...pool.filter((x) => x !== play)].slice(0, fielded ? 4 : 3);
   const choices = PLAY_ORDER.filter((x) => picks.includes(x)).map((id) => ({ id, label: PLAY_LABELS[id] }));
   return {
     kind: 'CHOICE',
-    id: `${scenario.id}:pre`,
+    id: `${scenario.id}:${fielded ? 'now' : 'pre'}`,
     scenarioId: scenario.id,
     position: fielder,
-    prompt: "IT'S HIT TO YOU, {NAME}! WHAT'S THE PLAY?",
+    prompt: fielded ? '{NAME} HAS THE BALL. NOW WHAT?' : "IT'S HIT TO YOU, {NAME}! WHAT'S THE PLAY?",
     choices,
     correctId: play,
     correctTitle: `YES! ${PLAY_LABELS[play].replace(' ✋', '')}!`,
-    explanation: resolved.assignments[fielder].explanation || PLAY_WHY[play],
+    explanation: fielded ? PLAY_WHY[play] : resolved.assignments[fielder].explanation || PLAY_WHY[play],
     concept: play === 'HOLD' ? 'HOLD_THE_BALL' : play === 'CUTOFF' ? 'CUTOFF_AND_RELAY' : play === 'CATCH' ? 'CALL_IT' : 'FIELDING_YOUR_BALL',
-    pauseAt: 'START',
-    hint: 'Where is the easiest, safest out? Is there a runner?',
-    beforePitch: true,
+    pauseAt: fielded ? 'FIELDED' : 'START',
+    hint: fielded
+      ? 'Look at the runners. Where is the closest, easiest out? Is there one at all?'
+      : 'Where is the easiest, safest out? Is there a runner?',
+    beforePitch: !fielded,
   };
 }
 

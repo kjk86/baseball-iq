@@ -72,6 +72,8 @@ export interface Timeline {
   /** When the rest of the defense starts moving. */
   reactStart: number;
   decisionTime?: number;
+  /** When the fielder first throws / carries / decides (the "now what?" moment). */
+  firstPlay?: number;
 }
 
 export interface RunnerFrame extends Coordinate {

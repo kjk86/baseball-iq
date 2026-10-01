@@ -6,6 +6,7 @@ import {
   decisionQuestion,
   destinationQuestion,
   forceTagQuestion,
+  nowWhatQuestion,
   prePitchDestinationQuestion,
   prePitchQuestion,
   type Question,
@@ -73,7 +74,7 @@ export function buildPracticeSession(
   const rounds: PracticeRound[] = active.map(({ inning, position }) => {
     const candidates: Question[] = [];
     for (const s of shuffle(SCENARIOS, rand)) {
-      const extra = [decisionQuestion(s), ...choiceQuestions(s)].filter(
+      const extra = [decisionQuestion(s), nowWhatQuestion(s), ...choiceQuestions(s)].filter(
         (q): q is NonNullable<typeof q> => !!q && q.position === position,
       );
       candidates.push(...extra);
@@ -159,4 +160,57 @@ export function buildBeforePitchSession(
 
   const total = rounds.reduce((n, r) => n + r.questions.length, 0);
   return { playerId, rounds: rounds.filter((r) => r.questions.length), total };
+}
+
+/**
+ * NOW WHAT?
+ * Ball is hit, it's fielded, everybody moves — freeze. "Now what?"
+ * First the plays where the kid is the fielder at their own positions,
+ * then plays fielded by teammates, so they learn every spot. ~10 questions.
+ */
+export function buildNowWhatSession(
+  playerId: PlayerId,
+  lineups: DefensiveLineup[],
+  seed = Date.now(),
+): PracticeSession {
+  const rand = rng(seed);
+  const active = lineups
+    .map((l) => ({ inning: l.inning, position: positionOf(l, playerId) }))
+    .filter((r): r is { inning: number; position: DefensivePosition } => r.position !== 'BENCH');
+  const all = shuffle(SCENARIOS, rand)
+    .map(nowWhatQuestion)
+    .filter((q): q is NonNullable<typeof q> => !!q);
+  const used = new Set<string>();
+  const usedKey = new Set<string>();
+  const take = (q: Question) => {
+    used.add(q.id);
+    if (q.kind === 'CHOICE') usedKey.add(`${q.position}:${q.correctId}`);
+  };
+
+  const rounds: PracticeRound[] = active.map(({ inning, position }) => {
+    const mine = all.filter((q) => q.position === position && !used.has(q.id) && !usedKey.has(`${q.position}:${q.correctId}`));
+    const picked = mine.slice(0, 2);
+    picked.forEach(take);
+    return { inning, position, questions: picked as Question[] };
+  });
+
+  // Top up with plays fielded by teammates — different answers first.
+  let total = rounds.reduce((n, r) => n + r.questions.length, 0);
+  const extra: Question[] = [];
+  for (const q of all) {
+    if (total + extra.length >= 10) break;
+    if (used.has(q.id) || usedKey.has(`${q.position}:${q.correctId}`)) continue;
+    take(q);
+    extra.push(q);
+  }
+  for (const q of all) {
+    if (total + extra.length >= 10) break;
+    if (used.has(q.id)) continue;
+    take(q);
+    extra.push(q);
+  }
+  const out = rounds.filter((r) => r.questions.length);
+  if (extra.length) out.push({ inning: lineups[0]?.inning ?? 1, position: 'SS', questions: extra });
+  total += extra.length;
+  return { playerId, rounds: out, total };
 }

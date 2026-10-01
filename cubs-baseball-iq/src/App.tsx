@@ -21,6 +21,8 @@ function Routes() {
       return <Practice key="practice" />;
     case 'pitch':
       return <Practice key="pitch" mode="pitch" />;
+    case 'now':
+      return <Practice key="now" mode="now" />;
     case 'coach':
       return <Coach />;
     case 'team':

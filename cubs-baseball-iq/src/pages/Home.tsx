@@ -49,6 +49,10 @@ export function Home() {
           ⏸ BEFORE THE PITCH
           <span className="btn-sub">What's my job if it's hit to me?</span>
         </button>
+        <button className="btn btn-outline btn-big btn-wide btn-pitch btn-now" onClick={() => go('/now-what')}>
+          🧤 NOW WHAT?
+          <span className="btn-sub">I fielded it — where does the ball go?</span>
+        </button>
         <p className="hero-sub">{PRINCIPLES.oneKid}</p>
       </section>
 

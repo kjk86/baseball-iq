@@ -24,7 +24,11 @@ interface QuestionViewProps {
 export function QuestionView({ question: q, names, onAnswered, onNext, nextLabel }: QuestionViewProps) {
   const { speed } = useApp();
   const scenario = scenarioById(q.scenarioId);
-  const { timeline, resolved } = useMemo(() => buildScenario(scenario, 'main'), [scenario]);
+  const think = q.kind === 'CHOICE' && q.pauseAt === 'FIELDED' ? 1.0 : 0;
+  const { timeline, resolved } = useMemo(
+    () => buildScenario(scenario, 'main', { thinkBeforePlay: think }),
+    [scenario, think],
+  );
 
   // Where to freeze the play and ask.
   const stopAt = useMemo(() => {
@@ -34,6 +38,7 @@ export function QuestionView({ question: q, names, onAnswered, onNext, nextLabel
       return Math.min(timeline.hitEnd, timeline.reactStart);
     }
     if (q.pauseAt === 'DECISION') return timeline.decisionTime ?? timeline.hitEnd;
+    if (q.pauseAt === 'FIELDED') return Math.max(timeline.hitEnd, (timeline.firstPlay ?? timeline.hitEnd) - 0.05);
     if (q.pauseAt === 'HIGHLIGHT') return timeline.highlights[0]?.t ?? timeline.hitEnd;
     return timeline.hitEnd;
   }, [q, resolved, timeline]);
