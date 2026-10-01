@@ -222,11 +222,11 @@ export const SCENARIOS: Scenario[] = [
       PITCH,
       hit('Ground ball — 1B has to leave the bag!'),
       REACT,
-      { kind: 'THROW', to: 'P', outs: ['BATTER'], caption: 'Toss to the pitcher — OUT!' },
+      { kind: 'CARRY', to: 'FIRST_BASE', outs: ['BATTER'], caption: 'Run it back to the bag — OUT!' },
     ],
     teachingPoints: [
-      { text: '1B leaves the bag? PITCHER covers first!', big: true },
-      { text: PRINCIPLES.coverBase },
+      { text: '1B leaves the bag? He runs it back to the bag himself.', big: true },
+      { text: 'Pitcher heads home — he can\u2019t beat the first baseman to the bag.' },
     ],
     relevantPositions: ['P', '1B', 'RF', 'SS'],
     prompts: {

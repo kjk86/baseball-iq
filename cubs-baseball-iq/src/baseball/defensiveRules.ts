@@ -90,7 +90,7 @@ const GROUND_BALL_SS: DefensiveRule = {
       destination: 'BACKUP_SECOND_RIGHT',
     }),
     RF: a('BACKUP_FIRST', 'Get behind first in case the throw gets away!'),
-    P: a('BACKUP_PLAY', "Don't watch from the mound. Move to help!"),
+    P: a('BACKUP_HOME', 'Head home and get behind the catcher in case a throw gets past!'),
     C: a('COVER_HOME', 'Protect home and tell everyone where to throw!'),
   },
   variants: [
@@ -124,7 +124,7 @@ const GROUND_BALL_2B: DefensiveRule = {
     }),
     // Coach: everybody moves on every play.
     LF: a('BACKUP_THIRD', 'Ball is on the other side. Get behind third — always be moving!'),
-    P: a('BACKUP_PLAY', "Don't watch from the mound. Move to help!"),
+    P: a('BACKUP_HOME', 'Head home and get behind the catcher in case a throw gets past!'),
     C: a('COVER_HOME', 'Protect home and tell everyone where to throw!'),
   },
   variants: [
@@ -159,7 +159,7 @@ const GROUND_BALL_3B: DefensiveRule = {
       destination: 'BACKUP_SECOND_RIGHT',
     }),
     RF: a('BACKUP_FIRST', 'Long throw coming to first! Get behind first!'),
-    P: a('BACKUP_PLAY', "Don't watch from the mound. Move to help!"),
+    P: a('BACKUP_HOME', 'Head home and get behind the catcher in case a throw gets past!'),
     C: a('COVER_HOME', 'Protect home and tell everyone where to throw!'),
   },
   variants: [
@@ -191,9 +191,7 @@ const GROUND_BALL_1B: DefensiveRule = {
   primaryFielder: '1B',
   assignments: {
     '1B': a('FIELD_BALL', "It's hit to you near the bag. Field it and step on first!"),
-    P: a('BACKUP_PLAY', 'Break toward first in case the first baseman needs you!', {
-      destination: 'P_TOWARD_FIRST',
-    }),
+    P: a('BACKUP_HOME', 'Head home and get behind the catcher in case a throw gets past!'),
     '2B': a('BACKUP_INFIELDER', 'Get behind the first baseman in case it gets past him!', {
       destination: 'BACKUP_1B_FIELDER',
     }),
@@ -218,8 +216,9 @@ const GROUND_BALL_1B_OFF_BAG: DefensiveRule = {
   ballLocation: 'GROUNDER_1B_AWAY',
   assignments: {
     ...GROUND_BALL_1B.assignments,
-    '1B': a('FIELD_BALL', 'You had to leave the bag to get it. Throw to the pitcher at first!'),
-    P: a('COVER_FIRST', 'First baseman left the bag. Pitcher — run to first!'),
+    '1B': a('FIELD_BALL', 'You had to leave the bag to get it. Field it and run it back to the bag!'),
+    // Coach: the pitcher can't beat the first baseman back to the bag — 1B runs it back himself.
+    P: a('BACKUP_HOME', 'First baseman will run it back to the bag. Pitcher — head home!'),
   },
 };
 
@@ -280,7 +279,7 @@ const SINGLE_RF: DefensiveRule = {
     '1B': a('COVER_FIRST', 'Stay at first in case the runner turns too far!'),
     '3B': a('COVER_THIRD', 'Protect third base!'),
     C: a('COVER_HOME', 'Protect home and tell everyone where to throw!'),
-    P: a('BACKUP_THIRD', 'Get behind third in case the throw gets away!'),
+    P: a('BACKUP_HOME', 'Head home and get behind the catcher in case a throw gets past!'),
     LCF: a('BACKUP_SECOND', 'Move toward second in case a throw gets away!', {
       destination: 'BACKUP_SECOND_LEFT',
     }),
@@ -495,7 +494,7 @@ const GAP_RIGHT: DefensiveRule = {
     '1B': a('COVER_FIRST', 'Stay at first in case the runner turns too far!'),
     '3B': a('COVER_THIRD', 'Protect third base!'),
     C: a('COVER_HOME', 'Protect home and tell everyone where to throw!'),
-    P: a('BACKUP_THIRD', 'Get behind third in case the throw gets away!'),
+    P: a('BACKUP_HOME', 'Head home and get behind the catcher in case a throw gets past!'),
     LCF: a('BACKUP_SECOND', 'Ball is on the other side. Get behind second!', { destination: 'BACKUP_SECOND_LEFT' }),
     LF: a('BACKUP_THIRD', 'Ball is on the far side. Get behind third!', { destination: 'BACKUP_THIRD_DEEP' }),
   },
