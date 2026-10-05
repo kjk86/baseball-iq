@@ -17,7 +17,7 @@ Add `?debug=1` to the URL (or flip the switch in Coach Mode ⚙) to see coordina
 
 ## Deploy
 
-It's a static site — no backend. Any of these work:
+It's a static site - no backend. Any of these work:
 
 - **Netlify Drop** – drag the `dist/` folder onto app.netlify.com/drop, get a URL.
 - **Vercel / Cloudflare Pages / GitHub Pages** – build command `npm run build`, output `dist`.
