@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Interactive visualizer for the proposed PVAA Rookie Division 1st base overthrow rule.">
+<title>1st Base Overthrow Rule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+
+/* Layout: a field-side coaching tool. Rule card on top, then a sticky diamond (left) with play controls and step narration (right); reference sections stack below. */
+:root{
+  --paper:#f4f2ea; --card:#ffffff; --ink:#13223f; --muted:#56637c; --line:#dcdfe6;
+  --navy:#0e3386; --navy-soft:#e7edfa; --brand-red:#cc3433; --gold:#ffc72c;
+  --legal:#1d8f4c; --legal-soft:#e2f4e9; --max:#f0b400; --max-soft:#fff3cf; --illegal:#d32f2f; --illegal-soft:#fde6e5; --path:#2f7de1;
+  --def:#0e3386; --def-ink:#ffffff; --btn:#0e3386; --btn-ink:#ffffff;
+  --grass-out:#3d7f37; --grass:#4f9b46; --grass-in:#56a54c; --dirt:#c98d58; --chalk:#ffffff;
+  --display:"Graduate","Rockwell","Georgia",serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e1524; --card:#172138; --ink:#e8ecf5; --muted:#9ba8c2; --line:#2a3655;
+  --navy:#7ea2ff; --navy-soft:#1d2b4f; --legal:#3cc276; --legal-soft:#143524; --max:#ffc928; --max-soft:#3a2f0d; --illegal:#ff5d5d; --illegal-soft:#3d1717; --path:#5aa0ff;
+  --def:#244cbc; --btn:#3d6ae0; --grass-out:#2c5f29; --grass:#3b7c35; --grass-in:#41863a; --dirt:#a87346; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1524; --card:#172138; --ink:#e8ecf5; --muted:#9ba8c2; --line:#2a3655;
+  --navy:#7ea2ff; --navy-soft:#1d2b4f; --legal:#3cc276; --legal-soft:#143524; --max:#ffc928; --max-soft:#3a2f0d; --illegal:#ff5d5d; --illegal-soft:#3d1717; --path:#5aa0ff;
+  --def:#244cbc; --btn:#3d6ae0; --grass-out:#2c5f29; --grass:#3b7c35; --grass-in:#41863a; --dirt:#a87346; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:28px}
+h1,h2{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(1.7rem,5vw,2.6rem)}
+h2{font-size:clamp(1.25rem,3.4vw,1.6rem)}
+h3{margin:0;font-size:1.05rem}
+p{margin:0}
+.eyebrow{font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;background:var(--gold);color:#13223f;padding:5px 10px;border-radius:4px}
+header{display:flex;flex-direction:column;gap:10px}
+.disclaimer{font-size:.9rem;color:var(--muted);max-width:68ch}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+/* Rule card */
+.rule{display:grid;gap:16px;grid-template-columns:1fr}
+.rule .full{font-size:.95rem;color:var(--muted);max-width:70ch;border-left:3px solid var(--line);padding-left:12px}
+.simple{font-size:1.2rem;font-weight:600;max-width:52ch}
+.simple b{color:var(--navy)}
+.qref{display:flex;flex-wrap:wrap;gap:8px}
+.qchip{display:flex;align-items:center;gap:8px;font-family:var(--cond);font-weight:700;font-size:1.05rem;background:var(--max-soft);border:1.5px solid var(--max);border-radius:6px;padding:6px 12px}
+.qchip .arrow{color:var(--muted)}
+.qchip .mx{font-size:.72rem;background:var(--max);color:#13223f;padding:1px 5px;border-radius:3px;letter-spacing:.06em}
+.note{font-size:.88rem;color:var(--muted)}
+@media(min-width:860px){.rule{grid-template-columns:1.3fr 1fr;align-items:start}}
+/* Scenario selector */
+.scn-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.scn{flex:0 0 150px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit;min-height:112px;position:relative}
+.scn:hover{border-color:var(--navy)}
+.scn[aria-pressed="true"]{border-color:var(--navy);background:var(--navy-soft)}
+.scn .num{font-family:var(--cond);font-weight:700;font-size:.78rem;color:var(--muted);letter-spacing:.06em}
+.scn .t{font-weight:700;font-size:.95rem;line-height:1.2}
+.scn .key{position:absolute;top:8px;right:8px;font-family:var(--cond);font-size:.68rem;font-weight:700;letter-spacing:.06em;background:var(--gold);color:#13223f;padding:1px 5px;border-radius:3px}
+.scn svg{width:30px;height:30px}
+@media(min-width:1000px){.scn-row{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible}.scn{flex:none}}
+:focus-visible{outline:3px solid var(--path);outline-offset:2px}
+/* Visualizer grid */
+.viz{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);grid-template-areas:"desc" "field" "controls" "step" "max" "teach" "timeline"}
+.viz>*{min-width:0}
+.a-desc{grid-area:desc}.a-field{grid-area:field}.a-controls{grid-area:controls}.a-step{grid-area:step}.a-max{grid-area:max}.a-teach{grid-area:teach}.a-timeline{grid-area:timeline}
+@media(min-width:900px){
+  .viz{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:24px;grid-template-areas:"field desc" "field controls" "field step" "field max" "field teach" "field timeline";grid-template-rows:auto auto auto auto auto 1fr}
+  .a-field{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);align-self:start}
+}
+.field-box{background:var(--grass-out);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.field-box svg{display:block;width:100%;height:auto;max-height:72vh}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:8px 2px 0;font-family:var(--cond);font-size:.88rem;color:var(--muted);font-weight:600}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:4px;border-radius:2px;display:inline-block}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.desc-title{display:flex;flex-direction:column;gap:4px}
+.desc-title p{color:var(--muted)}
+.variants{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.variants button{font:inherit;font-weight:600;font-size:.92rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;min-height:44px}
+.variants button[aria-pressed="true"]{border-color:var(--navy);background:var(--navy-soft)}
+.variants .tagline{display:block;font-size:.78rem;font-weight:500;color:var(--muted)}
+.controls{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:8px}
+.controls button{font:inherit;font-weight:700;min-height:52px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;gap:6px}
+.controls button.primary{background:var(--btn);color:var(--btn-ink);border-color:var(--btn);font-size:1.05rem}
+.controls button:disabled{opacity:.4;cursor:default}
+.controls svg{width:18px;height:18px;fill:currentColor}
+.stepcard{border-left:5px solid var(--navy)}
+.stepcard .sn{font-family:var(--cond);font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+.stepcard h3{font-size:1.2rem;margin:2px 0 6px}
+.maxtable{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.mrow{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;font-family:var(--cond);font-size:1.05rem;font-weight:600;padding:6px 10px;border-radius:6px;background:var(--paper)}
+.mrow .who{font-weight:700}
+.mrow .to{font-variant-numeric:tabular-nums}
+.st{font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;font-weight:700;white-space:nowrap}
+.st.run{background:var(--legal-soft);color:var(--legal)}
+.st.max{background:var(--max);color:#13223f}
+.st.bad{background:var(--illegal);color:#fff}
+.st.out{background:var(--line);color:var(--ink)}
+.st.idle{background:var(--line);color:var(--muted)}
+.teach{background:var(--navy);color:#fff;border-color:transparent}
+:root:not([data-theme="light"]) .teach{color:#fff}
+.teach .eyebrow{color:var(--gold)}
+.teach p.tp{font-family:var(--display);font-size:1.12rem;line-height:1.3;margin-top:6px}
+.teach .result{font-size:.92rem;opacity:.9;margin-top:10px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .teach{background:#1d3478}}
+:root[data-theme="dark"] .teach{background:#1d3478}
+.timeline{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.timeline button{width:100%;text-align:left;font:inherit;display:grid;grid-template-columns:28px 1fr;align-items:center;gap:8px;background:none;border:0;color:var(--muted);padding:6px 8px;border-radius:6px;cursor:pointer;min-height:40px}
+.timeline .n{font-family:var(--cond);font-weight:700;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:.85rem}
+.timeline li.done button{color:var(--ink)}
+.timeline li.done .n{border-color:var(--legal);color:var(--legal)}
+.timeline li.active button{background:var(--navy-soft);color:var(--ink);font-weight:700}
+.timeline li.active .n{background:var(--navy);border-color:var(--navy);color:var(--card)}
+/* Live ball */
+.live{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);border:3px solid var(--navy)}
+.live h2{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.live .pill{font-family:var(--cond);font-size:.85rem;letter-spacing:.08em;background:var(--legal);color:#fff;padding:3px 9px;border-radius:4px}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ticks li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-weight:600;font-size:1.02rem}
+.ticks .ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-size:.95rem}
+.ticks.yes .ic{background:var(--legal)}
+.ticks.no .ic{background:var(--illegal)}
+.live .col{display:flex;flex-direction:column;gap:10px}
+.live .col.butcol{background:var(--illegal-soft);border-radius:8px;padding:14px}
+@media(min-width:760px){.live{grid-template-columns:1.3fr 1fr;align-items:start}}
+/* Why cards */
+.why{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){.why{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.why .panel{display:flex;flex-direction:column;gap:8px}
+.why svg{width:44px;height:44px}
+.why p{color:var(--muted)}
+section{display:flex;flex-direction:column;gap:12px}
+/* Decision tree */
+.tree{display:flex;flex-direction:column;align-items:stretch;gap:0;max-width:640px}
+.node{background:var(--card);border:2px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.node.q{border-color:var(--navy)}
+.node.yes{border-color:var(--legal)}
+.node.warn{border-color:var(--illegal)}
+.node .lbl{font-family:var(--cond);font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.node .big{font-weight:700;font-size:1.08rem}
+.conn{width:3px;height:18px;background:var(--line);margin-left:28px}
+.yn{display:flex;gap:8px;flex-wrap:wrap}
+.yn button{font:inherit;font-weight:700;min-height:46px;padding:0 18px;border-radius:8px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.yn button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-weight:600}
+.chain span.s{background:var(--legal-soft);color:var(--ink);padding:4px 8px;border-radius:5px}
+.chain .ar{color:var(--muted)}
+/* Comparison */
+.compare{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:860px){.compare{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.compare .panel{display:flex;flex-direction:column;gap:10px}
+.compare .proposed{border:3px solid var(--navy);background:var(--navy-soft)}
+.compare ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.compare .k{font-family:var(--cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.82rem}
+.compare .pro .k{color:var(--legal)}
+.compare .con .k{color:var(--illegal)}
+.compare .trade .k{color:var(--muted)}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><span class="badge">Proposed rule clarification</span></div>
+    <div class="eyebrow">PVAA Rookie Division</div>
+    <h1>1st Base Overthrow Rule</h1>
+    <p class="disclaimer">This visualizer demonstrates a proposed clarification of the PVAA Rookie Division first-base overthrow rule. It is intended for discussion and education and does not replace the official league rules until approved.</p>
+  </header>
+
+  <section class="panel rule" aria-labelledby="rule-h">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="eyebrow" id="rule-h">Proposed 1st base overthrow rule</div>
+      <p class="full">“On the initial defensive throw to first base following a batted ball, if the throw gets past or is not controlled by the first baseman, each runner may advance a maximum of one additional base beyond the base they were advancing toward. The ball remains live and the defense may continue attempting to record outs, but runners may not advance beyond their maximum allowed base as a result of additional defensive overthrows during the same play. Normal stoppage-of-play rules still apply.”</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="eyebrow">Simple version</div>
+      <p class="simple"><b>Overthrow at 1st = each runner can advance one extra base.</b> The ball stays live, but another overthrow doesn’t give them another base.</p>
+      <div class="qref" aria-label="Maximum bases">
+        <span class="qchip">Batter <span class="arrow">→</span> 2B <span class="mx">MAX</span></span>
+        <span class="qchip">Runner on 1B <span class="arrow">→</span> 3B <span class="mx">MAX</span></span>
+        <span class="qchip">Runner on 2B <span class="arrow">→</span> Home <span class="mx">MAX</span></span>
+      </div>
+      <p class="note">These maximums assume runners were advancing normally on the batted ball.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="scn-h">
+    <div class="eyebrow" id="scn-h">Pick a scenario</div>
+    <div class="scn-row" id="scnRow" role="group" aria-label="Scenarios"></div>
+  </section>
+
+  <section class="viz" aria-label="Play visualizer">
+    <div class="a-desc desc-title">
+      <div class="eyebrow" id="dNum">Scenario</div>
+      <h2 id="dTitle">Runner on 1st</h2>
+      <p id="dDesc"></p>
+      <div class="variants" id="variants" hidden></div>
+    </div>
+
+    <div class="a-field">
+      <div class="field-box">
+        <svg id="field" viewBox="0 46 400 318" role="img" aria-label="Top-down baseball diamond showing the play">
+          <defs>
+            <clipPath id="fan"><path d="M200 330 L23 153 A250 250 0 0 1 377 153 Z"/></clipPath>
+          </defs>
+          <rect x="0" y="46" width="400" height="318" fill="var(--grass-out)"/>
+          <path d="M200 330 L23 153 A250 250 0 0 1 377 153 Z" fill="var(--grass)"/>
+          <g clip-path="url(#fan)" opacity=".35">
+            <path d="M23 150 A250 250 0 0 1 377 150" fill="none" stroke="var(--grass-in)" stroke-width="22"/>
+            <path d="M60 110 A250 250 0 0 1 340 110" fill="none" stroke="var(--grass-in)" stroke-width="22"/>
+          </g>
+          <path d="M23 153 A250 250 0 0 1 377 153" fill="none" stroke="#2a5a26" stroke-width="5"/>
+          <circle cx="200" cy="245" r="112" fill="var(--dirt)" clip-path="url(#fan)"/>
+          <circle cx="200" cy="330" r="22" fill="var(--dirt)"/>
+          <polygon points="200,314 270,245 200,176 130,245" fill="var(--grass-in)"/>
+          <circle cx="200" cy="255" r="11" fill="var(--dirt)"/>
+          <line x1="200" y1="330" x2="23" y2="153" stroke="var(--chalk)" stroke-width="1.6"/>
+          <line x1="200" y1="330" x2="377" y2="153" stroke="var(--chalk)" stroke-width="1.6"/>
+          <g fill="#fff" stroke="#9aa3b5" stroke-width=".8">
+            <rect x="279.5" y="239.5" width="11" height="11" transform="rotate(45 285 245)"/>
+            <rect x="194.5" y="154.5" width="11" height="11" transform="rotate(45 200 160)"/>
+            <rect x="109.5" y="239.5" width="11" height="11" transform="rotate(45 115 245)"/>
+            <path d="M194 325 h12 v5 l-6 6 l-6 -6 z"/>
+          </g>
+          <g font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="10" fill="#fff" text-anchor="middle" opacity=".85">
+            <text x="298" y="266">1B</text><text x="200" y="185">2B</text><text x="102" y="266">3B</text><text x="200" y="352">HOME</text>
+          </g>
+          <g id="dyn"></g>
+        </svg>
+      </div>
+      <div class="legend" aria-label="Legend">
+        <span><i class="sw" style="background:var(--legal)"></i>Legal advance</span>
+        <span><i class="dot" style="background:var(--max)"></i>At max base</span>
+        <span><i class="sw" style="background:var(--illegal)"></i>Past max</span>
+        <span><i class="sw" style="background:var(--path);height:3px"></i>Ball path</span>
+        <span><i class="dot" style="background:#fff;border:2px solid var(--ink)"></i>Runner</span>
+        <span><i class="dot" style="background:var(--def)"></i>Defense</span>
+      </div>
+    </div>
+
+    <div class="a-controls controls">
+      <button id="bPrev" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15.5 5 8.5 12l7 7z"/></svg>Back</button>
+      <button id="bNext" aria-label="Next step">Next<svg viewBox="0 0 24 24"><path d="M8.5 5l7 7-7 7z"/></svg></button>
+      <button id="bPlay" class="primary"><svg viewBox="0 0 24 24" id="playIc"><path d="M7 4.5v15l12-7.5z"/></svg><span id="playTxt">Play scenario</span></button>
+      <button id="bRestart" aria-label="Restart"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>Restart</button>
+    </div>
+
+    <div class="a-step panel stepcard" aria-live="polite">
+      <div class="sn" id="sNum">Ready</div>
+      <h3 id="sTitle">Press Play scenario</h3>
+      <p id="sText"></p>
+    </div>
+
+    <div class="a-max panel">
+      <div class="eyebrow">Runner maximums</div>
+      <div class="maxtable" id="maxTable"></div>
+    </div>
+
+    <div class="a-teach panel teach">
+      <div class="eyebrow">Teaching point</div>
+      <p class="tp" id="tPoint"></p>
+      <p class="result" id="tResult"></p>
+    </div>
+
+    <div class="a-timeline panel">
+      <div class="eyebrow">Play timeline</div>
+      <ol class="timeline" id="timeline"></ol>
+    </div>
+  </section>
+
+  <section class="panel live" aria-labelledby="live-h">
+    <div class="col">
+      <h2 id="live-h">What does live ball mean? <span class="pill">BALL STAYS LIVE</span></h2>
+      <ul class="ticks yes">
+        <li><span class="ic">✓</span>Defense can still record an out</li>
+        <li><span class="ic">✓</span>RF should still back up 1B</li>
+        <li><span class="ic">✓</span>Defense can still throw the ball</li>
+        <li><span class="ic">✓</span>Runners can be tagged while off a base</li>
+        <li><span class="ic">✓</span>Defense should get the ball in front of the lead runner</li>
+      </ul>
+    </div>
+    <div class="col butcol">
+      <div class="eyebrow">But</div>
+      <ul class="ticks no">
+        <li><span class="ic">✗</span>Another overthrow does NOT award another base</li>
+        <li><span class="ic">✗</span>A runner cannot legally advance beyond their established maximum</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="why-h">
+    <h2 id="why-h">Why this rule?</h2>
+    <div class="why">
+      <div class="panel">
+        <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="var(--legal-soft)"/><path d="M10 30 Q22 8 34 18" fill="none" stroke="var(--path)" stroke-width="3" stroke-dasharray="4 3"/><circle cx="34" cy="18" r="4" fill="#fff" stroke="var(--brand-red)" stroke-width="1.5"/></svg>
+        <h3>Encourage the play</h3>
+        <p>We want young infielders to attempt the throw to first without one bad throw automatically turning into multiple runs.</p>
+      </div>
+      <div class="panel">
+        <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="var(--illegal-soft)"/><path d="M22 10 L34 22 L22 34 L10 22 Z" fill="none" stroke="var(--illegal)" stroke-width="3"/><path d="M12 12 L32 32" stroke="var(--illegal)" stroke-width="3"/></svg>
+        <h3>Prevent the carousel</h3>
+        <p>One overthrow should not turn a routine ground ball into runners circling the bases because of repeated throwing errors.</p>
+      </div>
+      <div class="panel">
+        <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="var(--navy-soft)"/><circle cx="16" cy="24" r="6" fill="var(--def)"/><circle cx="30" cy="16" r="5" fill="#fff" stroke="var(--max)" stroke-width="2.5"/><path d="M20 21 L27 17" stroke="var(--path)" stroke-width="2.5"/></svg>
+        <h3>Teach baseball IQ</h3>
+        <p>The ball remains live so players still learn to back up throws, identify the lead runner, get the ball ahead of runners, and control the play.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="tree-h">
+    <h2 id="tree-h">Umpire &amp; coach decision tree</h2>
+    <div class="tree" id="tree">
+      <div class="node q">
+        <span class="lbl">Start</span>
+        <span class="big">Was the initial throw to 1B overthrown?</span>
+        <div class="yn"><button id="tYes" aria-pressed="false">Yes</button><button id="tNo" aria-pressed="false">No</button></div>
+      </div>
+      <div id="tNoPath" hidden>
+        <div class="conn"></div>
+        <div class="node"><span class="lbl">No</span><span class="big">Normal baseball. Normal stoppage rules.</span></div>
+      </div>
+      <div id="tYesPath" hidden>
+        <div class="conn"></div>
+        <div class="node yes"><span class="lbl">Step 1</span><span class="big">Determine each runner’s maximum</span>
+          <div class="qref"><span class="qchip">Batter → 2B</span><span class="qchip">Runner from 1B → 3B</span><span class="qchip">Runner from 2B → Home</span></div>
+        </div>
+        <div class="conn"></div>
+        <div class="node yes"><span class="lbl">Step 2</span><span class="big">Ball remains live</span></div>
+        <div class="conn"></div>
+        <div class="node yes"><span class="lbl">Step 3 · Defense</span>
+          <div class="chain"><span class="s">Retrieve ball</span><span class="ar">→</span><span class="s">Identify lead runner</span><span class="ar">→</span><span class="s">Get ball in front of runner</span><span class="ar">→</span><span class="s">Control play</span></div>
+        </div>
+        <div class="conn"></div>
+        <div class="node q"><span class="lbl">What if…</span>
+          <div class="yn"><button id="tAgain" aria-pressed="false">Another overthrow happens</button><button id="tPast" aria-pressed="false">A runner goes past their max</button></div>
+          <p id="tAgainA" class="big" hidden>Runner maximums DO NOT reset.</p>
+          <p id="tPastA" hidden><b>Runner remains live and may be tagged out.</b> If safe beyond the maximum when the play ends, return the runner to the maximum permitted base.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cmp-h">
+    <h2 id="cmp-h">Why not the alternatives?</h2>
+    <div class="compare">
+      <div class="panel">
+        <h3>No overthrow rule</h3>
+        <div class="pro"><div class="k">Pros</div><ul><li>Closest to normal baseball</li><li>Very simple concept</li></ul></div>
+        <div class="con"><div class="k">Cons</div><ul><li>A routine throw to first could result in multiple runs</li><li>May encourage young players or coaches to hold the ball instead of attempting the out</li></ul></div>
+      </div>
+      <div class="panel">
+        <h3>Immediate dead ball on overthrow</h3>
+        <div class="pro"><div class="k">Pros</div><ul><li>Extremely easy to officiate</li><li>Prevents runaway plays</li></ul></div>
+        <div class="con"><div class="k">Cons</div><ul><li>RF backup becomes less meaningful</li><li>Defense cannot make another out</li><li>Stops the baseball play artificially</li></ul></div>
+      </div>
+      <div class="panel proposed">
+        <span class="badge" style="align-self:flex-start">Proposed compromise</span>
+        <h3>Live ball / maximum-base rule</h3>
+        <div class="pro"><div class="k">Pros</div><ul><li>Protects the initial throw to first</li><li>Prevents endless advancement</li><li>Keeps defense involved</li><li>Teaches backup and runner control</li></ul></div>
+        <div class="trade"><div class="k">Tradeoff</div><ul><li>Coaches and umpires need to understand each runner’s maximum base</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Proposed rule clarification for discussion. Not an approved PVAA rule. Official league rules apply until a change is adopted.</footer>
+</div>
+
+<script>
+(()=>{
+// ---------- Geometry ----------
+const BASES=[[200,330],[285,245],[200,160],[115,245],[200,330]];
+const BASE_NAME=['Home','1B','2B','3B','Home'];
+const DEF={P:[200,255],'1B':[303,230],'2B':[248,180],SS:[152,180],'3B':[100,226],LF:[85,150],LCF:[160,104],RCF:[240,104],RF:[315,150]};
+const MAXTAG={2:[200,130],3:[58,280],4:[256,346]};
+const SPOT={home:[200,322],past1B:[356,253],rfBackup:[334,234],rfGet:[349,248],cover2B:[216,150],cover3B:[98,230],pHome:[214,318]};
+const RUNNERS={
+  B:{id:'B',label:'Batter',short:'BAT',start:0,max:2},
+  R1:{id:'R1',label:'R1',short:'R1',start:1,max:3},
+  R2:{id:'R2',label:'R2',short:'R2',start:2,max:4}
+};
+
+// ---------- Scenario data ----------
+// Each step: {label, text, banner?, hold?, dur?, acts:[...]}
+// acts: {t:'run',id,to,d,dur} {t:'f',id,to:[x,y]} {t:'ball',toF:'SS'|to:[x,y],kind:'hit'|'throw'|'roll'|'pick'} {t:'max'} {t:'flag',id,flag}
+function runs(ids,fn){return ids.map(id=>({t:'run',id,to:fn(RUNNERS[id])}))}
+function opening(ids,hitText){
+  const others=ids.filter(i=>i!=='B');
+  const maxList=ids.map(i=>`${RUNNERS[i].label} → ${BASE_NAME[RUNNERS[i].max]}`).join(', ');
+  return [
+    {label:'Ball hit to SS',text:hitText,acts:[{t:'ball',toF:'SS',kind:'hit'},...runs(ids,r=>r.start+.3)]},
+    {label:'Runners advance',text:(others.length?'Everyone runs on the ground ball. ':'The batter runs hard down the line. ')+'RF sprints in to back up first base.',acts:[...runs(ids,r=>r.start+.62),{t:'f',id:'RF',to:SPOT.rfBackup}]},
+    {label:'SS throws to 1B',text:'The shortstop makes the play we want: a throw to first.',acts:[{t:'ball',to:[300,234],kind:'throw'},...runs(ids,r=>r.start+.88)]},
+    {label:'Ball gets past 1B',text:'The throw gets past the first baseman. This is the initial throw to 1B, so the overthrow rule kicks in.',banner:{text:'1ST BASE OVERTHROW',kind:'over'},hold:1300,acts:[{t:'ball',to:SPOT.past1B,kind:'roll'},{t:'f',id:'1B',to:[312,240]},...runs(ids,r=>r.id==='B'?1:r.start+1.12)]},
+    {label:'Overthrow rule applies',text:`Each runner may go ONE base beyond the base they were running to. ${maxList}. The ball stays live.`,banner:{text:'ONE EXTRA BASE · BALL STAYS LIVE',kind:'max'},hold:2300,dur:700,acts:[{t:'max'}]}
+  ];
+}
+const retrieve=(ids,fn,text)=>({label:'RF retrieves ball',text:text||'RF was backing up, so RF gets to the ball fast. The ball is still live.',acts:[{t:'f',id:'RF',to:SPOT.rfGet,dur:.5},{t:'ball',toF:'RF',kind:'pick',d:.45,dur:.2},...runs(ids,fn)]});
+
+const SCENARIOS=[
+ {id:'s1',num:1,title:'Bases Empty',on:[],runners:['B'],
+  desc:'Ground ball to SS. SS throws to 1B and the throw gets past the first baseman.',
+  teach:'We still want SS to attempt the play at first. The overthrow does not allow the batter to keep circling the bases.',
+  result:'Batter may advance to 2B, the maximum. RF retrieves, the ball stays live, and the defense gets it under control.',
+  steps:[...opening(['B'],'Ground ball to the shortstop. The batter takes off for first.'),
+    retrieve(['B'],r=>1.7),
+    {label:'Defense reacts',text:'RF throws to the second baseman covering the bag. The batter reaches 2B, the max, and stays.',acts:[{t:'f',id:'2B',to:SPOT.cover2B,dur:.5},{t:'ball',toF:'2B',kind:'throw',d:.3,dur:.7},{t:'run',id:'B',to:2}]},
+    {label:'Play ends',text:'The defense has the ball under control. The batter is on 2B.',banner:{text:'PLAY OVER · BATTER ON 2B',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'s2',num:2,title:'Runner on 1st',on:[1],runners:['B','R1'],
+  desc:'Runner on 1B. Ground ball to SS. The runner heads for 2B, SS throws to first, and the throw gets past.',
+  teach:'After retrieving the overthrow, the defense should think about the LEAD RUNNER. Getting the ball toward 3B may be a better baseball decision than automatically throwing behind the runner to 2B.',
+  result:'Batter → 2B max. R1 → 3B max.',
+  steps:[...opening(['B','R1'],'Ground ball to the shortstop. The batter runs to first and R1 runs to second.'),
+    retrieve(['B','R1'],r=>r.id==='B'?1.7:2.75),
+    {label:'Defense reacts',text:'RF looks at the lead runner and gets the ball to 3B. R1 stops at 3B (max). The batter stops at 2B (max).',banner:{text:'BALL TO 3B · AHEAD OF LEAD RUNNER',kind:'info'},acts:[{t:'f',id:'3B',to:SPOT.cover3B,dur:.4},{t:'ball',toF:'3B',kind:'throw',d:.2,dur:.75},...runs(['B','R1'],r=>r.max)]},
+    {label:'Play ends',text:'Both runners are at their maximum. Nobody gets another base.',banner:{text:'BATTER ON 2B · R1 ON 3B',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'s3',num:3,title:'Runner on 2nd',on:[2],runners:['B','R2'],
+  desc:'Runner on 2B. Ground ball to SS. The runner heads for 3B, SS throws to first, and the throw gets past.',
+  teach:'The runner was already advancing toward third. The overthrow allows one additional base, so home is the maximum.',
+  result:'Batter → 2B max. R2 → Home max (scores).',
+  steps:[...opening(['B','R2'],'Ground ball to the shortstop. The batter runs to first and R2 runs to third.'),
+    retrieve(['B','R2'],r=>r.id==='B'?1.7:3.7),
+    {label:'Defense reacts',text:'R2 comes home. Home was the max. RF gets the ball back to 2B to hold the batter there.',acts:[{t:'f',id:'2B',to:SPOT.cover2B,dur:.5},{t:'ball',toF:'2B',kind:'throw',d:.3,dur:.7},...runs(['B','R2'],r=>r.max)]},
+    {label:'Play ends',text:'R2 scored on the one extra base. The batter stays at 2B.',banner:{text:'R2 SCORES · BATTER ON 2B',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'s4',num:4,title:'Runners on 1st & 2nd',key:true,on:[1,2],runners:['B','R1','R2'],
+  desc:'R1 on 1B, R2 on 2B. Ground ball to SS. Both runners advance, SS throws to first, and overthrows.',
+  teach:'The extra base is beyond the base the runner was already advancing toward. That is why “everyone gets one base” is confusing.',
+  result:'Batter → 2B max. R1 → 3B max. R2 → Home max.',
+  steps:[...opening(['B','R1','R2'],'Ground ball to the shortstop. The batter, R1 and R2 all run.'),
+    retrieve(['B','R1','R2'],r=>r.id==='B'?1.7:r.start+1.75),
+    {label:'Defense reacts',text:'RF gets the ball to 3B, in front of the lead runner still on the bases. R2 scores (max), R1 stops at 3B (max), batter stops at 2B (max).',acts:[{t:'f',id:'3B',to:SPOT.cover3B,dur:.4},{t:'ball',toF:'3B',kind:'throw',d:.2,dur:.75},...runs(['B','R1','R2'],r=>r.max)]},
+    {label:'Play ends',text:'Each runner went exactly one base past the base they were running to.',banner:{text:'R2 SCORES · R1 ON 3B · BATTER ON 2B',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'s5',num:5,title:'Another Throw',on:[1],runners:['B','R1'],
+  desc:'Runner on 1B. SS overthrows first. RF retrieves and throws toward 2B, and that throw gets away too.',
+  teach:'This prevents the play from becoming an endless overthrow carousel.',
+  result:'The ball stays live and the defense can still get an out, but the batter stays at a 2B max and R1 at a 3B max.',
+  steps:[...opening(['B','R1'],'Ground ball to the shortstop. The batter runs to first and R1 runs to second.'),
+    retrieve(['B','R1'],r=>r.id==='B'?1.55:2.55),
+    {label:'RF throws to 2B',text:'The ball is live, so the defense keeps trying for an out. RF throws to 2B and the throw sails away.',banner:{text:'SECOND OVERTHROW',kind:'over'},acts:[{t:'f',id:'2B',to:SPOT.cover2B,dur:.4},{t:'ball',to:[164,122],kind:'throw',d:.15,dur:.85},...runs(['B','R1'],r=>r.max)]},
+    {label:'Maximums don’t reset',text:'The second overthrow gives nothing extra. Batter stays at 2B, R1 stays at 3B. LCF chases down the ball.',banner:{text:'ANOTHER OVERTHROW ≠ ANOTHER BASE',kind:'bad'},hold:2200,acts:[{t:'f',id:'LCF',to:[166,116],dur:.7},{t:'ball',toF:'LCF',kind:'pick',d:.65,dur:.2}]},
+    {label:'Play ends',text:'Same result as if the second throw never happened.',banner:{text:'BATTER ON 2B · R1 ON 3B',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'s6',num:6,title:'Past the Max',on:[1],runners:['B','R1'],
+  desc:'Runner on 1B. The throw to first is overthrown. R1 reaches 3B (max), and the base coach sends him home anyway.',
+  teach:'Keeping the ball live means the defense should continue playing. It also puts responsibility on base coaches to know each runner’s maximum.',
+  result:'A runner past the max can still be tagged out. If he reaches safely, he goes back to 3B when the play ends.',
+  steps:[...opening(['B','R1'],'Ground ball to the shortstop. The batter runs to first and R1 runs to second.'),
+    retrieve(['B','R1'],r=>r.id==='B'?1.7:2.8),
+    {label:'R1 reaches 3B (max)',text:'R1 arrives at 3B, his maximum. The batter is at 2B, his maximum.',acts:runs(['B','R1'],r=>r.max)},
+    {label:'Coach sends runner home',text:'The base coach waves R1 home. He is NOT entitled to home. The ball is still live and he is off his permitted base.',banner:{text:'NOT ENTITLED TO HOME',kind:'bad'},hold:1700,acts:[{t:'run',id:'R1',to:3.45},{t:'f',id:'P',to:SPOT.pHome}]}
+  ],
+  variants:[
+   {key:'A',label:'A. Tagged before home',tag:'Defense tags him → OUT',steps:[
+     {label:'Defense tags runner',text:'RF throws home to the pitcher covering the plate. R1 is tagged before reaching home.',banner:{text:'OUT · TAGGED OFF THE BASE',kind:'info'},acts:[{t:'f',id:'P',to:[190,312],dur:.6},{t:'ball',toF:'P',kind:'throw',dur:.7},{t:'run',id:'R1',to:3.78},{t:'flag',id:'R1',flag:'out',d:.85}]},
+     {label:'Play ends',text:'R1 is out. Running past the max is a live-ball risk.',banner:{text:'R1 OUT · BATTER ON 2B',kind:'good'},dur:600,acts:[]}
+   ]},
+   {key:'B',label:'B. Reaches home safely',tag:'Returned to 3B',steps:[
+     {label:'Runner reaches home',text:'The throw home is late and R1 crosses the plate. The run does NOT count. Home was past his max.',banner:{text:'SAFE AT HOME, BUT…',kind:'info'},acts:[{t:'run',id:'R1',to:4,dur:.75},{t:'ball',toF:'P',kind:'throw',d:.35,dur:.65}]},
+     {label:'Returned to 3B',text:'When the play ends, R1 goes back to 3B, his maximum permitted base.',banner:{text:'RETURNED TO 3B · 3B WAS THE MAX',kind:'max'},hold:2000,acts:[{t:'run',id:'R1',to:3,d:.15,dur:.85},{t:'flag',id:'R1',flag:'returned',d:.99}]}
+   ]}
+  ]},
+ {id:'s7',num:7,title:'Right Baseball Play',on:[1],runners:['B','R1'],
+  desc:'Runner on 1B. The throw gets past 1B. R1 heads to 3B, batter heads to 2B. Where should RF throw?',
+  teach:'GET THE BALL IN FRONT OF THE LEAD RUNNER. Keeping the ball live keeps teaching RF backup, finding the lead runner, controlling advancement, and knowing when NOT to throw.',
+  result:'Option B puts the ball ahead of the lead runner and stops the advancement.',
+  defVariant:'B',
+  steps:[...opening(['B','R1'],'Ground ball to the shortstop. The batter runs to first and R1 runs to second.'),
+    retrieve(['B','R1'],r=>r.id==='B'?1.45:2.4,'RF backs up and retrieves the ball. Now: find the lead runner.')],
+  variants:[
+   {key:'A',label:'A. Throw to 2B',tag:'Usually chasing the play',steps:[
+     {label:'RF throws behind to 2B',text:'The throw goes behind the lead runner. The batter is already sliding into 2B and R1 jogs into 3B.',banner:{text:'CHASING THE PLAY',kind:'bad'},acts:[{t:'f',id:'2B',to:SPOT.cover2B,dur:.5},{t:'ball',toF:'2B',kind:'throw',d:.35,dur:.65},...runs(['B','R1'],r=>r.max)]},
+     {label:'Play ends',text:'The throw arrived after the runners. It did not control anything.',banner:{text:'THE THROW STOPPED NOBODY',kind:'info'},dur:600,acts:[]}
+   ]},
+   {key:'B',label:'B. Ball toward 3B',tag:'Better baseball decision',steps:[
+     {label:'RF throws ahead to 3B',text:'RF gets the ball to 3B, in front of the lead runner. The ball beats R1 to the bag.',banner:{text:'GET THE BALL IN FRONT OF THE LEAD RUNNER',kind:'good'},hold:1800,acts:[{t:'f',id:'3B',to:SPOT.cover3B,dur:.35},{t:'ball',toF:'3B',kind:'throw',d:.05,dur:.6},{t:'run',id:'R1',to:2.92},{t:'run',id:'B',to:1.9}]},
+     {label:'Defense controls the play',text:'With the ball at 3B ahead of him, R1 stops. The defense is in control and does not need another throw.',acts:runs(['B','R1'],r=>r.max)},
+     {label:'Play ends',text:'Ball controlled in front of the lead runner. No extra throw, no risk.',banner:{text:'BATTER ON 2B · R1 ON 3B',kind:'good'},dur:600,acts:[]}
+   ]}
+  ]}
+];
+
+// ---------- Engine ----------
+const $=id=>document.getElementById(id);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lerp=(a,b,t)=>a+(b-a)*t, lerp2=(p,q,t)=>[lerp(p[0],q[0],t),lerp(p[1],q[1],t)];
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, easeOut=t=>1-(1-t)*(1-t);
+const clone=o=>JSON.parse(JSON.stringify(o));
+function basePos(x){if(x>=4)return BASES[4];if(x<=0)return BASES[0];const i=Math.floor(x);return lerp2(BASES[i],BASES[i+1],x-i)}
+function ballPos(s){return s.ball.holder?s.fielders[s.ball.holder]:s.ball.pos}
+
+const App={scn:null,variant:null,steps:[],idx:-1,playing:false,raf:0,timer:0,states:[]};
+
+function initState(scn){
+  const r={};scn.runners.forEach(id=>{const R=RUNNERS[id];r[id]={idx:R.start,peak:R.start,flag:null}});
+  return {runners:r,fielders:clone(DEF),ball:{pos:SPOT.home,holder:null},throws:[],showMax:false};
+}
+function evalStep(S0,step,t){
+  const s=clone(S0); s.throws=S0.throws.map(x=>({...x,cur:false}));
+  const loc=a=>{const d=a.d||0,u=a.dur==null?1-d:a.dur;return Math.max(0,Math.min(1,u<=0?1:(t-d)/u))};
+  for(const a of step.acts){ if(a.t==='f'){s.fielders[a.id]=lerp2(S0.fielders[a.id],a.to,ease(loc(a)))} }
+  for(const a of step.acts){
+    if(a.t==='run'){const r=s.runners[a.id],r0=S0.runners[a.id];r.idx=lerp(r0.idx,a.to,ease(loc(a)));r.peak=Math.max(r0.peak,r.idx)}
+    else if(a.t==='max'){if(t>=(a.d||0))s.showMax=true}
+    else if(a.t==='flag'){if(t>=(a.d||0))s.runners[a.id].flag=a.flag}
+  }
+  for(const a of step.acts){ if(a.t!=='ball')continue;
+    const l=loc(a); if(l<=0)continue;
+    const from=ballPos(S0), target=a.toF?s.fielders[a.toF]:a.to;
+    const e=a.kind==='roll'||a.kind==='hit'?easeOut(l):l;
+    s.ball.pos=lerp2(from,target,e); s.ball.holder=l>=1&&a.toF?a.toF:null;
+    if(a.kind!=='pick') s.throws.push({from,to:s.ball.pos,cur:true,kind:a.kind});
+  }
+  return s;
+}
+function buildStates(){
+  App.states=[initState(App.scn)];
+  App.steps.forEach((st,i)=>App.states.push(evalStep(App.states[i],st,1)));
+}
+const stateAfter=k=>App.states[k+1];
+
+// ---------- Rendering ----------
+const C=v=>`var(--${v})`;
+function pts(a,b){const P=[basePos(a)];if(b>a){for(let i=Math.floor(a)+1;i<b;i++)P.push(BASES[i])}else{for(let i=Math.ceil(a)-1;i>b;i--)P.push(BASES[i])}P.push(basePos(b));return P.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')}
+function runnerState(id,r){const m=RUNNERS[id].max;if(r.flag==='out')return'out';if(r.idx>m+.02)return'bad';if(Math.abs(r.idx-m)<.03)return'max';return'run'}
+const BANNER={over:['gold','#13223f'],max:['max','#13223f'],bad:['illegal','#fff'],good:['legal','#fff'],info:['def','#fff']};
+function render(s,banner){
+  let h='';
+  // throws
+  s.throws.forEach(th=>{const dash=th.kind==='hit'?'2 4':'6 4';
+    h+=`<line x1="${th.from[0]}" y1="${th.from[1]}" x2="${th.to[0]}" y2="${th.to[1]}" stroke="${C('path')}" stroke-width="${th.cur?3:2}" stroke-dasharray="${dash}" stroke-linecap="round" opacity="${th.cur?1:.45}"/>`});
+  // trails
+  for(const id in s.runners){const r=s.runners[id],R=RUNNERS[id],m=R.max;
+    const g=Math.min(r.idx,m); if(g>R.start+.01) h+=`<polyline points="${pts(R.start,g)}" fill="none" stroke="${C('legal')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>`;
+    if(r.peak>m+.01) h+=`<polyline points="${pts(m,r.peak)}" fill="none" stroke="${C('illegal')}" stroke-width="5" stroke-linecap="round" ${r.idx<r.peak-.01?'stroke-dasharray="5 5" opacity=".7"':''}/>`;
+  }
+  // max tags
+  if(s.showMax){for(const id in s.runners){const R=RUNNERS[id],[x,y]=MAXTAG[R.max],txt=`${R.label.toUpperCase()} · MAX`,w=txt.length*7.2+16;
+    h+=`<g><rect x="${x-w/2}" y="${y-9}" width="${w}" height="18" rx="4" fill="${C('max')}" stroke="#13223f" stroke-width="1"/><text x="${x}" y="${y+4}" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="11.5" fill="#13223f">${txt}</text></g>`}}
+  // fielders
+  for(const id in s.fielders){const [x,y]=s.fielders[id];
+    h+=`<g><circle cx="${x}" cy="${y}" r="11.5" fill="${C('def')}" stroke="#fff" stroke-width="1.5"/><text x="${x}" y="${y+3.6}" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="${id.length>2?9:10.5}" fill="#fff">${id}</text></g>`}
+  // runners
+  for(const id in s.runners){const r=s.runners[id],[x,y]=basePos(r.idx),st=runnerState(id,r);
+    const ring={run:C('legal'),max:C('max'),bad:C('illegal'),out:'#7d8596'}[st];
+    h+=`<g><circle cx="${x}" cy="${y}" r="12.5" fill="${st==='out'?'#c9ced8':'#fff'}" stroke="${ring}" stroke-width="4"/><text x="${x}" y="${y+3.6}" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="${RUNNERS[id].short.length>2?9:10.5}" fill="#13223f">${RUNNERS[id].short}</text>`;
+    if(st==='out')h+=`<path d="M${x-9} ${y-9} L${x+9} ${y+9} M${x+9} ${y-9} L${x-9} ${y+9}" stroke="${C('illegal')}" stroke-width="3"/>`;
+    h+='</g>'}
+  // ball
+  const [bx,by]=ballPos(s), off=s.ball.holder?[9,-9]:[0,0];
+  h+=`<circle cx="${bx+off[0]+1}" cy="${by+off[1]+1.5}" r="5" fill="rgba(0,0,0,.3)"/><circle cx="${bx+off[0]}" cy="${by+off[1]}" r="5" fill="#fff" stroke="${C('brand-red')}" stroke-width="1.4"/>`;
+  // banner
+  if(banner){const [bg,fg]=BANNER[banner.kind]||BANNER.info,fs=banner.text.length>30?12.5:14.5,w=Math.min(384,banner.text.length*fs*.56+30);
+    h+=`<g><rect x="${200-w/2}" y="52" width="${w}" height="28" rx="5" fill="${C(bg)}" stroke="#13223f" stroke-opacity=".35"/><text x="200" y="${66+fs*.36}" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="${fs}" letter-spacing=".5" fill="${fg}">${banner.text}</text></g>`}
+  $('dyn').innerHTML=h;
+  renderMax(s);
+}
+function renderMax(s){
+  const lbl={run:['run','Running'],max:['max','At max'],bad:['bad','Past max!'],out:['out','Out']};
+  $('maxTable').innerHTML=Object.keys(s.runners).map(id=>{const R=RUNNERS[id],r=s.runners[id];
+    let [c,t]=lbl[runnerState(id,r)];
+    if(r.flag==='returned'){c='max';t='Returned to 3B'}
+    else if(c==='max'&&R.max===4)t='Scored (max)';
+    else if(Math.abs(r.idx-R.start)<.01){c='idle';t=R.start===0?'At bat':'On '+BASE_NAME[R.start]}
+    const startTxt=R.start===0?'':` <span style="color:var(--muted);font-weight:500">from ${BASE_NAME[R.start]}</span>`;
+    return `<div class="mrow"><span class="who">${R.label}</span><span class="to">→ ${BASE_NAME[R.max]} MAX${startTxt}</span><span class="st ${c}">${t}</span></div>`}).join('');
+}
+function updateText(k){
+  const st=App.steps[k];
+  if(k<0){$('sNum').textContent='Ready';$('sTitle').textContent='Press Play scenario';$('sText').textContent=App.scn.desc}
+  else{$('sNum').textContent=`Step ${k+1} of ${App.steps.length}`;$('sTitle').textContent=st.label;$('sText').textContent=st.text}
+  [...$('timeline').children].forEach((li,i)=>{li.classList.toggle('active',i===k);li.classList.toggle('done',i<k)});
+  $('bPrev').disabled=k<0; $('bNext').disabled=k>=App.steps.length-1;
+}
+function setPlayBtn(){
+  const end=App.idx>=App.steps.length-1&&!App.raf;
+  $('playTxt').textContent=App.playing?'Pause':end?'Replay':App.idx<0?'Play scenario':'Resume';
+  $('playIc').innerHTML=App.playing?'<path d="M6 4.5h4v15H6zM14 4.5h4v15h-4z"/>':'<path d="M7 4.5v15l12-7.5z"/>';
+}
+
+// ---------- Playback ----------
+function stopAnim(){cancelAnimationFrame(App.raf);App.raf=0;clearTimeout(App.timer)}
+function show(k){stopAnim();App.idx=k;render(stateAfter(k),k>=0?App.steps[k].banner:null);updateText(k);setPlayBtn()}
+function animate(k){
+  stopAnim(); if(k>=App.steps.length){App.playing=false;setPlayBtn();return}
+  const st=App.steps[k],from=stateAfter(k-1),dur=reduce?120:(st.dur||1350),t0=performance.now();
+  updateText(k);
+  const frame=now=>{const t=Math.min(1,(now-t0)/dur);render(evalStep(from,st,t),st.banner);
+    if(t<1){App.raf=requestAnimationFrame(frame);return}
+    App.raf=0;App.idx=k;setPlayBtn();
+    if(App.playing){if(k>=App.steps.length-1){App.playing=false;setPlayBtn()}else App.timer=setTimeout(()=>animate(k+1),reduce?1500:(st.hold||950))}
+  };
+  App.raf=requestAnimationFrame(frame);setPlayBtn();
+}
+function play(){if(App.playing){App.playing=false;clearTimeout(App.timer);setPlayBtn();return}
+  App.playing=true; if(App.raf){setPlayBtn();return}
+  if(App.idx>=App.steps.length-1){show(-1);App.playing=true;App.timer=setTimeout(()=>animate(0),350);setPlayBtn();return}
+  animate(App.idx+1)}
+function next(){App.playing=false;const target=App.raf?App.idx+1:App.idx;if(App.raf)show(target);animate(App.idx+1)}
+function prev(){App.playing=false;const k=App.raf?App.idx:App.idx-1;show(Math.max(-1,k))}
+function restart(){App.playing=false;show(-1);App.playing=true;App.timer=setTimeout(()=>animate(0),300);setPlayBtn()}
+
+// ---------- Scenario UI ----------
+function miniDiamond(on){const b={1:[24,15],2:[15,6],3:[6,15]};
+  return `<svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 26 L26 15 L15 4 L4 15 Z" fill="none" stroke="var(--muted)" stroke-width="1.5"/>${[1,2,3].map(n=>`<rect x="${b[n][0]-4}" y="${b[n][1]-4}" width="8" height="8" transform="rotate(45 ${b[n][0]} ${b[n][1]})" fill="${on.includes(n)?'var(--navy)':'var(--card)'}" stroke="var(--muted)" stroke-width="1.2"/>`).join('')}</svg>`}
+function buildCards(){
+  $('scnRow').innerHTML=SCENARIOS.map(s=>`<button class="scn" data-id="${s.id}" aria-pressed="false">${s.key?'<span class="key">KEY EXAMPLE</span>':''}${miniDiamond(s.on)}<span class="num">SCENARIO ${s.num}</span><span class="t">${s.title}</span></button>`).join('');
+  $('scnRow').addEventListener('click',e=>{const b=e.target.closest('.scn');if(b)select(b.dataset.id,true)});
+}
+function select(id,user){
+  const s=SCENARIOS.find(x=>x.id===id)||SCENARIOS[1];
+  App.scn=s; App.variant=s.variants?(s.defVariant||s.variants[0].key):null; App.playing=false; stopAnim();
+  document.querySelectorAll('.scn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===s.id));
+  $('dNum').textContent=`Scenario ${s.num}${s.key?' · key example':''}`;$('dTitle').textContent=s.title;$('dDesc').textContent=s.desc;
+  $('tPoint').textContent=s.teach;$('tResult').textContent='Result: '+s.result;
+  const v=$('variants'); v.hidden=!s.variants;
+  if(s.variants){v.innerHTML=s.variants.map(x=>`<button data-k="${x.key}" aria-pressed="${x.key===App.variant}">${x.label}<span class="tagline">${x.tag}</span></button>`).join('')}
+  loadSteps();
+  try{history.replaceState(null,'','#'+s.id)}catch(e){}
+  if(user&&matchMedia('(max-width:899px)').matches){$('dTitle').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+}
+function loadSteps(){
+  const s=App.scn; App.steps=s.steps.concat(s.variants?s.variants.find(x=>x.key===App.variant).steps:[]);
+  buildStates();
+  $('timeline').innerHTML=App.steps.map((st,i)=>`<li><button data-i="${i}"><span class="n">${i+1}</span><span>${st.label}</span></button></li>`).join('');
+  show(-1);
+}
+$('variants').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;App.variant=b.dataset.k;
+  [...$('variants').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const keep=App.scn.steps.length-1; App.playing=false; App.steps=null; loadSteps();
+  show(keep); App.playing=true; animate(keep+1);});
+$('timeline').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;App.playing=false;show(i-1);animate(i)});
+$('bPlay').onclick=play;$('bNext').onclick=next;$('bPrev').onclick=prev;$('bRestart').onclick=restart;
+
+// ---------- Decision tree ----------
+const tog=(btn,on)=>btn.setAttribute('aria-pressed',on);
+$('tYes').onclick=()=>{tog($('tYes'),true);tog($('tNo'),false);$('tYesPath').hidden=false;$('tNoPath').hidden=true};
+$('tNo').onclick=()=>{tog($('tNo'),true);tog($('tYes'),false);$('tNoPath').hidden=false;$('tYesPath').hidden=true};
+$('tAgain').onclick=()=>{const on=$('tAgainA').hidden;$('tAgainA').hidden=!on;tog($('tAgain'),on)};
+$('tPast').onclick=()=>{const on=$('tPastA').hidden;$('tPastA').hidden=!on;tog($('tPast'),on)};
+
+buildCards();
+const h=(location.hash||'').slice(1);
+select(SCENARIOS.some(s=>s.id===h)?h:'s2',false);
+})();
+</script>
+
+</body>
+</html>
