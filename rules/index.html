@@ -1,0 +1,1255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Every PVAA Rookie Division Fall 2026 rule, visualized, with each gray area and the ruling we play by.">
+<title>PVAA Rookie Rules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+/* Layout: a field-side rulebook. Glance chips and gray-area count up top, a sticky section bar, then one tool per topic (diagram left, controls right), then the full rule index and a plate-meeting checklist. */
+:root{
+  --paper:#f4f2ea; --card:#ffffff; --ink:#13223f; --muted:#56637c; --line:#dcdfe6;
+  --navy:#0e3386; --navy-soft:#e7edfa; --brand-red:#cc3433; --gold:#ffc72c;
+  --legal:#1d8f4c; --legal-soft:#e2f4e9; --max:#f0b400; --max-soft:#fff3cf; --illegal:#d32f2f; --illegal-soft:#fde6e5; --path:#2f7de1;
+  --grayc:#b45309; --gray-soft:#fdf0dc; --silent:#6d4fc2; --silent-soft:#efeafc;
+  --def:#0e3386; --coach:#ffc72c; --btn:#0e3386; --btn-ink:#ffffff;
+  --grass-out:#3d7f37; --grass:#4f9b46; --grass-in:#56a54c; --dirt:#c98d58; --chalk:#ffffff;
+  --display:"Graduate","Rockwell","Georgia",serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e1524; --card:#172138; --ink:#e8ecf5; --muted:#9ba8c2; --line:#2a3655;
+  --navy:#7ea2ff; --navy-soft:#1d2b4f; --legal:#3cc276; --legal-soft:#143524; --max:#ffc928; --max-soft:#3a2f0d; --illegal:#ff5d5d; --illegal-soft:#3d1717; --path:#5aa0ff;
+  --grayc:#f0a24a; --gray-soft:#35240f; --silent:#b39cff; --silent-soft:#251d44;
+  --def:#244cbc; --btn:#3d6ae0; --grass-out:#2c5f29; --grass:#3b7c35; --grass-in:#41863a; --dirt:#a87346; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1524; --card:#172138; --ink:#e8ecf5; --muted:#9ba8c2; --line:#2a3655;
+  --navy:#7ea2ff; --navy-soft:#1d2b4f; --legal:#3cc276; --legal-soft:#143524; --max:#ffc928; --max-soft:#3a2f0d; --illegal:#ff5d5d; --illegal-soft:#3d1717; --path:#5aa0ff;
+  --grayc:#f0a24a; --gray-soft:#35240f; --silent:#b39cff; --silent-soft:#251d44;
+  --def:#244cbc; --btn:#3d6ae0; --grass-out:#2c5f29; --grass:#3b7c35; --grass-in:#41863a; --dirt:#a87346; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:64px}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:34px}
+h1,h2{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(1.7rem,5vw,2.6rem)}
+h2{font-size:clamp(1.25rem,3.4vw,1.6rem)}
+h3{margin:0;font-size:1.05rem}
+p{margin:0}
+a{color:var(--navy)}
+:focus-visible{outline:3px solid var(--path);outline-offset:2px}
+.eyebrow{font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;background:var(--gold);color:#13223f;padding:5px 10px;border-radius:4px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.muted{color:var(--muted)}
+.note{font-size:.88rem;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:10px}
+.disclaimer{font-size:.92rem;color:var(--muted);max-width:70ch}
+section{display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.sec-head p{color:var(--muted)}
+
+/* Tags */
+.tag{display:inline-flex;align-items:center;font-family:var(--cond);font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:.74rem;padding:2px 7px;border-radius:4px;white-space:nowrap;line-height:1.4}
+.tag.off{background:var(--navy);color:#fff}
+.tag.gray{background:var(--grayc);color:#fff}
+.tag.silent{background:var(--silent);color:#fff}
+.tag.conf{background:var(--legal);color:#fff}
+.tag.sugg{background:var(--navy-soft);color:var(--navy);border:1px solid var(--navy)}
+.tag.nl{background:var(--max);color:#13223f}
+:root[data-theme="dark"] .tag.gray,:root[data-theme="dark"] .tag.silent,:root[data-theme="dark"] .tag.conf{color:#13223f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.gray,:root:not([data-theme="light"]) .tag.silent,:root:not([data-theme="light"]) .tag.conf{color:#13223f}}
+.rchip{font-family:var(--cond);font-weight:700;font-size:.8rem;color:var(--navy);background:var(--navy-soft);border-radius:4px;padding:1px 6px;text-decoration:none;white-space:nowrap}
+
+/* Glance */
+.glance{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.gl{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.gl:hover{border-color:var(--navy)}
+.gl b{font-family:var(--cond);font-size:1.12rem;font-weight:700;line-height:1.15}
+.gl span{font-size:.8rem;color:var(--muted);font-family:var(--cond);font-weight:600;letter-spacing:.04em}
+.keyrow{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:860px){.keyrow{grid-template-columns:1fr 1.4fr;align-items:stretch}}
+.count{display:flex;gap:14px;align-items:center}
+.count .n{font-family:var(--display);font-size:3rem;line-height:1;color:var(--grayc)}
+.legendtags{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;font-size:.92rem}
+
+/* Sticky nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);margin-inline:-16px;padding:8px 16px}
+.nav-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.nav-row::-webkit-scrollbar{display:none}
+.nav a{flex:none;font-family:var(--cond);font-weight:700;font-size:.92rem;letter-spacing:.03em;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.nav a:hover{border-color:var(--navy)}
+
+/* Tool layout */
+.tool{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.tool>*{min-width:0}
+@media(min-width:900px){.tool{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}.tool .stick{position:sticky;top:64px}}
+.field-box{background:var(--grass-out);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.field-box svg{display:block;width:100%;height:auto;max-height:74vh;touch-action:none}
+.side{display:flex;flex-direction:column;gap:12px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button,.btn{font:inherit;font-weight:700;font-size:.95rem;min-height:44px;padding:0 14px;border-radius:8px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"],.btn.primary{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.btn:disabled{opacity:.4;cursor:default}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:8px 2px 0;font-family:var(--cond);font-size:.88rem;color:var(--muted);font-weight:600}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.sq{width:12px;height:12px;border-radius:2px;display:inline-block;transform:rotate(45deg)}
+.sw{width:18px;height:4px;border-radius:2px;display:inline-block}
+
+/* Callout list */
+.callouts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.callouts li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid var(--line)}
+.callouts .k{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--cond);font-weight:700;font-size:.9rem;color:#fff;background:var(--def)}
+.callouts .k.c{background:var(--coach);color:#13223f;border-radius:5px}
+.callouts .k.o{background:var(--muted)}
+.callouts b{font-weight:700}
+.callouts .d{font-size:.92rem;color:var(--muted)}
+
+/* Checks */
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.checks li{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-weight:600}
+.ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-size:.85rem;background:var(--legal)}
+.ic.no{background:var(--illegal)}
+.ic.warn{background:var(--grayc)}
+.checks .sub{display:block;font-weight:500;font-size:.88rem;color:var(--muted)}
+.verdict{font-family:var(--display);font-size:1.25rem;line-height:1.2}
+.verdict.good{color:var(--legal)}.verdict.bad{color:var(--illegal)}.verdict.grayv{color:var(--grayc)}
+input[type=range]{width:100%;accent-color:var(--navy)}
+label.lab{font-family:var(--cond);font-weight:700;letter-spacing:.04em;font-size:.95rem;display:flex;justify-content:space-between;gap:8px}
+
+/* Gray cards */
+.grays{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){.grays.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gcard{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--grayc);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.gcard.silent{border-left-color:var(--silent)}
+.gcard.conf{border-left-color:var(--legal)}
+.gcard.conf .call{background:var(--legal-soft)}
+.gcard.conf .call .eyebrow{color:var(--legal)}
+.gcard .top{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.gcard h3{font-size:1.05rem}
+.gcard .q{font-size:.93rem;color:var(--muted)}
+.call{background:var(--navy-soft);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.call .eyebrow{color:var(--navy)}
+.call p{font-weight:600;font-size:.95rem}
+.gcard:target{box-shadow:0 0 0 3px var(--grayc)}
+
+/* At-bat */
+.slots{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.slot{aspect-ratio:1;max-width:100%;border:2px dashed var(--line);border-radius:8px;display:grid;place-items:center;font-family:var(--cond);font-weight:700;font-size:.9rem;text-align:center;line-height:1.05;padding:2px;color:var(--muted)}
+.slot.f{border-style:solid;color:var(--ink)}
+.slot.sw{background:var(--illegal-soft);border-color:var(--illegal)}
+.slot.fo{background:var(--max-soft);border-color:var(--max)}
+.slot.tk{background:var(--navy-soft);border-color:var(--navy)}
+.slot.hb{background:var(--silent-soft);border-color:var(--silent)}
+.slot.hit{background:var(--legal-soft);border-color:var(--legal)}
+.kdots{display:flex;gap:8px;align-items:center;font-family:var(--cond);font-weight:700}
+.kdots i{width:20px;height:20px;border-radius:50%;border:2px solid var(--illegal);display:inline-block}
+.kdots i.on{background:var(--illegal)}
+.abtns{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.abtns .btn{min-height:50px}
+.alog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:.92rem}
+.alog li{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+
+/* Plays */
+.scn-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+.scn{flex:0 0 160px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit;min-height:104px;text-decoration:none}
+.scn:hover{border-color:var(--navy)}
+.scn[aria-pressed="true"]{border-color:var(--navy);background:var(--navy-soft)}
+.scn .num{font-family:var(--cond);font-weight:700;font-size:.78rem;color:var(--muted);letter-spacing:.06em}
+.scn .t{font-weight:700;font-size:.95rem;line-height:1.2}
+@media(min-width:1000px){.scn-row{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible}.scn{flex:none}}
+.controls{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:8px}
+.controls button{font:inherit;font-weight:700;min-height:52px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:.95rem}
+.controls button.primary{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.controls button:disabled{opacity:.4;cursor:default}
+.stepcard{border-left:5px solid var(--navy)}
+.stepcard .sn{font-family:var(--cond);font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+.stepcard h3{font-size:1.2rem;margin:2px 0 6px}
+.teach{background:var(--navy);color:#fff;border-color:transparent}
+.teach .eyebrow{color:var(--gold)}
+.teach p.tp{font-family:var(--display);font-size:1.08rem;line-height:1.3;margin-top:6px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .teach{background:#1d3478}}
+:root[data-theme="dark"] .teach{background:#1d3478}
+.variants{display:flex;gap:6px;flex-wrap:wrap}
+.variants button{font:inherit;font-weight:600;font-size:.92rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;min-height:44px}
+.variants button[aria-pressed="true"]{border-color:var(--navy);background:var(--navy-soft)}
+
+/* Clock */
+.clockbar svg{display:block;width:100%;height:auto}
+.form{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.form .full{grid-column:1/-1}
+.form select,.form input[type=number],.lineup select,.lineup input,.tb input{font:inherit;font-size:1rem;min-height:42px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:0 10px;width:100%}
+.stepper{display:grid;grid-template-columns:44px 1fr 44px;gap:6px;align-items:center}
+.stepper button{font:inherit;font-weight:700;font-size:1.2rem;min-height:42px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.stepper output{text-align:center;font-family:var(--cond);font-weight:700;font-size:1.4rem;font-variant-numeric:tabular-nums}
+.chk{display:flex;gap:8px;align-items:center;font-weight:600}
+.chk input{width:20px;height:20px;accent-color:var(--navy)}
+
+/* Lineup */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.lineup{border-collapse:collapse;width:100%;min-width:520px}
+.lineup th,.lineup td{padding:6px;border-bottom:1px solid var(--line);text-align:left}
+.lineup th{font-family:var(--cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;color:var(--muted)}
+.lineup td.n{font-family:var(--cond);font-weight:700;color:var(--muted);width:28px}
+.lineup select{min-width:76px;padding:0 6px;font-weight:600}
+.lineup select.if{background:var(--navy-soft)}
+.lineup select.of{background:var(--legal-soft)}
+.lineup select.bn{background:var(--paper);color:var(--muted)}
+.lineup select.bad{outline:3px solid var(--illegal);outline-offset:-1px}
+.lineup input{min-width:110px}
+.lineup td.sum{font-family:var(--cond);font-weight:700;font-size:.85rem;white-space:nowrap;color:var(--muted)}
+
+/* Other rules */
+.cards{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1060px){.cards.three{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cards .panel{display:flex;flex-direction:column;gap:10px}
+.flow{display:flex;flex-direction:column;gap:0}
+.fnode{border:2px solid var(--line);border-radius:8px;padding:8px 12px;font-weight:600;background:var(--card)}
+.fnode.ok{border-color:var(--legal);background:var(--legal-soft)}
+.fnode.no{border-color:var(--illegal);background:var(--illegal-soft)}
+.fconn{width:3px;height:14px;background:var(--line);margin-left:22px}
+.fsplit{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tb{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;align-items:center}
+.tb .h{font-family:var(--cond);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tbres{display:flex;flex-direction:column;gap:6px}
+.tbres div{display:flex;justify-content:space-between;gap:8px;background:var(--paper);border-radius:6px;padding:8px 10px;font-weight:600}
+.order{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-weight:600}
+
+/* Rule index */
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.rlist{display:flex;flex-direction:column;gap:8px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px}
+.rule .rn{font-family:var(--display);font-size:1.4rem;color:var(--navy);line-height:1}
+.rule .rt{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rule .rt h3{margin-right:4px}
+.rule .pl{margin-top:4px}
+.rule .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.rule details{margin-top:8px}
+.rule summary{cursor:pointer;font-family:var(--cond);font-weight:700;color:var(--muted);letter-spacing:.04em;font-size:.9rem}
+.rule .official{margin-top:6px;font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:10px;white-space:pre-line}
+.rule .seelink{font-family:var(--cond);font-weight:700;font-size:.9rem}
+
+/* Checklist */
+.cl{display:flex;flex-direction:column;gap:6px;list-style:none;margin:0;padding:0}
+.cl li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.cl input{width:20px;height:20px;margin-top:2px;accent-color:var(--legal)}
+.cl .cq{font-weight:700}
+.cl .cc{font-size:.92rem;color:var(--muted)}
+.cl li.done{opacity:.6}
+.cols{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){.cols{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}}
+.cols>div{display:flex;flex-direction:column;gap:10px;min-width:0}
+/* Share links */
+.linkbtn{font:inherit;font-family:var(--cond);font-weight:700;font-size:.82rem;letter-spacing:.04em;border:1.5px solid var(--line);background:var(--card);color:var(--navy);border-radius:999px;padding:3px 10px;cursor:pointer;min-height:30px;display:inline-flex;align-items:center;gap:5px;align-self:flex-start}
+.linkbtn:hover{border-color:var(--navy)}
+.linkbtn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2}
+.gcard .top .linkbtn,.rule .meta .linkbtn{margin-left:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--ink);color:var(--paper);border-radius:10px;padding:10px 14px;font-weight:600;font-size:.92rem;max-width:calc(100% - 32px);box-shadow:0 6px 24px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:2px}
+.toast span{user-select:all;-webkit-user-select:all;font-family:var(--cond);font-size:.95rem;word-break:break-all;opacity:.85}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><span class="badge">Fall 2026 · Rules updated 8/15/26</span><a href="https://kjk86.github.io/bsaeball-iq/overthrow/" style="font-family:var(--cond);font-weight:700">1st base overthrow visualizer →</a></div>
+    <div class="eyebrow">PVAA Rookie Division</div>
+    <h1>Rookie Rules, Visualized</h1>
+    <p class="disclaimer">Every rule in the Fall 2026 Rookie Division rulebook, shown on the field. Anything the rulebook leaves open is flagged, along with the ruling we're playing by. Some rulings update the 8/15/26 PDF. The umpire's call stands.</p>
+  </header>
+
+  <section aria-labelledby="glance-h">
+    <div class="eyebrow" id="glance-h">Rules at a glance</div>
+    <div class="glance">
+      <a class="gl" href="#atbat"><b>6 pitches or 3 strikes</b><span>Rule 5 · whichever comes first</span></a>
+      <a class="gl" href="#atbat"><b>No walks, steals or leadoffs</b><span>Rule 14 · no base on hit-by-pitch (5)</span></a>
+      <a class="gl" href="#fair"><b>Fair = past the 20 ft arc</b><span>Rule 4 · halfway to the rubber</span></a>
+      <a class="gl" href="#clock"><b>5 innings or 90 minutes</b><span>Rule 8 · no new inning after 75 min</span></a>
+      <a class="gl" href="#lineup"><b>Every kid: 1 IF + 1 OF inning</b><span>Rule 15 · catcher counts as infield</span></a>
+      <a class="gl" href="#lineup"><b>No repeat infield spot</b><span>Rule 15a · first 4 innings · catcher can repeat</span></a>
+      <a class="gl" href="#plays"><b>Time in front of lead runner</b><span>Rule 10a · trailing runners can keep going</span></a>
+      <a class="gl" href="#plays"><b>No infield fly rule</b><span>Rule 11</span></a>
+      <a class="gl" href="#lineup"><b>Everyone bats</b><span>Rule 12 · order stays the same</span></a>
+      <a class="gl" href="#clock"><b>8 players to play</b><span>Rule 16 · 10-minute grace</span></a>
+      <a class="gl" href="#other"><b>USA Baseball bats only</b><span>Rule 19 · no USSSA bats</span></a>
+      <a class="gl" href="#plays"><b>Overthrow at 1st: 1 base max</b><span>Rule 10d · applies in fall</span></a>
+    </div>
+  </section>
+
+  <section class="keyrow" aria-label="How to read this page">
+    <div class="panel count">
+      <span class="n" id="grayCount">0</span>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <h2 style="font-size:1.2rem">Gray areas flagged</h2>
+        <p class="muted" style="font-size:.95rem" id="countLine"></p>
+        <a href="#meeting" class="seelink" style="font-family:var(--cond);font-weight:700">Open the plate-meeting checklist →</a>
+      </div>
+    </div>
+    <div class="panel legendtags">
+      <span class="tag off">Official</span><span>What the rulebook says, word for word.</span>
+      <span class="tag nl">NL only</span><span>Marked “NL Only” in the rulebook. Rule 24 applies it this fall.</span>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Sections"><div class="nav-row">
+    <a href="#field">Who stands where</a><a href="#mound">The mound</a><a href="#fair">Fair ball arc</a><a href="#atbat">The at-bat</a><a href="#plays">Live &amp; dead ball</a><a href="#clock">Game clock</a><a href="#lineup">Playing time</a><a href="#other">Everything else</a><a href="#rules">All 24 rules</a><a href="#meeting">Plate meeting</a>
+  </div></nav>
+
+  <!-- FIELD -->
+  <section id="field" aria-labelledby="field-h">
+    <div class="sec-head"><div class="eyebrow">Rules 1, 3, 7, 13</div><h2 id="field-h">Who stands where</h2><p>Pick a side to see where your players and coaches are allowed to be.</p></div>
+    <div class="tool">
+      <div class="stick">
+        <div class="field-box"><svg id="layoutSvg" viewBox="0 40 400 340" role="img" aria-label="Field diagram showing player and coach positions"></svg></div>
+        <div class="legend"><span><i class="dot" style="background:var(--def)"></i>Players</span><span><i class="sq" style="background:var(--coach)"></i>Coaches</span><span><i class="dot" style="background:#8d96a8"></i>Other team</span><span><i class="sw" style="background:#fff"></i>20 ft fair arc</span></div>
+      </div>
+      <div class="side">
+        <div class="seg" role="group" aria-label="Which side"><button id="lyDef" aria-pressed="true">We're on defense</button><button id="lyOff" aria-pressed="false">We're batting</button></div>
+        <ol class="callouts" id="layoutList"></ol>
+        <p class="note">All other coaches sit along the fence or in the dugout (Rule 13). Only registered coaches are allowed in the dugout (Rule 17).</p>
+      </div>
+    </div>
+    <div class="grays two" data-g="G8,G16"></div>
+  </section>
+
+  <!-- MOUND -->
+  <section id="mound" aria-labelledby="mound-h">
+    <div class="sec-head"><div class="eyebrow">Rules 1, 2, 3, 7</div><h2 id="mound-h">The mound</h2><p>Slide the pitching coach forward and back. Drag or tap to place the player pitcher. The checks update as you move them.</p></div>
+    <div class="tool">
+      <div class="stick">
+        <div class="field-box" style="background:var(--grass)"><svg id="moundSvg" viewBox="0 -14 300 280" role="img" aria-label="Close-up of the pitching circle"></svg></div>
+        <div class="legend"><span><i class="sq" style="background:var(--coach)"></i>Pitching coach</span><span><i class="dot" style="background:var(--def)"></i>Player pitcher</span><span><i class="sw" style="background:var(--legal)"></i>Where the coach can pitch from</span><span>Mound marking drawn 9 ft from the rubber; measure the 5 ft from the marking on your field</span></div>
+      </div>
+      <div class="side">
+        <label class="lab" for="coachD"><span>Move the pitching coach</span><span id="coachDv"></span></label>
+        <input type="range" id="coachD" min="-3" max="20" step="1" value="8">
+        <div class="panel"><div class="eyebrow">Pitching coach · Rules 1–3</div><ul class="checks" id="coachChecks" style="margin-top:8px"></ul></div>
+        <div class="panel"><div class="eyebrow">Player pitcher · Rule 7</div><ul class="checks" id="pitcherChecks" style="margin-top:8px"></ul></div>
+        <div class="panel" style="display:flex;flex-direction:column;gap:6px">
+          <div class="eyebrow">Also official</div>
+          <p><b>Rule 2:</b> the pitching coach can't coach, by voice or by hand, while in the pitching position.</p>
+          <p><b>Rule 3:</b> the pitching coach must stay out of the defense's way once the ball is hit. Before the pitch: first offense is a warning, second offense removes him as pitcher for the game. After the pitch: obstruction is called.</p>
+          <p><b>Rule 3c:</b> the pitching coach must be an adult, 18 or older.</p>
+        </div>
+      </div>
+    </div>
+    <div class="grays two" data-g="G1,G7,G2,G3"></div>
+  </section>
+
+  <!-- FAIR -->
+  <section id="fair" aria-labelledby="fair-h">
+    <div class="sec-head"><div class="eyebrow">Rule 4</div><h2 id="fair-h">Fair ball arc</h2><p>A batted ball has to get past the 20 ft arc to be fair. Tap anywhere to see where a ball would be called, or pick an example.</p></div>
+    <div class="tool">
+      <div class="stick">
+        <div class="field-box"><svg id="fairSvg" viewBox="0 0 320 230" role="img" aria-label="Home plate area with the 20 foot arc"></svg></div>
+        <div class="legend"><span><i class="sw" style="background:#fff"></i>20 ft arc</span><span><i class="sw" style="background:var(--path)"></i>Ball path</span><span>Tap the field to drop a ball</span></div>
+      </div>
+      <div class="side">
+        <div class="seg" id="fairEx" role="group" aria-label="Examples"></div>
+        <div class="panel" aria-live="polite"><div class="eyebrow" id="fairTag">Your ball</div><p class="verdict" id="fairVerdict" style="margin-top:6px"></p><p id="fairWhy" style="margin-top:6px"></p></div>
+        <p class="note">On a field without lines, the umpire decides where the arc is (Rule 4).</p>
+      </div>
+    </div>
+    <div class="grays" data-g="G4"></div>
+  </section>
+
+  <!-- AT-BAT -->
+  <section id="atbat" aria-labelledby="atbat-h">
+    <div class="sec-head"><div class="eyebrow">Rules 5, 14</div><h2 id="atbat-h">The at-bat</h2><p>Six pitches or strike three, whichever comes first. No walks, no stealing, no leading off, and no base for a hit-by-pitch. Tap what happens on each pitch.</p></div>
+    <div class="tool">
+      <div class="side">
+        <div class="panel" style="display:flex;flex-direction:column;gap:12px">
+          <div class="eyebrow">Pitches</div>
+          <div class="slots" id="abSlots"></div>
+          <div class="kdots" id="abK"></div>
+          <p class="verdict" id="abVerdict" aria-live="polite"></p>
+        </div>
+        <div class="abtns" id="abBtns">
+          <button class="btn" data-a="sw">Swing &amp; miss</button>
+          <button class="btn" data-a="fo">Foul ball</button>
+          <button class="btn" data-a="tk">Takes the pitch</button>
+          <button class="btn" data-a="hb">Hit by pitch</button>
+          <button class="btn primary" data-a="hit">Hit fair</button>
+          <button class="btn" data-a="reset">New batter</button>
+        </div>
+      </div>
+      <div class="side">
+        <div class="panel"><div class="eyebrow">What just happened</div><ol class="alog" id="abLog" style="margin-top:8px"></ol></div>
+        <div class="panel"><div class="eyebrow">Runners · Rule 14</div><ul class="checks" style="margin-top:8px">
+          <li><span class="ic no">✗</span><span>No walks<span class="sub">Taken pitches only count toward the 6.</span></span></li>
+          <li><span class="ic no">✗</span><span>No stealing<span class="sub">Runners advance on batted balls only.</span></span></li>
+          <li><span class="ic no">✗</span><span>No leading off<span class="sub">Runners stay on the bag until the ball is hit.</span></span></li>
+          <li><span class="ic no">✗</span><span>No base on a hit-by-pitch<span class="sub">Rule 5. The batter stays up.</span></span></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="grays two" data-g="G5,G6,G17"></div>
+  </section>
+
+  <!-- PLAYS -->
+  <section id="plays" aria-labelledby="plays-h">
+    <div class="sec-head"><div class="eyebrow">Rules 3, 10, 11</div><h2 id="plays-h">Live ball &amp; dead ball</h2><p>The ball stays live until time is called in front of the lead runner, or the ball is controlled in the infield and everyone has stopped. Pick a play and press Play.</p></div>
+    <div class="scn-row" id="scnRow" role="group" aria-label="Plays"></div>
+    <div class="tool">
+      <div class="stick">
+        <div class="field-box"><svg id="playSvg" viewBox="0 46 400 318" role="img" aria-label="Animated play on the field"></svg></div>
+        <div class="legend"><span><i class="dot" style="background:#fff;border:2px solid var(--ink)"></i>Runner</span><span><i class="dot" style="background:var(--def)"></i>Defense</span><span><i class="sq" style="background:var(--coach)"></i>Pitching coach</span><span><i class="sw" style="background:var(--path)"></i>Ball</span><span><i class="sw" style="background:var(--legal)"></i>Runner path</span></div>
+      </div>
+      <div class="side">
+        <div style="display:flex;flex-direction:column;gap:4px"><div class="eyebrow" id="pNum">Play</div><h3 id="pTitle" style="font-size:1.3rem"></h3><p id="pDesc" class="muted"></p><div id="pTags" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px"></div></div>
+        <div class="variants" id="pVariants" hidden></div>
+        <div class="controls">
+          <button id="bPrev">Back</button><button id="bNext">Next</button><button id="bPlay" class="primary">Play</button><button id="bRestart">Restart</button>
+        </div>
+        <div class="panel stepcard" aria-live="polite"><div class="sn" id="sNum">Ready</div><h3 id="sTitle">Press Play</h3><p id="sText"></p></div>
+        <div class="panel teach"><div class="eyebrow">The rule</div><p class="tp" id="pTeach"></p></div>
+      </div>
+    </div>
+    <div class="grays two" data-g="G11,G12,G14,G13,G15"></div>
+  </section>
+
+  <!-- CLOCK -->
+  <section id="clock" aria-labelledby="clock-h">
+    <div class="sec-head"><div class="eyebrow">Rules 8, 16</div><h2 id="clock-h">Game clock</h2><p>The clock starts at the scheduled start time, even if the first pitch is late. Set where the game is and see what happens next.</p></div>
+    <div class="panel clockbar"><svg id="clockSvg" viewBox="0 0 640 96" role="img" aria-label="Game time line from 0 to 90 minutes"></svg></div>
+    <div class="tool">
+      <div class="panel form">
+        <div class="full"><label class="lab" for="cMin"><span>Minutes since scheduled start</span><span id="cMinV"></span></label><input type="range" id="cMin" min="0" max="100" value="72"></div>
+        <div class="full"><label class="lab" for="cHalf"><span>Half-inning that just ended</span></label><select id="cHalf"></select></div>
+        <div><label class="lab" for="cV"><span>Visitors</span></label><div class="stepper"><button data-s="v" data-d="-1" aria-label="Visitors minus one">−</button><output id="cV">5</output><button data-s="v" data-d="1" aria-label="Visitors plus one">+</button></div></div>
+        <div><label class="lab" for="cH"><span>Home</span></label><div class="stepper"><button data-s="h" data-d="-1" aria-label="Home minus one">−</button><output id="cH">4</output><button data-s="h" data-d="1" aria-label="Home plus one">+</button></div></div>
+        <label class="chk full"><input type="checkbox" id="cChamp"> Championship game (Rule 8a: full 5 innings)</label>
+      </div>
+      <div class="side">
+        <div class="panel" aria-live="polite"><div class="eyebrow">What happens next</div><p class="verdict" id="cVerdict" style="margin-top:6px"></p><p id="cWhy" style="margin-top:6px"></p><div id="cTags" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div></div>
+        <div class="panel"><div class="eyebrow">Before the game · Rule 16</div><ul class="checks" style="margin-top:8px">
+          <li><span class="ic">8</span><span>A team needs 8 players in the field to play a game that counts.</span></li>
+          <li><span class="ic warn">10</span><span>10-minute grace period to get to 8, but the game clock is already running.</span></li>
+          <li><span class="ic no">F</span><span>Still short? Forfeit, called before the game starts. Coaches can agree to play it as a practice game.</span></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="grays two" data-g="G9,G10,G21"></div>
+  </section>
+
+  <!-- LINEUP -->
+  <section id="lineup" aria-labelledby="lineup-h">
+    <div class="sec-head"><div class="eyebrow">Rules 12, 15, 15a, 24</div><h2 id="lineup-h">Playing time checker</h2><p>Build your defensive rotation and it's checked against the playing-time rules as you go. The example is filled in. Change the names and positions, or fill a new legal rotation.</p></div>
+    <div class="seg" style="align-items:center">
+      <label class="lab" for="luN" style="align-items:center">Players&nbsp;<select id="luN" style="min-height:44px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;padding:0 8px"></select></label>
+      <label class="lab" for="luI" style="align-items:center">Innings&nbsp;<select id="luI" style="min-height:44px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;padding:0 8px"><option>4</option><option>5</option></select></label>
+      <button class="btn primary" id="luFill">Fill a legal rotation</button>
+      <button class="btn" id="luClear">Clear positions</button>
+    </div>
+    <div class="tool" style="grid-template-columns:minmax(0,1fr)">
+      <div class="tablewrap"><table class="lineup" id="luTable"></table></div>
+    </div>
+    <div class="cols">
+      <div class="panel"><div class="eyebrow">Rule checks</div><ul class="checks" id="luChecks" style="margin-top:8px"></ul></div>
+      <div class="panel" style="display:flex;flex-direction:column;gap:8px"><div class="eyebrow">Batting order · Rule 12</div>
+        <p>Every player at the game is in the batting order, and the order stays the same all game. The only exception is a player removed for injury or illness.</p>
+        <p class="note">Infield is P, C, 1B, 2B, SS, 3B. The catcher counts as infield (Rule 15). No player sits a second inning until every player has sat once.</p>
+      </div>
+    </div>
+    <div class="grays two" data-g="G24,G18,G19,G20"></div>
+  </section>
+
+  <!-- OTHER -->
+  <section id="other" aria-labelledby="other-h">
+    <div class="sec-head"><div class="eyebrow">Rules 6, 9, 17–24</div><h2 id="other-h">Everything else</h2></div>
+    <div class="cards">
+      <div class="panel">
+        <div class="rt" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span class="rchip">Rule 19</span><h3>Bats</h3></div>
+        <div class="flow">
+          <div class="fnode">Check the bat's stamp</div><div class="fconn"></div>
+          <div class="fsplit"><div class="fnode ok">USA Baseball stamp ✓<br><span class="note">Good to go</span></div><div class="fnode no">USSSA stamp ✗<br><span class="note">Not allowed</span></div></div>
+          <div class="fconn" style="margin-left:auto;margin-right:25%"></div>
+          <div class="fnode no">Caught once: the at-bat is an out and the play is reversed back to before the at-bat.</div><div class="fconn" style="margin-left:auto;margin-right:25%"></div>
+          <div class="fnode no">Keeps using it: the team forfeits and the player is removed from the league.</div>
+        </div>
+        <div class="grays" data-g="G22"></div>
+      </div>
+      <div class="panel">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span class="rchip">Rule 20</span><h3>Playoff tiebreakers</h3></div>
+        <ol class="order"><li>Head-to-head</li><li>“Runs against/runs for”</li><li>Coin flip</li></ol>
+        <p class="note">Step 2 means fewest runs allowed, then most runs scored. Enter two teams to see who advances:</p>
+        <div class="tb">
+          <span></span><span class="h">Runs for</span><span class="h">Runs against</span>
+          <b>Team A</b><input type="number" id="tbAF" value="52" min="0" aria-label="Team A runs for"><input type="number" id="tbAA" value="30" min="0" aria-label="Team A runs against">
+          <b>Team B</b><input type="number" id="tbBF" value="31" min="0" aria-label="Team B runs for"><input type="number" id="tbBA" value="24" min="0" aria-label="Team B runs against">
+        </div>
+        <div class="tbres" id="tbRes"></div>
+        <div class="grays" data-g="G23"></div>
+      </div>
+    </div>
+    <div class="cards three">
+      <div class="panel"><div style="display:flex;gap:6px;align-items:center"><span class="rchip">Rule 9</span><h3>Field size</h3></div><p>Standard Cal Ripken bases, 60 ft apart. The 20 ft fair arc is halfway between home and the rubber, so the rubber is about 40 ft from home.</p></div>
+      <div class="panel"><div style="display:flex;gap:6px;align-items:center"><span class="rchip">Rules 17, 18</span><h3>Players &amp; helmets</h3></div><p>Only registered players bat or play the field. Every batter and base runner wears a batting helmet.</p></div>
+      <div class="panel"><div style="display:flex;gap:6px;align-items:center"><span class="rchip">Rule 21</span><h3>Uniforms</h3></div><p>Shirts tucked in at all times. Hats worn properly.</p></div>
+      <div class="panel"><div style="display:flex;gap:6px;align-items:center"><span class="rchip">Rule 22</span><h3>No tobacco or alcohol</h3></div><p>Not on the field, in the dugout, or in the stands. The umpire decides enforcement, up to removing people or forfeiting the game.</p></div>
+      <div class="panel"><div style="display:flex;gap:6px;align-items:center"><span class="rchip">Rule 23</span><h3>Behavior</h3></div><p>Head coaches are responsible for their fans, players and coaches. See the Coaches and Parents Codes of Conduct on the league website.</p></div>
+      <div class="panel"><div style="display:flex;gap:6px;align-items:center"><span class="rchip">Rules 6, 24</span><h3>Ages &amp; fall season</h3></div><p>Ages are on the league website. In the fall, all teams follow the Spring NL rules, so the “NL Only” rules (10d and 15a) apply.</p></div>
+    </div>
+  </section>
+
+  <!-- RULE INDEX -->
+  <section id="rules" aria-labelledby="rules-h">
+    <div class="sec-head"><div class="eyebrow">Fall 2026 rulebook</div><h2 id="rules-h">All 24 rules</h2><p>Plain-English version of every rule, with the official wording one tap away.</p></div>
+    <div class="filters seg" role="group" aria-label="Filter rules"><button data-f="all" aria-pressed="true">All rules</button><button data-f="gray" aria-pressed="false">Only rules with gray areas</button><button data-f="nl" aria-pressed="false">NL only</button></div>
+    <div class="rlist" id="rList"></div>
+  </section>
+
+  <!-- MEETING -->
+  <section id="meeting" aria-labelledby="meet-h">
+    <div class="sec-head"><div class="eyebrow">Settle it before first pitch</div><h2 id="meet-h">Plate-meeting checklist</h2><p>Every gray area has a ruling. Walk the other coach and the umpire through the on-field ones before the game so everyone calls them the same way.</p></div>
+    <div class="cols">
+      <div><h3>On the field: go over at the plate meeting</h3><ul class="cl" id="clPlate"></ul></div>
+      <div><h3>Game, roster and standings rulings</h3><ul class="cl" id="clLeague"></ul>
+        <div class="seg"><button class="btn primary" id="clCopy">Copy all rulings</button></div>
+        <textarea id="clText" rows="6" style="width:100%;font:inherit;font-size:.85rem;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px" hidden aria-label="Rulings text"></textarea>
+        <p class="note" id="clMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Based on the PVAA Rookie Division Rules, updated 08.15.26. Items marked Confirmed reflect rulings confirmed after the 8/15/26 PDF. Suggested calls are proposals, not approved PVAA rules. The umpire's judgment governs. See also the <a href="https://kjk86.github.io/bsaeball-iq/overthrow/">1st base overthrow visualizer</a>.</footer>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ================= GRAY AREAS =================
+// kind: gray = wording can be read more than one way; silent = rulebook doesn't cover it.
+// aud: plate = settle at the plate meeting; league = ask the league to clarify.
+const GRAY=[
+ {id:'G1',rule:'1',kind:'gray',aud:'plate',title:'Where exactly can the coach pitch from?',
+  q:'“Pitcher’s line” isn’t defined. “Up to 5 ft in front of the pitcher’s mound (pitching circle)” can mean 5 ft past the front edge of the circle, or 5 ft in front of the rubber.',
+  call:'Anywhere from the rubber up to 5 ft in front of the pitcher’s mound, using the mound marking on the field as the guide. One foot on or straddling the pitcher’s line (rubber to home plate).'},
+ {id:'G2',rule:'2',kind:'gray',aud:'plate',title:'What counts as coaching from the mound?',
+  q:'The pitching coach can’t coach “verbally or physically” while pitching. The rule doesn’t say whether that includes encouragement.',
+  call:'No instructions to the batter or runners from the pitching position (stance, swing, “run!”). Short encouragement like “good swing” is fine. Base coaches do the coaching.'},
+ {id:'G3',rule:'3a',kind:'gray',aud:'plate',title:'Obstruction on the pitching coach: then what?',
+  q:'Rule 3a says obstruction is called if the coach is in the way after the pitch, but gives no penalty. Normal obstruction rules cover fielders blocking runners, not a batting team’s coach blocking fielders.',
+  call:'Dead ball. The umpire puts everyone where he judges they’d have ended up without the coach in the way, including calling the out the defense would have made.'},
+ {id:'G4',rule:'4',kind:'gray',aud:'plate',title:'Fair or foul near the arc?',
+  q:'The ball must “go past” the 20 ft arc. The rule doesn’t cover a ball that crosses the arc and spins back, or one a fielder touches before it gets there.',
+  call:'Once the ball crosses the arc in fair territory it’s fair, even if it rolls back. If a fielder touches it before it reaches the arc, it’s foul. On an unlined field, mark the arc before the game: about 20 ft, roughly 7 big steps from home.'},
+ {id:'G5',rule:'5',kind:'gray',aud:'plate',title:'Foul ball on the 6th pitch?',
+  q:'“6 pitches or 3rd strike, whichever comes first” reads as the at-bat ending on pitch 6. Plenty of coach-pitch leagues let a batter keep going on a foul, so coaches disagree.',
+  call:'A foul on the 6th pitch doesn’t end the at-bat. The batter keeps hitting until he puts one in play or the pitch isn’t fouled off. The 8/15/26 rulebook hasn’t been updated with this yet, so mention it at the plate meeting.',ruled:true},
+ {id:'G6',rule:'5',kind:'silent',aud:'plate',title:'What counts as a strike?',
+  q:'The rule doesn’t say whether a pitch the batter takes is a strike, whether a foul can be strike 3, or whether a hit-by-pitch counts as one of the 6.',
+  call:'Swings and misses and fouls are strikes, like normal baseball, but a foul can’t be strike 3. Taken pitches and hit-by-pitches count toward the 6 pitches but aren’t strikes.'},
+ {id:'G7',rule:'7',kind:'gray',aud:'plate',title:'Where does the player pitcher stand?',
+  q:'“Either side of the pitching coach,” “one foot inside the pitcher’s circle” and “behind the pitching coach” leave room to argue about how far back and how far over.',
+  call:'Beside the coach, not directly behind him, at least one foot inside the circle, and no closer to home than the coach until the ball is hit.'},
+ {id:'G8',rule:'7',kind:'gray',aud:'plate',title:'Catcher: full gear, behind the plate',
+  q:'The 8/15/26 rulebook says the league won’t provide catcher’s gear and lets a catcher without gear stand at the fence behind the batter.',
+  call:'That has changed. The league provides catcher’s gear, and every catcher plays in full gear behind the plate. No standing at the fence.'},
+ {id:'G9',rule:'8',kind:'gray',aud:'plate',title:'Is 90 minutes a hard stop?',
+  q:'No new inning starts after 75 minutes, and an inning that started must be finished “if either team has the ability to tie or beat their opponent.” The rule doesn’t say whether the game stops mid-inning at 90.',
+  call:'Time only keeps new innings from starting. An inning that started gets finished, except the home team doesn’t bat in the bottom half if it’s already ahead.'},
+ {id:'G10',rule:'8',kind:'silent',aud:'league',title:'Can a game end in a tie?',
+  q:'The rulebook doesn’t say what happens when the score is tied after the last inning or when time runs out.',
+  call:'Regular-season games can end in a tie. The rulebook still doesn’t say how a tied playoff game is decided.'},
+ {id:'G11',rule:'10a',kind:'gray',aud:'plate',title:'How close is “directly in front of the lead runner”?',
+  q:'The rule doesn’t say where the fielder has to be, or what happens to a lead runner who is between bases when time is called.',
+  call:'A fielder with the ball, in the infield, between the lead runner and the base he’s heading to, asks for time. A lead runner past halfway gets that base. Short of halfway, he goes back.'},
+ {id:'G12',rule:'10a',kind:'gray',aud:'plate',title:'When is the ball “controlled” and runners “stopped”?',
+  q:'Play stops when the ball is controlled on the infield and all runners have stopped, but neither word is defined.',
+  call:'An infielder has the ball in the infield (dirt or infield grass) and no runner is moving toward the next base. The umpire calls time. A runner can’t wait and then take off.'},
+ {id:'G13',rule:'10b',kind:'silent',aud:'league',title:'Where do runners go after an injury stoppage?',
+  q:'The ball is dead when a player is hurt and can’t continue, but the rule doesn’t say where the runners end up.',
+  call:'The umpire puts runners on the bases he judges they would have reached.'},
+ {id:'G14',rule:'10c',kind:'silent',aud:'league',title:'Ball hits the coach, and he didn’t try to move?',
+  q:'Rule 10c only covers a coach who made a reasonable effort to get out of the way.',
+  call:'Same result: dead ball, batter to 1st, forced runners move up. The umpire can warn the coach under Rule 3b.'},
+ {id:'G15',rule:'10d',kind:'gray',aud:'league',title:'One extra base on an overthrow, counted from where?',
+  q:'“A maximum of one base on a 1st base overthrow” doesn’t say if it’s one base past where the runner started or past where he was headed, or what a second overthrow does.',
+  call:'Each runner can go one base past the base he was running to. The ball stays live, and another overthrow doesn’t add a base. See the overthrow visualizer for every case.',link:'https://kjk86.github.io/bsaeball-iq/overthrow/'},
+ {id:'G16',rule:'13',kind:'gray',aud:'plate',title:'Who is the backstop coach?',
+  q:'“A coach may stand at backstop to help catcher” doesn’t say which team, or whether it’s on top of the defense’s 3 coaches.',
+  call:'A defensive coach who helps the catcher get the ball back to the pitcher. He’s in addition to the 3 defensive coaches and doesn’t talk to the batter.'},
+ {id:'G17',rule:'14',kind:'silent',aud:'plate',title:'When can a runner leave the base?',
+  q:'No stealing and no leading off, but the rule doesn’t say when a runner may go, or what happens if he leaves early.',
+  call:'Runners leave when the ball is hit. A runner who leaves early goes back to his base after the play. No out.'},
+ {id:'G18',rule:'15',kind:'gray',aud:'league',title:'What if the game is cut short?',
+  q:'The playing-time rule assumes the game finishes. If time runs out after 3 innings, a player may not have had an infield or outfield inning.',
+  call:'Plan the rotation so every player has had an infield inning and an outfield inning by the end of the 3rd.'},
+ {id:'G24',rule:'15a',kind:'gray',aud:'plate',title:'Can a player catch more than once?',
+  q:'Rule 15a says players may not repeat the same infield position in a four-inning game, and Rule 15 counts catcher as an infield position.',
+  call:'Yes. Catcher is the one infield position a player can repeat. Every other infield spot still can’t be repeated in the first 4 innings.'},
+ {id:'G19',rule:'15, 16',kind:'silent',aud:'plate',title:'How many players in the field?',
+  q:'A team needs at least 8 in the field. The rulebook doesn’t set a maximum or say how many outfielders.',
+  call:'Up to 10 in the field: 6 infielders (catcher included) and 4 outfielders. Everyone else sits under the sitting rule.'},
+ {id:'G20',rule:'12',kind:'silent',aud:'league',title:'Late arrivals and injured players in the batting order?',
+  q:'The order stays the same all game. The rule doesn’t say where a late player bats, or whether a removed player’s spot is an out.',
+  call:'A late arrival goes to the end of the order. A player removed for injury or illness is skipped with no out.'},
+ {id:'G21',rule:'16',kind:'silent',aud:'league',title:'Team drops below 8 during the game?',
+  q:'Forfeits are called before the game begins. The rule doesn’t cover a team that loses a player in the middle of the game.',
+  call:'The game goes on and counts. The forfeit decision is only made before the first pitch.'},
+ {id:'G22',rule:'19',kind:'gray',aud:'league',title:'What does “continues to use” the bat mean?',
+  q:'The first time is an out. If the player “continues to use” a USSSA bat, the team forfeits. It doesn’t say if that’s the next pitch, the next at-bat, or the next game.',
+  call:'Any later at-bat with a non-approved bat after the first one is caught, in the same game.'},
+ {id:'G23',rule:'20',kind:'gray',aud:'league',title:'“Runs against/runs for” as a tiebreaker',
+  q:'It could be a ratio (runs against divided by runs for, lower wins) or two steps (fewest runs against, then most runs for). The example above shows they can pick different teams.',
+  call:'Two steps: the team that allowed the fewest runs wins the tie. If that’s even, the team that scored more runs. Then a coin flip.'}
+];
+// Calls Keith confirmed (Oct 5, 2026). Everything else is still a suggestion.
+const CONFIRMED=['G1','G2','G3','G4','G5','G6','G7','G8','G9','G10','G11','G12','G13','G14','G15','G16','G17','G18','G19','G20','G21','G22','G23','G24'];
+GRAY.forEach(g=>g.conf=CONFIRMED.includes(g.id));
+const G=Object.fromEntries(GRAY.map(g=>[g.id,g]));
+const ruleLink=r=>`<a class="rchip" href="#r${String(r).split(/[ ,a-z]/)[0]}">Rule ${esc(r)}</a>`;
+function gcard(g,withId){
+  return `<article class="gcard ${g.kind==='silent'?'silent':''} ${g.conf?'conf':''}"${withId?` id="g-${g.id}"`:''}>
+   <div class="top">${ruleLink(g.rule)}</div>
+   <h3>${esc(g.title)}</h3><p class="q">${esc(g.q)}</p>
+   <div class="call"><span class="eyebrow">${g.conf?'Ruling':'Suggested call · not official'}</span><p>${esc(g.call)}</p>${g.link?`<a href="${g.link}" style="font-family:var(--cond);font-weight:700">Open the overthrow visualizer →</a>`:''}</div>
+  </article>`;
+}
+const seen=new Set();
+document.querySelectorAll('.grays[data-g]').forEach(el=>{
+  el.innerHTML=el.dataset.g.split(',').map(id=>{const first=!seen.has(id);seen.add(id);return gcard(G[id],first)}).join('');
+});
+$('grayCount').textContent=GRAY.length;
+{const open=GRAY.filter(g=>!g.conf).length;$('countLine').textContent=open?`${GRAY.length-open} confirmed. ${open} still open.`:`Every one has a confirmed ruling.`}
+
+// ================= RULES =================
+const RULES=[
+ {n:1,t:'Where the coach pitches',see:'mound',g:['G1'],plain:'The pitching coach keeps one foot on (or straddles) the pitcher’s line and pitches from anywhere between the rubber and 5 ft in front of the pitching circle.',
+  o:'The pitching coach shall keep one foot on or straddle the pitcher’s line. The Coach can pitch anywhere in-between the pitching rubber and up to 5 ft in front of the pitchers mound (pitching circle).'},
+ {n:2,t:'No coaching from the mound',see:'mound',g:['G2'],plain:'While in the pitching position, the coach can’t coach by voice or by hand.',
+  o:'The pitching coach shall not verbally or physically coach while in the pitching position.'},
+ {n:3,t:'Pitching coach stays out of the way',see:'mound',g:['G3'],plain:'Once the ball is hit, the pitching coach can’t be in the defense’s way. After the pitch: obstruction. Before the pitch: warning, then removal as pitcher for the game. Must be 18 or older.',
+  o:'The pitching coach shall position himself as not to be an obstruction to the defensive team on any possible play once the ball has been hit.\na) Penalty: If a coach violates this rule after the ball is pitched, obstruction shall be called.\nb) If a coach violates this rule before the ball is pitched, First Offense: Warning; Second Offense: Removal of coach as the pitcher for the remainder of the game.\nc) The Pitching Coach shall be an adult at least eighteen (18) years of age.'},
+ {n:4,t:'Fair ball arc',see:'fair',g:['G4'],plain:'A batted ball has to get past the 20 ft arc (halfway between home and the rubber) to be fair. Unlined field: the umpire decides.',
+  o:'Fair Ball Arc: A batted ball must go past the 20 ft arc beyond home plate (halfway between the pitching rubber and home plate) to be a fair ball. If a field is not lined, fair ball arc at the discretion of the umpire.'},
+ {n:5,t:'6 pitches or 3 strikes',see:'atbat',g:['G5','G6'],plain:'The at-bat ends at strike 3 or after the 6th pitch, whichever comes first. League update: a foul on the 6th pitch keeps the at-bat going. No base for being hit by a pitch.',
+  o:'6 pitches or 3rd strike whichever comes first. The batter can continue until the sixth pitch is reached or strike 3 is recorded. No base granted if a player is hit by pitch.'},
+ {n:6,t:'Ages',see:'other',g:[],plain:'See the league website.',o:'Ages: Refer to League website.'},
+ {n:7,t:'Infield, player pitcher and catcher',see:'field',g:['G7','G8'],plain:'Infield is P, C, 1B, 2B, SS, 3B. The player pitcher stands beside the pitching coach, one foot in the circle, behind the coach until the ball is hit. Update: the league now provides catcher’s gear, and the catcher plays in full gear behind the plate.',
+  o:'Infield positions include a pitcher, catcher, first baseman, second baseman, shortstop and a third baseman. Pitchers will take their place on either side of the pitching coach and must have one foot inside the pitcher’s circle and be behind the pitching coach until the ball is hit. The catcher will take his/her normal position in full gear if desired and provided by their team, otherwise the catcher will be permitted to stand at the fence behind the batters back with a batting helmet on. The catcher can join the play after the ball is struck. The league will not provide catching equipment for the Rookie League teams.'},
+ {n:8,t:'Game length',see:'clock',g:['G9','G10'],plain:'5 innings or 90 minutes. No new inning after 75 minutes. An inning that started is finished if either team can still tie or win. Championship games play all 5 innings.',
+  o:'Game length is 5 innings or ninety minutes. No new inning shall start after 75 minutes from start time or in other words with 15 minutes to go to the 90 minute mark. An inning started must be completed if either team has the ability to tie or beat their opponent.\na) Championship games will complete a full 5 innings'},
+ {n:9,t:'Field size',see:'other',g:[],plain:'Standard Cal Ripken 60 ft bases.',o:'Field dimensions: Standard Cal Ripken Division base length of 60 ft.'},
+ {n:10,t:'Dead ball',see:'plays',g:['G11','G12','G13','G14','G15'],nl:true,plain:'Runners keep going until time is called directly in front of the lead runner; trailing runners can keep going until an occupied base stops them. Play also stops when the ball is controlled in the infield and all runners have stopped. Dead ball on an injury. A batted ball that hits the pitching coach (who tried to move) is dead: batter to 1st, runners move up only if forced. 1st base overthrow: one base max (NL only).',
+  o:'Dead ball:\na) Players can advance bases until play is called dead by calling time out DIRECTLY in front of the LEAD runner. If time is called in front of the lead runner, then any trailing runners may continue to advance until stopped by an occupied base. Play is also stopped when the ball is controlled on the infield and all runners have stopped their attempts at advancing.\nb) The ball will be declared dead when a player is injured and in the umpire’s judgment is unable to continue the play.\nc) A batted ball hits the pitching coach (and the coach made a reasonable effort to get out of the way), the ball will be declared dead and the batter will be awarded 1st base. Base runners will advance one base, only if forced.\nd) Runners can advance a maximum of one base on a 1st base overthrow. (NL Only).'},
+ {n:11,t:'No infield fly rule',see:'plays',g:[],plain:'There is no infield fly rule. A dropped infield pop-up is a live ball and runners are forced.',o:'There is no infield fly rule.'},
+ {n:12,t:'Batting order',see:'lineup',g:['G20'],plain:'Every player at the game bats. The order stays the same all game unless a player is removed for injury or illness.',
+  o:'Every player at the game shall be put in a batting order. That batting order will stay the same throughout the game unless a player is removed from game due to injury or illness.'},
+ {n:13,t:'Coaches on the field',see:'field',g:['G16'],plain:'Defense: two coaches in the outfield in foul territory and one at the dugout. Offense: two base coaches and the pitching coach. Everyone else sits. A coach may stand at the backstop to help the catcher.',
+  o:'A team on defense may have two coaches stationed in the outfield in foul territory and a coach standing at the dugout. All other coaches must be sitting down along fence or in the dugout. A team on offense may have two base coaches and a coach pitching to his or her batters. A coach may stand at backstop to help catcher speed up the game.'},
+ {n:14,t:'No walks, steals or leadoffs',see:'atbat',g:['G17'],plain:'No walks, no base stealing, no leading off.',o:'There will be no walks, base stealing or leading off.'},
+ {n:15,t:'Playing time',see:'lineup',g:['G18','G19','G24'],nl:true,plain:'Every player gets at least one infield inning and one outfield inning. Nobody sits a second inning until everyone has sat once. Catcher is infield. No repeating an infield position in the first 4 innings (NL only), except catcher, which a player can repeat.',
+  o:'Each player must be given a position in the infield and a position in the outfield for at least one inning each per game. No player can sit a second inning in any game until all players have sat for a minimum of one inning. CATCHER IS AN INFIELD POSITION.\na) Players may not repeat same infield position in a four-inning game. If a game advances to a fifth-inning, they may repeat an infield position. (NL Only)'},
+ {n:16,t:'Minimum players and forfeits',see:'clock',g:['G19','G21'],plain:'8 players in the field to play a game that counts. Short-handed teams forfeit before the game starts (coaches can still play it as a practice). 10-minute grace period, but the clock starts at the scheduled time.',
+  o:'In order to field a team and play a binding game, teams must place eight players in the field. If a team is unable to do so, for whatever reason, then the game will result in a forfeit and a forfeit must be called before the game begins. However, at the discretion of the coaches, the game may be played as a practice game. Teams shall be given a grace period of 10 minutes from the scheduled start of the game within which to produce the required number of players; however, game time begins at scheduled starting time.'},
+ {n:17,t:'Registered players and coaches',see:'other',g:[],plain:'Only registered players bat or play the field. Only registered coaches in the dugout.',o:'Only registered players are allowed to bat and/or play the field. Only registered coaches are allowed to be in the dugout.'},
+ {n:18,t:'Helmets',see:'other',g:[],plain:'All batters and runners wear a batting helmet.',o:'All batters and base runners shall wear an appropriate batting helmet'},
+ {n:19,t:'Bats',see:'other',g:['G22'],plain:'USA Baseball bats only. A USSSA bat: the at-bat is an out and the play is reversed. Keep using it: forfeit, and the player is removed from the league.',
+  o:'Only USA BASEBALL approved bats will be allowed. See guidelines posted on the Home Page of this website. USSSA Bats are not permitted. A player found to be using a USSSA Bat shall have the at-bat called an out and the play reversed to the field position prior to their at bat. If the player continues to use the USSSA Bat the team shall forfeit the game and the player will be removed from the league.'},
+ {n:20,t:'Playoff tiebreakers',see:'other',g:['G23'],plain:'Head-to-head, then runs against/runs for, then a coin flip.',o:'Ties in the standings going into the playoffs will be broken based on 1) head-to-head, 2) runs against/runs for 3) flip of a coin.'},
+ {n:21,t:'Uniforms',see:'other',g:[],plain:'Shirts tucked in, hats on properly.',o:'Shirts are to be tucked in at all times and hats worn properly.'},
+ {n:22,t:'No tobacco or alcohol',see:'other',g:[],plain:'None on the field, in the dugout or in the stands. The umpire decides enforcement.',o:'No Tobacco or alcohol products will be allowed on the field, the dugout area or in the stands. The method of enforcement, including the possibility of exclusion of the attending party, coaches, or forfeiture, shall be determined by the umpire on the field.'},
+ {n:23,t:'Behavior',see:'other',g:[],plain:'Head coaches answer for their fans, players and coaches. See the Codes of Conduct on the league website.',o:'Head coaches or acting head coaches are responsible for the behavior of their fans, players and coaches. See Coaches Code of Conduct and Parents Code of Conduct on the website for more information.'},
+ {n:24,t:'Fall season follows NL rules',see:'other',g:[],plain:'In the fall, every team follows the Spring NL rules. That turns on the “NL Only” rules: 10d and 15a.',o:'During Fall Rec season, all teams will follow rules set forth under Spring NL specific rules.'}
+];
+const SEE={field:'Who stands where',mound:'The mound',fair:'Fair ball arc',atbat:'The at-bat',plays:'Live & dead ball',clock:'Game clock',lineup:'Playing time',other:'Everything else'};
+function renderRules(f){
+  $('rList').innerHTML=RULES.filter(r=>f==='all'||(f==='gray'&&r.g.length)||(f==='nl'&&r.nl)).map(r=>`
+   <article class="rule" id="r${r.n}"><div class="rn">${r.n}</div><div>
+    <div class="rt"><h3>${esc(r.t)}</h3>${r.nl?'<span class="tag nl">NL only · applies in fall</span>':''}</div>
+    <p class="pl">${esc(r.plain)}</p>
+    <div class="meta"><a class="seelink" href="#${r.see}">See it: ${esc(SEE[r.see])} →</a></div>
+    <details><summary>Official wording</summary><p class="official">${esc(r.o)}</p></details>
+   </div></article>`).join('');
+}
+document.querySelector('.filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderRules(b.dataset.f)});
+renderRules('all');
+
+// ================= CHECKLIST =================
+function clItems(aud){return GRAY.filter(g=>g.aud===aud).map(g=>`<li><input type="checkbox" id="cl-${g.id}" aria-label="${esc(g.title)} settled"><div><label for="cl-${g.id}" class="cq">${esc(g.title)}</label> ${ruleLink(g.rule)}${g.conf?'':' <span class="tag sugg">Still open</span>'}<div class="cc">${g.conf?'Ruling':'Suggested'}: ${esc(g.call)} <a href="#g-${g.id}">Details</a></div></div></li>`).join('')}
+$('clPlate').innerHTML=clItems('plate');$('clLeague').innerHTML=clItems('league');
+document.querySelectorAll('.cl').forEach(ul=>ul.addEventListener('change',e=>{const li=e.target.closest('li');if(li)li.classList.toggle('done',e.target.checked)}));
+$('clCopy').onclick=()=>{
+  const txt='PVAA Rookie Division (Fall 2026): how we call the gray areas in the 8/15/26 rulebook\n\n'+GRAY.map((g,i)=>`${i+1}. Rule ${g.rule}: ${g.title}\n   ${g.conf?'Ruling':'Still open, suggested'}: ${g.call}`).join('\n\n');
+  const fallback=()=>{const t=$('clText');t.hidden=false;t.value=txt;t.focus();t.select();$('clMsg').textContent='Select all and copy the text above.'};
+  try{navigator.clipboard.writeText(txt).then(()=>{$('clMsg').textContent='Copied. Paste it into an email or text.'},fallback)}catch(e){fallback()}
+};
+
+// ================= FIELD DRAWING =================
+// Scale: 2 px per ft. Home (200,330); bases 60 ft apart; rubber 40 ft from home; fair arc 20 ft.
+const FONT='Barlow Condensed, Arial Narrow, sans-serif';
+function fieldBase(extra){
+  return `<defs><clipPath id="fan${extra}"><path d="M200 330 L23 153 A250 250 0 0 1 377 153 Z"/></clipPath></defs>
+  <rect x="0" y="0" width="400" height="400" fill="var(--grass-out)"/>
+  <path d="M200 330 L23 153 A250 250 0 0 1 377 153 Z" fill="var(--grass)"/>
+  <path d="M23 153 A250 250 0 0 1 377 153" fill="none" stroke="#2a5a26" stroke-width="5"/>
+  <circle cx="200" cy="245" r="112" fill="var(--dirt)" clip-path="url(#fan${extra})"/>
+  <circle cx="200" cy="330" r="22" fill="var(--dirt)"/>
+  <polygon points="200,314 270,245 200,176 130,245" fill="var(--grass-in)"/>
+  <circle cx="200" cy="250" r="11" fill="var(--dirt)"/>
+  <rect x="195" y="248.5" width="10" height="3" fill="#fff"/>
+  <line x1="200" y1="330" x2="23" y2="153" stroke="var(--chalk)" stroke-width="1.6"/>
+  <line x1="200" y1="330" x2="377" y2="153" stroke="var(--chalk)" stroke-width="1.6"/>
+  <path d="M171.7 301.7 A40 40 0 0 1 228.3 301.7" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/>
+  <g fill="#fff" stroke="#9aa3b5" stroke-width=".8">
+    <rect x="279.5" y="239.5" width="11" height="11" transform="rotate(45 285 245)"/>
+    <rect x="194.5" y="154.5" width="11" height="11" transform="rotate(45 200 160)"/>
+    <rect x="109.5" y="239.5" width="11" height="11" transform="rotate(45 115 245)"/>
+    <path d="M194 325 h12 v5 l-6 6 l-6 -6 z"/>
+  </g>`;
+}
+const pin=(x,y,lab,fill,ink,shape,extra='')=>shape==='sq'
+  ?`<g ${extra}><rect x="${x-10}" y="${y-10}" width="20" height="20" rx="3" transform="rotate(45 ${x} ${y})" fill="${fill}" stroke="#13223f" stroke-width="1.2"/><text x="${x}" y="${y+3.8}" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="10.5" fill="${ink}">${lab}</text></g>`
+  :`<g ${extra}><circle cx="${x}" cy="${y}" r="11.5" fill="${fill}" stroke="#fff" stroke-width="1.5"/><text x="${x}" y="${y+3.6}" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="${String(lab).length>2?9:10.5}" fill="${ink}">${lab}</text></g>`;
+const txt=(x,y,s,size=9,fill='#fff',anchor='middle')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${FONT}" font-weight="700" font-size="${size}" fill="${fill}">${s}</text>`;
+
+// ================= WHO STANDS WHERE =================
+const FIELDERS={'1B':[302,230],'2B':[250,182],SS:[150,182],'3B':[98,228],LF:[85,150],LCF:[160,104],RCF:[240,104],RF:[315,150]};
+const OTHER='#8d96a8';
+const LAYOUT={
+ def:{pins:()=>{let h='';
+   for(const k in FIELDERS)h+=pin(...FIELDERS[k],k,'var(--def)','#fff');
+   h+=pin(216,246,'P','var(--def)','#fff');
+   h+=pin(200,348,'C','var(--def)','#fff');
+   h+=pin(200,266,'PC',OTHER,'#fff','sq');
+   h+=pin(174,326,'B',OTHER,'#fff');
+   h+=pin(42,206,'1','var(--coach)','#13223f','sq')+pin(358,206,'2','var(--coach)','#13223f','sq')+pin(340,312,'3','var(--coach)','#13223f','sq');
+   h+=`<g opacity=".85">`+pin(232,364,'4','var(--coach)','#13223f','sq')+`</g>`;
+   return h},
+  items:[
+   ['P','','Player pitcher','Beside the pitching coach, one foot inside the circle, behind the coach until the ball is hit.','7','G7'],
+   ['C','','Catcher','Full gear, behind the plate. The league provides the gear. Joins the play once the ball is hit.','7','G8'],
+   ['IF','','Infield and outfield','Infield is P, C, 1B, 2B, SS, 3B. At least 8 players in the field.','7, 16','G19'],
+   ['1','c','Two outfield coaches','In foul territory down the lines. They can coach from there.','13',''],
+   ['3','c','Dugout coach','One coach standing at the dugout. Everyone else sits.','13',''],
+   ['4','c','Backstop coach (optional)','May stand at the backstop to help the catcher keep the game moving.','13','G16'],
+   ['PC','o','Their pitching coach','Must stay out of your fielders’ way once the ball is hit.','3','G3']
+  ]},
+ off:{pins:()=>{let h='';
+   for(const k in FIELDERS)h+=pin(...FIELDERS[k],k,OTHER,'#fff');
+   h+=pin(216,246,'P',OTHER,'#fff')+pin(200,348,'C',OTHER,'#fff');
+   h+=`<rect x="196" y="250" width="8" height="21" fill="var(--legal)" opacity=".7"/>`;
+   h+=pin(200,266,'PC','var(--coach)','#13223f','sq');
+   h+=pin(174,326,'B','var(--def)','#fff');
+   h+=pin(328,268,'1','var(--coach)','#13223f','sq')+pin(72,268,'2','var(--coach)','#13223f','sq');
+   return h},
+  items:[
+   ['PC','c','Your pitching coach','One foot on the pitcher’s line, between the rubber and 5 ft in front of the circle (green strip). No coaching from there.','1, 2','G1'],
+   ['1','c','1st base coach','One of your two base coaches.','13',''],
+   ['2','c','3rd base coach','Your other base coach.','13',''],
+   ['B','','Batter and runners','Everyone batting or running wears a helmet. Every player at the game bats, in the same order all game.','12, 18',''],
+   ['—','o','Everyone else','All other coaches sit along the fence or in the dugout.','13','']
+  ]}
+};
+function drawLayout(side){
+  const L=LAYOUT[side];
+  $('layoutSvg').innerHTML=fieldBase('L')
+    +`<rect x="12" y="316" width="78" height="24" rx="4" fill="#5b4a3a"/>${txt(51,332,'3B DUGOUT',9)}<rect x="310" y="316" width="78" height="24" rx="4" fill="#5b4a3a"/>${txt(349,332,'1B DUGOUT',9)}`
+    +`<path d="M146 352 Q200 382 254 352" fill="none" stroke="#cfd5df" stroke-width="2.5"/>`
+    +txt(200,314,'20 FT ARC',7.5)+L.pins();
+  $('layoutList').innerHTML=L.items.map(([k,c,t,d,r,g])=>`<li><span class="k ${c}">${k}</span><div><b>${t}</b> ${String(r).split(', ').map(x=>`<a class="rchip" href="#r${x}">Rule ${x}</a>`).join(' ')}<div class="d">${d}</div></div></li>`).join('');
+  $('lyDef').setAttribute('aria-pressed',side==='def');$('lyOff').setAttribute('aria-pressed',side==='off');
+}
+$('lyDef').onclick=()=>drawLayout('def');$('lyOff').onclick=()=>drawLayout('off');
+drawLayout('def');
+
+// ================= MOUND =================
+// 6 px per ft. Rubber at (150,40). Circle radius 9 ft (54 px). Zone to 5 ft past the circle's front edge (y=124).
+const M={cx:150,cy:40,r:54,ft:6,front:94,zoneEnd:124};
+const mound={d:8,p:[188,52]};
+function drawMound(){
+  const cyC=M.cy+mound.d*M.ft, [px,py]=mound.p;
+  const ref=[[M.cy,'RUBBER'],[M.front,'MARKING EDGE'],[M.zoneEnd,'LIMIT']];
+  let h=`<rect x="0" y="-14" width="300" height="280" fill="var(--grass)"/>
+   <circle cx="${M.cx}" cy="${M.cy}" r="${M.r}" fill="var(--dirt)"/>
+   <rect x="96" y="${M.cy}" width="108" height="${M.zoneEnd-M.cy}" fill="var(--legal)" opacity=".4"/>
+   <line x1="96" y1="${M.zoneEnd}" x2="204" y2="${M.zoneEnd}" stroke="#fff" stroke-width="2.5"/>
+   <line x1="150" y1="${M.cy}" x2="150" y2="258" stroke="#fff" stroke-width="1.5" stroke-dasharray="5 4"/>
+   ${txt(156,252,'TO HOME PLATE',9,'#fff','start')}
+   <rect x="141" y="${M.cy-2}" width="18" height="4" fill="#fff"/>
+   ${ref.map(([y,l])=>`<line x1="204" y1="${y}" x2="214" y2="${y}" stroke="#fff" stroke-width="1.2"/>${txt(217,y+3,l,8.5,'#fff','start')}`).join('')}
+   ${txt(217,M.cy+13,'40 FT FROM HOME',7.5,'#fff','start')}
+   ${txt(217,M.zoneEnd+13,'5 FT PAST MARKING',7.5,'#fff','start')}
+   <line x1="86" y1="${M.front}" x2="96" y2="${M.front}" stroke="#fff" stroke-width="1"/>
+   <line x1="90" y1="${M.front}" x2="90" y2="${M.zoneEnd}" stroke="#fff" stroke-width="1.5"/>
+   ${txt(86,M.front+19,'5 FT',10,'#fff','end')}
+   ${txt(142,M.zoneEnd+24,'COACH PITCHES FROM',8,'#fff','end')}${txt(142,M.zoneEnd+34,'ANYWHERE IN THE GREEN',8,'#fff','end')}`;
+  h+=`<line x1="40" y1="${cyC}" x2="96" y2="${cyC}" stroke="#fff" stroke-width="1" stroke-dasharray="2 3" opacity=".9"/>`
+    +txt(38,cyC-4,'P STAYS',7.5,'#fff','end')+txt(38,cyC+5,'BEHIND',7.5,'#fff','end');
+  h+=pin(150,cyC,'PC','var(--coach)','#13223f','sq');
+  h+=`<g style="cursor:grab">${pin(px,py,'P','var(--def)','#fff')}</g>`;
+  $('moundSvg').innerHTML=h;
+  const d=mound.d, past=d-9;
+  $('coachDv').textContent=`${d} ft from rubber · ${40-d} ft from home`;
+  // checks
+  const ck=(ok,t,s,lvl)=>`<li><span class="ic ${lvl||(ok?'':'no')}">${lvl==='warn'?'?':ok?'✓':'✗'}</span><span>${t}${s?`<span class="sub">${s}</span>`:''}</span></li>`;
+  let c=ck(true,'One foot on the pitcher’s line','Shown on the line here.');
+  if(d<0)c+=ck(false,'Behind the rubber','The coach can’t pitch from behind the rubber.');
+  else if(d>14)c+=ck(false,'Too far forward',`He’s ${past} ft past the mound marking. The limit is 5 ft past it.`);
+  else c+=ck(true,'Inside the coach zone',past<=0?`He’s on the mound marking, ${d} ft in front of the rubber.`:`He’s ${past} ft past the mound marking. The limit is 5 ft past it.`);
+  $('coachChecks').innerHTML=c;
+  const dist=Math.hypot(px-M.cx,py-M.cy), inCircle=dist<=M.r+M.ft, behind=py<=cyC-2, side=Math.abs(px-150)>=12;
+  $('pitcherChecks').innerHTML=
+    ck(inCircle,'One foot inside the pitcher’s circle',inCircle?'':'Move closer to the rubber.')+
+    ck(behind,'Behind the pitching coach',behind?'Farther from home than the coach.':'He’s closer to home than the coach. He has to stay behind until the ball is hit.')+
+    ck(side,'On either side of the coach',side?'':'Directly behind the coach. Rule 7 puts him on one side.')+
+    `<li><span class="ic ${inCircle&&behind&&side?'':'no'}">${inCircle&&behind&&side?'✓':'✗'}</span><span><b>${inCircle&&behind&&side?'Legal spot':'Not legal yet'}</b><span class="sub">Once the ball is hit he can go get it.</span></span></li>`;
+}
+$('coachD').addEventListener('input',e=>{mound.d=+e.target.value;drawMound()});
+function svgPoint(svg,ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse())}
+(function(){const svg=$('moundSvg');let drag=false;
+  const mv=ev=>{const p=svgPoint(svg,ev);mound.p=[Math.max(10,Math.min(290,p.x)),Math.max(-6,Math.min(250,p.y))];drawMound()};
+  svg.addEventListener('pointerdown',ev=>{drag=true;try{svg.setPointerCapture(ev.pointerId)}catch(e){}mv(ev)});
+  svg.addEventListener('pointermove',ev=>{if(drag)mv(ev)});
+  svg.addEventListener('pointerup',()=>drag=false);svg.addEventListener('pointercancel',()=>drag=false);
+})();
+drawMound();
+
+// ================= FAIR BALL ARC =================
+// 4 px per ft. Home (160,212). Arc radius 80 (20 ft). Rubber at 40 ft (y=52).
+const H=[160,212], ARC=80;
+const inLines=([x,y])=>y<=H[1]&&Math.abs(x-H[0])<=H[1]-y+.5;
+const pastArc=([x,y])=>Math.hypot(x-H[0],y-H[1])>ARC;
+const FAIR_EX=[
+ {k:'short',label:'Stops short',path:[H,[172,168]],v:'Foul',cls:'bad',tag:'off',why:'It never got past the arc.'},
+ {k:'past',label:'Rolls past the arc',path:[H,[196,108]],v:'Fair',cls:'good',tag:'off',why:'It went past the arc in fair territory.'},
+ {k:'back',label:'Crosses, then spins back',path:[H,[148,118],[154,150]],v:'Fair',cls:'grayv',tag:'gray',why:'It crossed the arc, then spun back in front of it. Ruling: once it crosses the arc in fair territory, it’s fair.'},
+ {k:'touch',label:'Touched before the arc',path:[H,[140,160]],fielder:[140,160],v:'Foul',cls:'grayv',tag:'gray',why:'The catcher grabbed it before it reached the arc. Ruling: it never got past the arc, so it’s foul.'},
+ {k:'rollfoul',label:'Past the arc, rolls foul',path:[H,[206,140],[262,126]],v:'Foul',cls:'bad',tag:'nb',why:'Normal baseball: a ball that rolls foul before reaching 1st or 3rd is foul, even after it passes the arc.'}
+];
+let fairSel=FAIR_EX[1];
+function drawFair(ex){
+  const ARCPATH=`M${H[0]-ARC*Math.SQRT1_2} ${H[1]-ARC*Math.SQRT1_2} A${ARC} ${ARC} 0 0 1 ${H[0]+ARC*Math.SQRT1_2} ${H[1]-ARC*Math.SQRT1_2}`;
+  let h=`<rect x="0" y="0" width="320" height="230" fill="var(--grass-out)"/>
+   <polygon points="${H[0]},${H[1]} 0,${H[1]-H[0]} 0,0 320,0 320,${H[1]-H[0]}" fill="var(--grass)"/>
+   <circle cx="160" cy="52" r="16" fill="var(--dirt)"/><rect x="153" y="50.5" width="14" height="3" fill="#fff"/>
+   ${txt(178,48,'RUBBER (40 FT)',8.5,'#fff','start')}
+   <circle cx="${H[0]}" cy="${H[1]}" r="26" fill="var(--dirt)"/>
+   <line x1="${H[0]}" y1="${H[1]}" x2="0" y2="${H[1]-H[0]}" stroke="#fff" stroke-width="1.6"/>
+   <line x1="${H[0]}" y1="${H[1]}" x2="320" y2="${H[1]-H[0]}" stroke="#fff" stroke-width="1.6"/>
+   <path d="${ARCPATH}" fill="none" stroke="#fff" stroke-width="2.4" stroke-dasharray="5 4"/>
+   ${txt(160,126,'20 FT ARC',9)}${txt(26,110,'FOUL',10,'#d9e6d5')}${txt(294,110,'FOUL',10,'#d9e6d5')}${txt(232,30,'FAIR',11,'#fff')}
+   <path d="M154 207 h12 v5 l-6 6 l-6 -6 z" fill="#fff"/>`;
+  const P=ex.path, pts=P.map(p=>p.join(',')).join(' ');
+  h+=`<polyline points="${pts}" fill="none" stroke="var(--path)" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round"/>`;
+  if(ex.fielder)h+=pin(ex.fielder[0]-14,ex.fielder[1]+10,'C','var(--def)','#fff');
+  const e=P[P.length-1];
+  h+=`<circle cx="${e[0]+1}" cy="${e[1]+1.5}" r="5" fill="rgba(0,0,0,.3)"/><circle cx="${e[0]}" cy="${e[1]}" r="5" fill="#fff" stroke="var(--brand-red)" stroke-width="1.4"/>`;
+  $('fairSvg').innerHTML=h;
+  const tags={off:'<span class="tag off">Official</span>',gray:'',nb:'<span class="tag off">Normal baseball</span>'};
+  $('fairTag').innerHTML=tags[ex.tag]+' '+esc(ex.label||'Your ball');
+  $('fairVerdict').textContent=ex.v;$('fairVerdict').className='verdict '+ex.cls;$('fairWhy').textContent=ex.why;
+  [...$('fairEx').children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===ex.k));
+}
+$('fairEx').innerHTML=FAIR_EX.map(e=>`<button data-k="${e.k}" aria-pressed="false">${e.label}</button>`).join('');
+$('fairEx').addEventListener('click',e=>{const b=e.target.closest('button');if(b)drawFair(FAIR_EX.find(x=>x.k===b.dataset.k))});
+$('fairSvg').addEventListener('pointerdown',ev=>{const p=svgPoint($('fairSvg'),ev),pt=[Math.max(4,Math.min(316,p.x)),Math.max(4,Math.min(226,p.y))];
+  const f=inLines(pt), past=pastArc(pt), ft=Math.round(Math.hypot(pt[0]-H[0],pt[1]-H[1])/4);
+  let v,cls,why;
+  if(!f){v='Foul';cls='bad';why='It ended up outside the foul lines.'}
+  else if(!past){v='Foul';cls='bad';why=`It stopped about ${ft} ft from home, short of the 20 ft arc.`}
+  else{v='Fair';cls='good';why=`It got about ${ft} ft from home, past the arc in fair territory.`}
+  drawFair({k:'tap',label:'Your ball',path:[H,pt],v,cls,tag:'off',why});
+});
+drawFair(fairSel);
+
+// ================= AT-BAT =================
+const AB={pitches:[],strikes:0,done:null};
+const ABL={sw:'Swing & miss',fo:'Foul',tk:'Taken',hb:'Hit by pitch',hit:'Hit fair'};
+const sugTag='', grayTag=id=>'';
+function abAct(a){
+  if(a==='reset'){AB.pitches=[];AB.strikes=0;AB.done=null;return abDraw()}
+  if(AB.done)return;
+  const n=AB.pitches.length+1; let note='',tags='';
+  if(a==='sw'){AB.strikes++;note=`Strike ${AB.strikes}.`;tags='<span class="tag off">Official</span>'}
+  else if(a==='fo'){if(AB.strikes<2){AB.strikes++;note=`Foul. Strike ${AB.strikes}.`;tags='<span class="tag off">Normal baseball</span>'}else{note='Foul with 2 strikes. Not strike 3.';tags=sugTag+grayTag('G6')}}
+  else if(a==='tk'){note='Counts as one of the 6 pitches. Not a strike.';tags=sugTag+grayTag('G6')}
+  else if(a==='hb'){note='No base. The batter stays up. Counts as one of the 6.';tags='<span class="tag off">Official: no base</span>'+grayTag('G6')}
+  else if(a==='hit'){note='Ball in play. Run!';AB.done='hit'}
+  AB.pitches.push({a,note,tags});
+  if(!AB.done){
+    if(AB.strikes>=3){AB.done='k'}
+    else if(n>=6&&a!=='fo'){AB.done='six'}
+    else if(n>=6){AB.pitches[n-1].note+=' Foul on the last pitch, so he keeps hitting.';AB.pitches[n-1].tags+=''}
+  }
+  abDraw();
+}
+function abDraw(){
+  $('abSlots').innerHTML=Array.from({length:Math.max(6,AB.pitches.length+(AB.done?0:AB.pitches.length>=6?1:0))},(_,i)=>{const p=AB.pitches[i];return p?`<div class="slot f ${p.a}">${ABL[p.a].replace(' & ','<br>& ').replace(' by ','<br>by ')}</div>`:`<div class="slot">${i<6?i+1:'+'}</div>`}).join('');
+  $('abK').innerHTML='Strikes '+[0,1,2].map(i=>`<i class="${i<AB.strikes?'on':''}"></i>`).join('');
+  const left=6-AB.pitches.length, v=$('abVerdict');
+  const V={hit:['Ball in play','good'],k:['Strike 3. Batter is out.','bad'],six:[AB.pitches.length>6?'Not fouled off, no fair ball. Batter is out.':'6th pitch, no fair ball. Batter is out.','bad']};
+  if(AB.done){v.textContent=V[AB.done][0];v.className='verdict '+V[AB.done][1]}
+  else if(left<=0){v.textContent='Fouled off the 6th: he keeps hitting until he puts one in play or doesn’t foul it off';v.className='verdict'}
+  else{v.textContent=AB.pitches.length?`${left} pitch${left===1?'':'es'} left, ${3-AB.strikes} strike${3-AB.strikes===1?'':'s'} to go`:'Pitch 1 is coming';v.className='verdict'}
+  $('abLog').innerHTML=AB.pitches.length?AB.pitches.map((p,i)=>`<li><b>Pitch ${i+1}:</b> ${ABL[p.a]}. ${p.note} ${p.tags}</li>`).join(''):'<li class="muted">Tap a button for each pitch.</li>';
+  [...$('abBtns').children].forEach(b=>{if(b.dataset.a!=='reset')b.disabled=!!AB.done});
+}
+$('abBtns').addEventListener('click',e=>{const b=e.target.closest('button');if(b)abAct(b.dataset.a)});
+abDraw();
+
+// ================= LIVE & DEAD BALL PLAYS =================
+const BASES=[[200,330],[285,245],[200,160],[115,245],[200,330]];
+const PDEF={PC:[200,264],P:[216,247],C:[200,346],'1B':[303,230],'2B':[248,180],SS:[152,180],'3B':[100,226],LF:[85,150],LCF:[160,104],RCF:[240,104],RF:[315,150]};
+const RUN={B:{label:'BAT',start:0},R1:{label:'R1',start:1},R2:{label:'R2',start:2},R3:{label:'R3',start:3}};
+const lerp=(a,b,t)=>a+(b-a)*t, lerp2=(p,q,t)=>[lerp(p[0],q[0],t),lerp(p[1],q[1],t)];
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, easeOut=t=>1-(1-t)*(1-t);
+const clone=o=>JSON.parse(JSON.stringify(o));
+function basePos(x){if(x>=4)return BASES[4];if(x<=0)return BASES[0];const i=Math.floor(x);return lerp2(BASES[i],BASES[i+1],x-i)}
+const run=(id,to,o={})=>({t:'run',id,to,...o}), f=(id,to,o={})=>({t:'f',id,to,...o}), ball=(o)=>({t:'ball',...o}), flag=(id,fl,d=0)=>({t:'flag',id,flag:fl,d}), time=(id,d=0)=>({t:'time',id,d});
+const T={off:'<span class="tag off">Official</span>',gray:'',sugg:'',nl:'<span class="tag nl">NL only</span>'};
+
+const PLAYS=[
+ {id:'p1',rule:'10a',title:'Time in front of the lead runner',tags:['off'],runners:['B','R1'],
+  desc:'Runner on 1st. Base hit to left-center. The shortstop gets the ball in front of the lead runner and asks for time.',
+  teach:'Time is called with the ball in the infield, directly in front of the lead runner. Runners behind him can keep going until an occupied base stops them.',
+  steps:[
+   {label:'Base hit to the gap',text:'Line drive into left-center. R1 runs from 1st and the batter heads down the line.',acts:[ball({to:[150,98],kind:'hit'}),run('B',.55),run('R1',1.55)]},
+   {label:'LCF gets it',text:'The left-center fielder runs it down. Nobody has called time, so the ball is live.',acts:[f('LCF',[152,102],{dur:.5}),ball({toF:'LCF',kind:'pick',d:.45,dur:.2}),run('B',1.1),run('R1',2.35)]},
+   {label:'Throw to the shortstop',text:'LCF throws to the shortstop at the edge of the infield.',acts:[f('SS',[142,198],{dur:.5}),ball({toF:'SS',kind:'throw',d:.2,dur:.7}),run('B',1.45),run('R1',2.85)]},
+   {label:'Time, in front of the lead runner',text:'R1 is the lead runner and he’s on 3rd. The shortstop runs the ball in between R1 and home and asks for time.',banner:{text:'TIME · IN FRONT OF THE LEAD RUNNER',kind:'info'},hold:1700,acts:[f('SS',[146,262]),run('R1',3),run('B',1.65),time('SS',.8)]},
+   {label:'Trailing runner keeps going',text:'Time stops the lead runner, not the runners behind him. The batter can keep going until an occupied base stops him. 2nd is open, so he takes it. 3rd is taken, so that’s where he stops.',banner:{text:'TRAILING RUNNER: ON TO THE NEXT OPEN BASE',kind:'max'},hold:2200,acts:[run('B',2)]},
+   {label:'Play over',text:'R1 on 3rd, batter on 2nd.',banner:{text:'R1 ON 3RD · BATTER ON 2ND',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'p2',rule:'10a',title:'Lead runner between bases',tags:['gray','sugg'],runners:['B','R1'],gray:'G11',
+  desc:'Runner on 1st. Base hit to right. Time is called while R1 is between 2nd and 3rd. Where does he go?',
+  teach:'Ruling: a lead runner past halfway gets the base he was running to. Short of halfway, he goes back. Trailing runners can only move up into open bases.',
+  steps:[
+   {label:'Base hit to right',text:'R1 runs from 1st, the batter heads for 1st.',acts:[ball({to:[318,146],kind:'hit'}),run('B',.5),run('R1',1.5)]},
+   {label:'RF gets it',text:'The right fielder picks it up. R1 rounds 2nd.',acts:[f('RF',[318,150],{dur:.5}),ball({toF:'RF',kind:'pick',d:.45,dur:.2}),run('B',.95),run('R1',2.05)]}
+  ],
+  variants:[
+   {key:'A',label:'A. Past halfway',tag:'Gets 3rd',steps:[
+     {label:'Time, R1 past halfway',text:'RF throws to the shortstop, who steps into R1’s path toward 3rd and asks for time. R1 is past halfway.',banner:{text:'TIME · R1 PAST HALFWAY',kind:'info'},acts:[f('SS',[132,226],{dur:.6}),ball({toF:'SS',kind:'throw',d:.1,dur:.75}),run('R1',2.6),run('B',1.3),time('SS',.9)]},
+     {label:'R1 gets 3rd',text:'Ruling: past halfway, so R1 gets 3rd. The batter is a trailing runner and 2nd is now open, so he can take it.',banner:{text:'RULING · R1 TO 3RD',kind:'max'},hold:2000,acts:[run('R1',3),run('B',2)]},
+     {label:'Play over',text:'R1 on 3rd, batter on 2nd.',banner:{text:'R1 ON 3RD · BATTER ON 2ND',kind:'good'},dur:600,acts:[]}
+   ]},
+   {key:'B',label:'B. Short of halfway',tag:'Back to 2nd',steps:[
+     {label:'Time, R1 short of halfway',text:'RF gets the ball in quickly. The shortstop steps into R1’s path and asks for time before R1 reaches halfway.',banner:{text:'TIME · R1 SHORT OF HALFWAY',kind:'info'},acts:[f('SS',[143,214],{dur:.5}),ball({toF:'SS',kind:'throw',d:.05,dur:.65}),run('R1',2.32),run('B',1.25),time('SS',.8)]},
+     {label:'R1 goes back to 2nd',text:'Ruling: short of halfway, so R1 returns to 2nd. 2nd is occupied, so the batter has to stop at 1st.',banner:{text:'RULING · R1 BACK TO 2ND',kind:'max'},hold:2000,acts:[run('R1',2),flag('R1','returned',.95),run('B',1)]},
+     {label:'Play over',text:'R1 on 2nd, batter on 1st.',banner:{text:'R1 ON 2ND · BATTER ON 1ST',kind:'good'},dur:600,acts:[]}
+   ]}
+  ]},
+ {id:'p3',rule:'10a',title:'Ball controlled, runners stop',tags:['off'],runners:['B','R2'],
+  desc:'Runner on 2nd. Grounder to second base, out at 1st. R2 stops at 3rd and the first baseman holds the ball.',
+  teach:'Play also stops when the ball is controlled in the infield and every runner has stopped trying to advance.',
+  steps:[
+   {label:'Grounder to second',text:'R2 breaks for 3rd. The batter runs.',acts:[f('2B',[246,188],{dur:.6}),ball({to:[246,190],kind:'hit'}),run('B',.35),run('R2',2.3)]},
+   {label:'Out at 1st',text:'The second baseman throws to first in time.',banner:{text:'OUT AT 1ST',kind:'info'},acts:[f('1B',[287,238],{dur:.4}),ball({toF:'1B',kind:'throw',dur:.7}),run('B',.95),run('R2',2.75),flag('B','out',.9)]},
+   {label:'R2 stops at 3rd',text:'R2 reaches 3rd and stops. The first baseman has the ball in the infield.',acts:[run('R2',3)]},
+   {label:'Play over',text:'Ball controlled in the infield and no runner is trying to advance, so the play is over.',banner:{text:'BALL CONTROLLED · RUNNERS STOPPED',kind:'good'},hold:1800,acts:[time('1B',.3)]}
+  ]},
+ {id:'p4',rule:'10c',title:'Ball hits the pitching coach',tags:['off'],runners:['B','R1','R3'],
+  desc:'Runners on 1st and 3rd. A line drive hits the pitching coach, who tried to get out of the way.',
+  teach:'Ball hits the pitching coach (who tried to move): dead ball, batter to 1st, runners move up one base only if forced.',
+  steps:[
+   {label:'Line drive up the middle',text:'The ball comes straight back. The coach tries to get out of the way.',acts:[f('PC',[208,262],{dur:.4}),ball({toF:'PC',kind:'hit',dur:.55}),run('B',.12)]},
+   {label:'Dead ball',text:'A batted ball that hits the pitching coach is dead, as long as he made a reasonable effort to move.',banner:{text:'DEAD BALL · BALL HIT THE COACH',kind:'bad'},hold:1700,acts:[ball({to:[226,284],kind:'roll'})]},
+   {label:'Batter gets 1st',text:'The batter is awarded 1st base.',acts:[run('B',1)]},
+   {label:'Forced runners move up',text:'Runners move up one base only if forced. R1 is forced by the batter, so he goes to 2nd. 2nd was empty, so R3 isn’t forced. He stays.',banner:{text:'R1 FORCED TO 2ND · R3 STAYS',kind:'max'},hold:2000,acts:[run('R1',2)]},
+   {label:'Play over',text:'Batter on 1st, R1 on 2nd, R3 on 3rd.',banner:{text:'BASES LOADED · NO RUN',kind:'good'},dur:600,acts:[]}
+  ]},
+ {id:'p5',rule:'3a',title:'Coach in the way',tags:['gray','sugg'],runners:['B'],gray:'G3',
+  desc:'Slow roller to the left of the mound. The pitching coach doesn’t move and the player pitcher can’t get to the ball.',
+  teach:'Coaches: get out of the way once the ball is hit. Before the pitch it’s a warning, then removal as pitcher (3b). After the pitch it’s obstruction (3a), but the penalty isn’t written down.',
+  steps:[
+   {label:'Slow roller',text:'Soft grounder to the left side of the mound.',acts:[ball({to:[176,280],kind:'hit'}),run('B',.3)]},
+   {label:'Coach in the way',text:'The player pitcher goes for it, but the pitching coach doesn’t move and blocks his path.',banner:{text:'COACH IN THE WAY',kind:'bad'},acts:[f('P',[211,254],{dur:.7}),run('B',.6)]},
+   {label:'Obstruction is called',text:'Rule 3a: obstruction after the pitch. The rulebook doesn’t say what the penalty is.',banner:{text:'OBSTRUCTION · PENALTY NOT WRITTEN',kind:'over'},hold:2000,acts:[run('B',1)]},
+   {label:'The call',text:'Dead ball. The umpire decides what would have happened without the coach there. If the pitcher would have thrown the batter out, he’s out. If not, he stays at 1st.',banner:{text:'RULING: UMPIRE’S JUDGMENT',kind:'max'},dur:600,acts:[]}
+  ]},
+ {id:'p6',rule:'11',title:'No infield fly rule',tags:['off'],runners:['B','R1','R2'],
+  desc:'Runners on 1st and 2nd. Pop-up to the shortstop, who lets it drop on purpose.',
+  teach:'There is no infield fly rule. A dropped infield pop-up is a live ball and the runners are forced. Runners: stay close to your base on an infield pop-up.',
+  steps:[
+   {label:'Pop-up to short',text:'Runners hold close to their bases. In older divisions the infield fly rule would make the batter automatically out. Not here.',acts:[ball({to:[156,170],kind:'hit'}),run('B',.3)]},
+   {label:'SS lets it drop',text:'The shortstop lets the ball drop on purpose. Now every runner is forced to run.',banner:{text:'NO INFIELD FLY RULE · BALL DROPPED',kind:'over'},hold:1500,acts:[f('SS',[154,182],{dur:.4}),ball({toF:'SS',kind:'pick',d:.5,dur:.2}),run('R2',2.25),run('R1',1.25),run('B',.5)]},
+   {label:'Force at 3rd',text:'Throw to third ahead of R2.',banner:{text:'OUT AT 3RD',kind:'info'},acts:[f('3B',[116,240],{dur:.4}),ball({toF:'3B',kind:'throw',d:.1,dur:.7}),run('R2',2.82),flag('R2','out',.9),run('R1',1.6),run('B',.75)]},
+   {label:'Force at 2nd',text:'Third baseman to second ahead of R1.',banner:{text:'OUT AT 2ND',kind:'info'},acts:[f('2B',[206,166],{dur:.4}),ball({toF:'2B',kind:'throw',d:.1,dur:.7}),run('R1',1.85),flag('R1','out',.9),run('B',1)]},
+   {label:'Play over',text:'Two outs on a pop-up. Completely legal.',banner:{text:'TWO OUTS ON A POP-UP · LEGAL',kind:'good'},dur:600,acts:[]}
+  ]}
+];
+const Pl={scn:null,variant:null,steps:[],idx:-1,playing:false,raf:0,timer:0,states:[]};
+const ballPos=s=>s.ball.holder?s.fielders[s.ball.holder]:s.ball.pos;
+function pInit(scn){const r={};scn.runners.forEach(id=>r[id]={idx:RUN[id].start,flag:null});return{runners:r,fielders:clone(PDEF),ball:{pos:BASES[0],holder:null},throws:[],time:null}}
+function pEval(S0,step,t){
+  const s=clone(S0); s.throws=S0.throws.map(x=>({...x,cur:false}));
+  const loc=a=>{const d=a.d||0,u=a.dur==null?1-d:a.dur;return Math.max(0,Math.min(1,u<=0?1:(t-d)/u))};
+  for(const a of step.acts)if(a.t==='f')s.fielders[a.id]=lerp2(S0.fielders[a.id],a.to,ease(loc(a)));
+  for(const a of step.acts){
+    if(a.t==='run')s.runners[a.id].idx=lerp(S0.runners[a.id].idx,a.to,ease(loc(a)));
+    else if(a.t==='flag'&&t>=(a.d||0))s.runners[a.id].flag=a.flag;
+    else if(a.t==='time'&&t>=(a.d||0))s.time=a.id;
+  }
+  for(const a of step.acts){if(a.t!=='ball')continue;const l=loc(a);if(l<=0)continue;
+    const from=ballPos(S0),to=a.toF?s.fielders[a.toF]:a.to,e=a.kind==='roll'||a.kind==='hit'?easeOut(l):l;
+    s.ball.pos=lerp2(from,to,e);s.ball.holder=l>=1&&a.toF?a.toF:null;
+    if(a.kind!=='pick')s.throws.push({from,to:s.ball.pos,cur:true,kind:a.kind});}
+  return s;
+}
+function ptsPath(a,b){const P=[basePos(a)];if(b>a){for(let i=Math.floor(a)+1;i<b;i++)P.push(BASES[i])}else{for(let i=Math.ceil(a)-1;i>b;i--)P.push(BASES[i])}P.push(basePos(b));return P.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')}
+const BANNER={over:['var(--gold)','#13223f'],max:['var(--max)','#13223f'],bad:['var(--illegal)','#fff'],good:['var(--legal)','#fff'],info:['var(--def)','#fff']};
+const FB=fieldBase('P');
+function pRender(s,banner){
+  let h=FB;
+  s.throws.forEach(th=>{h+=`<line x1="${th.from[0]}" y1="${th.from[1]}" x2="${th.to[0]}" y2="${th.to[1]}" stroke="var(--path)" stroke-width="${th.cur?3:2}" stroke-dasharray="${th.kind==='hit'?'2 4':'6 4'}" stroke-linecap="round" opacity="${th.cur?1:.45}"/>`});
+  for(const id in s.runners){const r=s.runners[id],st=RUN[id].start;if(Math.abs(r.idx-st)>.01)h+=`<polyline points="${ptsPath(st,r.idx)}" fill="none" stroke="var(--legal)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`}
+  for(const id in s.fielders){const [x,y]=s.fielders[id];h+=id==='PC'?pin(x,y,'PC','var(--coach)','#13223f','sq'):pin(x,y,id,'var(--def)','#fff')}
+  if(s.time){const [x,y]=s.fielders[s.time];h+=`<g><rect x="${x-20}" y="${y-32}" width="40" height="17" rx="4" fill="#fff" stroke="#13223f"/>${txt(x,y-19.5,'TIME!',11,'#13223f')}</g>`}
+  for(const id in s.runners){const r=s.runners[id],[x,y]=basePos(r.idx),out=r.flag==='out',ret=r.flag==='returned';
+    h+=`<g><circle cx="${x}" cy="${y}" r="12.5" fill="${out?'#c9ced8':'#fff'}" stroke="${out?'#7d8596':ret?'var(--max)':'var(--legal)'}" stroke-width="4"/>${txt(x,y+3.6,RUN[id].label,RUN[id].label.length>2?9:10.5,'#13223f')}`;
+    if(out)h+=`<path d="M${x-9} ${y-9} L${x+9} ${y+9} M${x+9} ${y-9} L${x-9} ${y+9}" stroke="var(--illegal)" stroke-width="3"/>`;h+='</g>'}
+  const [bx,by]=ballPos(s),off=s.ball.holder?[9,-9]:[0,0];
+  h+=`<circle cx="${bx+off[0]+1}" cy="${by+off[1]+1.5}" r="5" fill="rgba(0,0,0,.3)"/><circle cx="${bx+off[0]}" cy="${by+off[1]}" r="5" fill="#fff" stroke="var(--brand-red)" stroke-width="1.4"/>`;
+  if(banner){const [bg,fg]=BANNER[banner.kind]||BANNER.info,fs=banner.text.length>30?12.5:14.5,w=Math.min(384,banner.text.length*fs*.56+30);
+    h+=`<g><rect x="${200-w/2}" y="52" width="${w}" height="28" rx="5" fill="${bg}" stroke="#13223f" stroke-opacity=".35"/><text x="200" y="${66+fs*.36}" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="${fs}" letter-spacing=".5" fill="${fg}">${esc(banner.text)}</text></g>`}
+  $('playSvg').innerHTML=h;
+}
+function pBuild(){Pl.states=[pInit(Pl.scn)];Pl.steps.forEach((st,i)=>Pl.states.push(pEval(Pl.states[i],st,1)))}
+const pAfter=k=>Pl.states[k+1];
+function pText(k){const st=Pl.steps[k];
+  if(k<0){$('sNum').textContent='Ready';$('sTitle').textContent='Press Play';$('sText').textContent=Pl.scn.desc}
+  else{$('sNum').textContent=`Step ${k+1} of ${Pl.steps.length}`;$('sTitle').textContent=st.label;$('sText').textContent=st.text}
+  $('bPrev').disabled=k<0;$('bNext').disabled=k>=Pl.steps.length-1;}
+function pBtn(){const end=Pl.idx>=Pl.steps.length-1&&!Pl.raf;$('bPlay').textContent=Pl.playing?'Pause':end?'Replay':Pl.idx<0?'Play':'Resume'}
+function pStop(){cancelAnimationFrame(Pl.raf);Pl.raf=0;clearTimeout(Pl.timer)}
+function pShow(k){pStop();Pl.idx=k;pRender(pAfter(k),k>=0?Pl.steps[k].banner:null);pText(k);pBtn()}
+function pAnim(k){pStop();if(k>=Pl.steps.length){Pl.playing=false;pBtn();return}
+  const st=Pl.steps[k],from=pAfter(k-1),dur=reduce?120:(st.dur||1350),t0=performance.now();pText(k);
+  const frame=now=>{const t=Math.min(1,(now-t0)/dur);pRender(pEval(from,st,t),st.banner);
+    if(t<1){Pl.raf=requestAnimationFrame(frame);return}
+    Pl.raf=0;Pl.idx=k;pBtn();
+    if(Pl.playing){if(k>=Pl.steps.length-1){Pl.playing=false;pBtn()}else Pl.timer=setTimeout(()=>pAnim(k+1),reduce?1500:(st.hold||1000))}};
+  Pl.raf=requestAnimationFrame(frame);pBtn()}
+$('bPlay').onclick=()=>{if(Pl.playing){Pl.playing=false;clearTimeout(Pl.timer);pBtn();return}
+  Pl.playing=true;if(Pl.raf){pBtn();return}
+  if(Pl.idx>=Pl.steps.length-1){pShow(-1);Pl.playing=true;Pl.timer=setTimeout(()=>pAnim(0),350);pBtn();return}
+  pAnim(Pl.idx+1)};
+$('bNext').onclick=()=>{Pl.playing=false;if(Pl.raf)pShow(Pl.idx+1);pAnim(Pl.idx+1)};
+$('bPrev').onclick=()=>{Pl.playing=false;const k=Pl.raf?Pl.idx:Pl.idx-1;pShow(Math.max(-1,k))};
+$('bRestart').onclick=()=>{Pl.playing=false;pShow(-1);Pl.playing=true;Pl.timer=setTimeout(()=>pAnim(0),300);pBtn()};
+function pLoad(){const s=Pl.scn;Pl.steps=s.steps.concat(s.variants?s.variants.find(v=>v.key===Pl.variant).steps:[]);pBuild();pShow(-1)}
+function pSelect(id){
+  const s=PLAYS.find(p=>p.id===id)||PLAYS[0];Pl.scn=s;Pl.variant=s.variants?s.variants[0].key:null;Pl.playing=false;pStop();
+  document.querySelectorAll('#scnRow button.scn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===s.id));
+  $('pNum').textContent=`Rule ${s.rule}`;$('pTitle').textContent=s.title;$('pDesc').textContent=s.desc;$('pTeach').textContent=s.teach;
+  $('pTags').innerHTML=s.tags.map(t=>T[t]).join('')+(s.gray?` <a href="#g-${s.gray}" class="seelink" style="font-family:var(--cond);font-weight:700">See the ruling</a>`:'');
+  const v=$('pVariants');v.hidden=!s.variants;
+  if(s.variants)v.innerHTML=s.variants.map(x=>`<button data-k="${x.key}" aria-pressed="${x.key===Pl.variant}">${x.label}<span class="note" style="display:block">${x.tag}</span></button>`).join('');
+  pLoad();
+}
+$('pVariants').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;Pl.variant=b.dataset.k;
+  [...$('pVariants').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const keep=Pl.scn.steps.length-1;Pl.playing=false;pLoad();pShow(keep);Pl.playing=true;pAnim(keep+1)});
+$('scnRow').innerHTML=PLAYS.map(p=>`<button class="scn" data-id="${p.id}" aria-pressed="false"><span class="num">RULE ${p.rule}</span><span class="t">${p.title}</span><span style="display:flex;gap:4px;flex-wrap:wrap">${p.tags.map(t=>T[t]).join('')}</span></button>`).join('')
+  +`<a class="scn" href="https://kjk86.github.io/bsaeball-iq/overthrow/"><span class="num">RULE 10d</span><span class="t">1st base overthrow →</span><span style="display:flex;gap:4px;flex-wrap:wrap">${T.nl}${T.sugg}</span><span class="note">Opens the overthrow visualizer</span></a>`;
+$('scnRow').addEventListener('click',e=>{const b=e.target.closest('button.scn');if(b)pSelect(b.dataset.id)});
+pSelect('p1');
+
+// ================= GAME CLOCK =================
+const cx=m=>20+Math.min(95,Math.max(0,m))*6.4;
+const CL={v:5,h:4};
+$('cHalf').innerHTML=[1,2,3,4,5].map(i=>`<option value="t${i}">Top of the ${['1st','2nd','3rd','4th','5th'][i-1]}</option><option value="b${i}">Bottom of the ${['1st','2nd','3rd','4th','5th'][i-1]}</option>`).join('');
+$('cHalf').value='b3';
+function clockNext(min,half,inn,v,h,champ){
+  const ord=['1st','2nd','3rd','4th','5th'][inn-1], nxt=['2nd','3rd','4th','5th'][inn-1];
+  if(half==='t'){
+    const last=champ?inn===5:(inn===5||min>=75);
+    if(last&&h>v)return{v:'Game over',cls:'bad',why:`The home team is ahead after the top of the ${ord}, and no inning can follow this one, so the bottom half isn’t needed.`,tags:['8']};
+    if(last)return{v:`Play the bottom of the ${ord}`,cls:'good',why:`${min>=90?'Even past 90 minutes, t':'T'}his inning already started and the home team can still tie or win, so it gets finished.`,tags:['8',min>=90?'G9':'']};
+    return{v:`Play the bottom of the ${ord}`,cls:'good',why:'Normal half-inning.',tags:[]};
+  }
+  if(inn===5){
+    if(v===h)return champ?{v:'Tied after 5',cls:'grayv',why:'Championship game: the rulebook doesn’t say how a tie is decided.',tags:['8a','G10']}:{v:'Game over, tied',cls:'bad',why:'Regular-season games can end in a tie.',tags:['8','G10']};
+    return{v:'Game over',cls:'bad',why:'All 5 innings are complete.',tags:['8']};
+  }
+  if(!champ&&min>=75){
+    if(v===h)return{v:'Game over, tied',cls:'bad',why:`It’s been ${min} minutes, so no new inning can start. Regular-season games can end in a tie.`,tags:['8','G10']};
+    return{v:'Game over',cls:'bad',why:`It’s been ${min} minutes. No new inning starts after 75.`,tags:['8']};
+  }
+  if(champ)return{v:`Start the ${nxt} inning`,cls:'good',why:'Championship games play all 5 innings, whatever the clock says.',tags:['8a']};
+  return{v:`Start the ${nxt} inning`,cls:'good',why:`${75-min} minute${75-min===1?'':'s'} left to start new innings.`,tags:['8']};
+}
+function drawClock(){
+  const min=+$('cMin').value, hv=$('cHalf').value, champ=$('cChamp').checked;
+  $('cMinV').textContent=min+' min';$('cV').textContent=CL.v;$('cH').textContent=CL.h;
+  const x=cx(min);
+  $('clockSvg').innerHTML=`
+   <rect x="20" y="30" width="480" height="26" fill="var(--legal-soft)" stroke="var(--legal)"/>
+   <rect x="500" y="30" width="96" height="26" fill="var(--max-soft)" stroke="var(--max)"/>
+   <rect x="596" y="30" width="32" height="26" fill="var(--illegal-soft)" stroke="var(--illegal)"/>
+   <rect x="20" y="30" width="64" height="26" fill="var(--navy-soft)" stroke="var(--navy)" stroke-dasharray="3 2"/>
+   <text x="52" y="47" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="11" fill="var(--navy)">GRACE</text>
+   <text x="292" y="20" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="13" fill="var(--legal)">NEW INNINGS CAN START</text>
+   <text x="548" y="20" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="13" fill="var(--ink)">NO NEW INNINGS</text>
+   ${[[0,'START'],[10,'10'],[75,'75'],[90,'90']].map(([m,l])=>`<line x1="${cx(m)}" y1="56" x2="${cx(m)}" y2="64" stroke="var(--muted)"/><text x="${cx(m)}" y="78" text-anchor="${m===0?'start':'middle'}" font-family="${FONT}" font-weight="700" font-size="12" fill="var(--muted)">${l}</text>`).join('')}
+   <line x1="${x}" y1="24" x2="${x}" y2="62" stroke="var(--ink)" stroke-width="3"/>
+   <path d="M${x-7} 24 L${x+7} 24 L${x} 32 Z" fill="var(--ink)"/>
+   <text x="${Math.min(612,Math.max(28,x))}" y="93" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="12" fill="var(--ink)">${min} MIN</text>`;
+  const r=clockNext(min,hv[0],+hv[1],CL.v,CL.h,champ);
+  $('cVerdict').textContent=r.v;$('cVerdict').className='verdict '+r.cls;$('cWhy').textContent=r.why;
+  $('cTags').innerHTML=r.tags.filter(t=>t&&t[0]!=='G').map(t=>`<a class="rchip" href="#r${parseInt(t)}">Rule ${t}</a>`).join('');
+}
+['cMin','cHalf','cChamp'].forEach(id=>$(id).addEventListener('input',drawClock));
+$('cChamp').addEventListener('change',drawClock);
+document.querySelectorAll('.stepper button').forEach(b=>b.onclick=()=>{CL[b.dataset.s]=Math.max(0,Math.min(30,CL[b.dataset.s]+ +b.dataset.d));drawClock()});
+drawClock();
+
+// ================= PLAYING TIME =================
+const IFP=['P','C','1B','2B','SS','3B'], OFP=['LF','LCF','CF','RCF','RF'];
+const OPTS=['','P','C','1B','2B','SS','3B','LF','LCF','CF','RCF','RF','BN'];
+const posSet=n=>IFP.concat(n>=10?['LF','LCF','RCF','RF']:n===9?['LF','CF','RF']:['LF','RF']);
+const isIF=p=>IFP.includes(p), isOF=p=>OFP.includes(p);
+const LU_KEY='pvaa-rookie-lineup-v1';
+let LU=null;
+try{const s=JSON.parse(localStorage.getItem(LU_KEY)||'null');if(s&&s.grid&&s.names)LU=s}catch(e){}
+function cyclic10(inn){const P=posSet(10);return Array.from({length:10},(_,i)=>Array.from({length:inn},(_,k)=>P[(i+3*k)%10]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function generate(n,inn){
+  const F=posSet(n),sitN=Math.max(0,n-F.length);let last=null;
+  for(let att=0;att<6000;att++){
+    const sits=Array(n).fill(0),ifc=Array(n).fill(0),ofc=Array(n).fill(0),used=Array.from({length:n},()=>new Set()),grid=Array.from({length:n},()=>Array(inn).fill(''));let ok=true;
+    for(let k=0;k<inn&&ok;k++){
+      const ord=shuffle([...Array(n).keys()]).sort((a,b)=>sits[a]-sits[b]);
+      const sitters=new Set(ord.slice(0,sitN));sitters.forEach(p=>{grid[p][k]='BN';sits[p]++});
+      const avail=new Set(ord.filter(p=>!sitters.has(p)));
+      for(const pos of shuffle(F)){
+        let c=[...avail].filter(p=>!(isIF(pos)&&pos!=='C'&&k<4&&used[p].has(pos)));
+        if(!c.length){ok=false;break}
+        const sc=p=>isIF(pos)?(ifc[p]===0?0:1+ifc[p]-(ofc[p]===0?0:0)):(ofc[p]===0?0:1+ofc[p]);
+        const best=Math.min(...c.map(sc));c=shuffle(c.filter(p=>sc(p)===best));const p=c[0];
+        grid[p][k]=pos;avail.delete(p);if(isIF(pos)){ifc[p]++;used[p].add(pos)}else ofc[p]++;
+      }
+    }
+    if(!ok)continue;last=grid;
+    if(!validate({n,inn,names:[],grid}).checks.some(c=>!c.ok&&!c.warn))return grid;
+  }
+  return last||Array.from({length:n},()=>Array(inn).fill(''));
+}
+if(!LU)LU={n:10,inn:4,names:Array.from({length:10},(_,i)=>''),grid:cyclic10(4)};
+const nm=(s,i)=>(s.names[i]||'').trim()||`Player ${i+1}`;
+function validate(s){
+  const checks=[],bad=new Set(),{n,inn,grid}=s;
+  // one per position, field size
+  const dups=[],small=[],big=[],missIF=[];let empty=0;
+  for(let k=0;k<inn;k++){const m={};let field=0;
+    for(let p=0;p<n;p++){const v=grid[p][k];if(!v){empty++;continue}if(v==='BN')continue;field++;(m[v]=m[v]||[]).push(p)}
+    for(const pos in m)if(m[pos].length>1){dups.push(`Inning ${k+1}: ${m[pos].length} at ${pos}`);m[pos].forEach(p=>bad.add(p+'-'+k))}
+    if(field<8)small.push(`Inning ${k+1}: ${field}`);if(field>10)big.push(`Inning ${k+1}: ${field}`);
+    const miss=IFP.filter(x=>!m[x]);if(miss.length&&field>=8)missIF.push(`Inning ${k+1}: no ${miss.join(', ')}`);
+  }
+  checks.push({ok:!dups.length,t:'One player per position each inning',sub:dups.join(' · ')});
+  checks.push({ok:!small.length,t:'At least 8 in the field every inning',rule:'16',sub:small.length?'Only '+small.join(' · '):''});
+  if(big.length)checks.push({ok:false,warn:true,t:'More than 10 in the field',g:'G19',sub:big.join(' · ')+'. The rulebook doesn’t set a max.'});
+  if(missIF.length)checks.push({ok:false,warn:true,t:'Infield positions left open',sub:missIF.join(' · ')});
+  // IF and OF each
+  const noIF=[],noOF=[];
+  for(let p=0;p<n;p++){if(!grid[p].some(isIF))noIF.push(nm(s,p));if(!grid[p].some(isOF))noOF.push(nm(s,p))}
+  checks.push({ok:!noIF.length,t:'Every player gets an infield inning',rule:'15',sub:noIF.length?'Missing: '+noIF.join(', '):'Catcher counts as infield.'});
+  checks.push({ok:!noOF.length,t:'Every player gets an outfield inning',rule:'15',sub:noOF.length?'Missing: '+noOF.join(', '):''});
+  // sitting
+  const sits=Array(n).fill(0),sitErr=[];
+  for(let k=0;k<inn;k++){const sitting=[];for(let p=0;p<n;p++)if(grid[p][k]==='BN')sitting.push(p);
+    const after=sits.map((c,p)=>c+(sitting.includes(p)?1:0));
+    for(const p of sitting)if(sits[p]>=1&&after.some(c=>c===0)){sitErr.push(`${nm(s,p)} sits again in inning ${k+1}`);bad.add(p+'-'+k)}
+    sitting.forEach(p=>sits[p]++)}
+  checks.push({ok:!sitErr.length,t:'Nobody sits twice until everyone has sat once',rule:'15',sub:sitErr.join(' · ')});
+  // no repeat IF in first 4
+  const rep=[];
+  for(let p=0;p<n;p++){const seen={};for(let k=0;k<Math.min(4,inn);k++){const v=grid[p][k];if(!isIF(v)||v==='C')continue;if(seen[v]!=null){rep.push(`${nm(s,p)} at ${v} twice`);bad.add(p+'-'+k);bad.add(p+'-'+seen[v])}else seen[v]=k}}
+  checks.push({ok:!rep.length,t:'No repeat infield position in the first 4 innings',rule:'15a',nl:true,sub:rep.length?rep.join(' · '):'Catcher can be repeated.'+(inn===5?' 5th inning: any repeats are allowed.':'')});
+  if(empty)checks.push({ok:false,warn:true,t:`${empty} spot${empty===1?'':'s'} not filled in yet`,sub:'Pick a position or Bench for every inning.'});
+  return{checks,bad};
+}
+function luSave(){try{localStorage.setItem(LU_KEY,JSON.stringify(LU))}catch(e){}}
+function cellCls(v){return isIF(v)?'if':isOF(v)?'of':v==='BN'?'bn':''}
+function luTable(){
+  const {n,inn}=LU;
+  let h=`<thead><tr><th>#</th><th>Player</th>${Array.from({length:inn},(_,k)=>`<th>Inn ${k+1}</th>`).join('')}<th>IF / OF / Sit</th></tr></thead><tbody>`;
+  for(let p=0;p<n;p++){
+    h+=`<tr><td class="n">${p+1}</td><td><input id="lu-n-${p}" data-p="${p}" value="${esc(LU.names[p]||'')}" placeholder="Player ${p+1}" aria-label="Player ${p+1} name"></td>`;
+    for(let k=0;k<inn;k++){const v=LU.grid[p][k]||'';h+=`<td><select id="lu-${p}-${k}" data-p="${p}" data-k="${k}" class="${cellCls(v)}" aria-label="Player ${p+1} inning ${k+1}">${OPTS.map(o=>`<option value="${o}"${o===v?' selected':''}>${o===''?'Pick':o==='BN'?'Bench':o}</option>`).join('')}</select></td>`}
+    h+=`<td class="sum" id="lu-s-${p}"></td></tr>`;
+  }
+  $('luTable').innerHTML=h+'</tbody>';
+  luCheck();
+}
+function luCheck(){
+  const {checks,bad}=validate(LU);
+  for(let p=0;p<LU.n;p++){
+    for(let k=0;k<LU.inn;k++){const el=$(`lu-${p}-${k}`);if(el)el.className=cellCls(LU.grid[p][k])+(bad.has(p+'-'+k)?' bad':'')}
+    const r=LU.grid[p];$(`lu-s-${p}`).textContent=`${r.filter(isIF).length} / ${r.filter(isOF).length} / ${r.filter(v=>v==='BN').length}`;
+  }
+  const allOk=!checks.some(c=>!c.ok&&!c.warn);
+  $('luChecks').innerHTML=`<li><span class="ic ${allOk?'':'no'}">${allOk?'✓':'✗'}</span><span><b>${allOk?'This rotation follows the rules':'This rotation breaks a rule'}</b></span></li>`+checks.map(c=>`<li><span class="ic ${c.ok?'':c.warn?'warn':'no'}">${c.ok?'✓':c.warn?'!':'✗'}</span><span>${esc(c.t)} ${c.rule?`<a class="rchip" href="#r${parseInt(c.rule)}">Rule ${c.rule}</a>`:''}${c.nl?' <span class="tag nl">NL only · applies in fall</span>':''}${c.sub?`<span class="sub">${esc(c.sub)}</span>`:''}</span></li>`).join('');
+}
+$('luTable').addEventListener('change',e=>{const t=e.target;if(t.tagName==='SELECT'){LU.grid[+t.dataset.p][+t.dataset.k]=t.value;luSave();luCheck()}});
+$('luTable').addEventListener('input',e=>{const t=e.target;if(t.tagName==='INPUT'){LU.names[+t.dataset.p]=t.value;luSave();luCheck()}});
+$('luN').innerHTML=[8,9,10,11,12,13].map(i=>`<option value="${i}">${i}</option>`).join('');
+$('luN').value=LU.n;$('luI').value=LU.inn;
+function luResize(n,inn){
+  const names=Array.from({length:n},(_,i)=>LU.names[i]||'');
+  LU={n,inn,names,grid:n===10&&inn===4?cyclic10(4):generate(n,inn)};luSave();luTable();
+}
+$('luN').onchange=()=>luResize(+$('luN').value,LU.inn);
+$('luI').onchange=()=>luResize(LU.n,+$('luI').value);
+$('luFill').onclick=()=>{LU.grid=generate(LU.n,LU.inn);luSave();luTable()};
+$('luClear').onclick=()=>{LU.grid=Array.from({length:LU.n},()=>Array(LU.inn).fill(''));luSave();luTable()};
+luTable();
+
+// ================= TIEBREAKER =================
+function drawTB(){
+  const v=id=>Math.max(0,+$(id).value||0), A={f:v('tbAF'),a:v('tbAA')}, B={f:v('tbBF'),a:v('tbBA')};
+  const r1=A.a!==B.a?(A.a<B.a?'A':'B'):A.f!==B.f?(A.f>B.f?'A':'B'):'Still tied';
+  const ra=A.f?A.a/A.f:Infinity, rb=B.f?B.a/B.f:Infinity, r2=ra===rb?'Still tied':ra<rb?'A':'B';
+  const fmt=x=>isFinite(x)?x.toFixed(2):'—';
+  const name=x=>x==='Still tied'?x:'Team '+x;
+  $('tbRes').innerHTML=`<div style="background:var(--legal-soft)"><span>Fewest runs against, then most runs for</span><span>${name(r1)}</span></div>
+   <div style="opacity:.7"><span>Not used: ratio, runs against ÷ runs for (A ${fmt(ra)}, B ${fmt(rb)})</span><span>${name(r2)}</span></div>
+   <p class="verdict good" style="font-size:1.05rem">${r1==='Still tied'?'Still tied: coin flip':name(r1)+' advances'}</p>`;
+}
+['tbAF','tbAA','tbBF','tbBA'].forEach(id=>$(id).addEventListener('input',drawTB));
+drawTB();
+
+// ================= SHARE LINKS =================
+const PAGE_URL='https://kjk86.github.io/bsaeball-iq/rules/';
+const LINK_IC='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+const linkBtn=(hash,label)=>`<button type="button" class="linkbtn" data-hash="${hash}" aria-label="Copy link to ${esc(label)}">${LINK_IC}Copy link</button>`;
+let toastT=0;
+function toast(head,url){let t=$('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)}
+  t.innerHTML=`${esc(head)}<span>${esc(url)}</span>`;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,4500)}
+document.addEventListener('click',e=>{const b=e.target.closest('.linkbtn');if(!b)return;
+  const url=PAGE_URL+'#'+b.dataset.hash;
+  try{navigator.clipboard.writeText(url).then(()=>toast('Link copied',url),()=>toast('Copy this link',url))}catch(err){toast('Copy this link',url)}});
+document.querySelectorAll('section[id] > .sec-head').forEach(h=>{const s=h.parentElement;h.insertAdjacentHTML('beforeend',linkBtn(s.id,h.querySelector('h2')?.textContent||s.id))});
+document.querySelectorAll('.gcard[id]').forEach(c=>c.querySelector('.top').insertAdjacentHTML('beforeend',linkBtn(c.id,c.querySelector('h3').textContent)));
+function linkRules(){document.querySelectorAll('.rule[id] .meta').forEach(m=>{if(!m.querySelector('.linkbtn'))m.insertAdjacentHTML('beforeend',linkBtn(m.closest('.rule').id,'Rule '+m.closest('.rule').id.slice(1)))})}
+linkRules();new MutationObserver(linkRules).observe($('rList'),{childList:true});
+$('pTags').insertAdjacentHTML('afterend','<div id="pLink"></div>');
+const playLink=()=>{$('pLink').innerHTML=linkBtn(Pl.scn.id,'this play')};playLink();
+$('scnRow').addEventListener('click',()=>setTimeout(playLink));
+function goHash(){const h=decodeURIComponent((location.hash||'').slice(1));if(!h)return;
+  if(PLAYS.some(p=>p.id===h)){pSelect(h);playLink();$('plays').scrollIntoView();return}
+  if(/^r\d+$/.test(h)&&!$(h)){document.querySelector('.filters button[data-f="all"]').click()}
+  const el=$(h);if(el)el.scrollIntoView()}
+addEventListener('hashchange',goHash);
+requestAnimationFrame(goHash);
+})();
+</script>
+</body>
+</html>

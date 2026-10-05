@@ -1,6 +1,6 @@
 # 1st Base Overthrow Rule Visualizer
 
-Proposed PVAA Rookie Division overthrow rule, shown on an animated diamond.
+How the PVAA Rookie Division 1st base overthrow rule (Rule 10d) is called, shown on an animated diamond. Linked from the rulebook visualizer at `/rules/`.
 Live at https://kjk86.github.io/bsaeball-iq/overthrow/ (link to one play with `#s1`–`#s7`).
 
 - Everything is in `index.html`: no build step and no dependencies (Google Fonts only).
